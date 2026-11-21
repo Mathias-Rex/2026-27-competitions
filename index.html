@@ -155,9 +155,6 @@
                     <span id="themeToggleIcon" aria-hidden="true">🌙</span>
                     <span id="themeToggleText">Sötét mód</span>
                 </button>
-                <button id="toggleAllBtn" type="button" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-700 text-xs font-semibold transition cursor-pointer border border-slate-300">
-                    Összes ki-/bekapcsolása
-                </button>
             </div>
         </div>
     </header>
@@ -754,11 +751,6 @@
 
                 container.appendChild(card);
             });
-
-            // "Összes ki-/bekapcsolása" gomb felirat frissítése
-            const allActive = competitions.every(c => c.active);
-            const toggleAllBtn = document.getElementById('toggleAllBtn');
-            toggleAllBtn.textContent = allActive ? 'Összes kikapcsolása' : 'Összes bekapcsolása';
         }
 
         // 4.2 Közös Idővonal-diagram (Az első verzió tiszta vízszintes Gantt / Timeline elrendezése)
@@ -1319,14 +1311,6 @@
                 if (typeof state.isDetailsSectionOpen === 'boolean') isDetailsSectionOpen = state.isDetailsSectionOpen;
             } catch (e) { /* hibás vagy nem elérhető mentés: alapértelmezés */ }
         }
-
-        // "Összes ki-/bekapcsolása" gomb
-        document.getElementById('toggleAllBtn').addEventListener('click', () => {
-            const allActive = competitions.every(c => c.active);
-            const targetState = !allActive;
-            competitions.forEach(c => c.active = targetState);
-            updateAll();
-        });
 
         // Időszűrő gombok ("Összes" / "Csak hátralévő")
         function applyTimeFilterUI() {
