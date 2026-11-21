@@ -46,6 +46,7 @@
         }
         /* Finom animációk a mérföldkő pontokhoz */
         .milestone-dot {
+            transform: translate(-50%, -50%);
             transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
         }
         .milestone-dot:hover, .milestone-dot.active {
@@ -53,6 +54,7 @@
             z-index: 40;
         }
         .diamond-dot {
+            transform: translate(-50%, -50%) rotate(45deg);
             transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
         }
         .diamond-dot:hover, .diamond-dot.active {
@@ -176,7 +178,7 @@
 
             <!-- Görgethető konténer kisebb képernyőkhöz -->
             <div class="overflow-x-auto timeline-scroll">
-                <div id="timelineWrapper" class="min-w-[880px] p-5 relative select-none">
+                <div id="timelineWrapper" class="min-w-[760px] lg:min-w-[880px] p-5 relative select-none">
                     <!-- Ide épül fel a közös idővonal -->
                 </div>
             </div>
@@ -766,7 +768,7 @@
 
             // Rács fejléc (hónapok)
             let gridHeaderHtml = `
-                <div class="grid grid-cols-[190px_1fr] items-end pb-2 border-b border-slate-200">
+                <div class="grid grid-cols-[104px_1fr] lg:grid-cols-[190px_1fr] items-end pb-2 border-b border-slate-200">
                     <div class="text-xs font-bold uppercase tracking-wider text-slate-400 pr-3">Verseny</div>
                     <div class="relative h-6">
             `;
@@ -783,7 +785,7 @@
             gridHeaderHtml += `</div></div>`;
 
             // Függőleges segédvonalak + dinamikus MA vonal réteg
-            let gridLinesHtml = `<div class="grid grid-cols-[190px_1fr] absolute inset-0 pointer-events-none px-5 pt-11 pb-5">
+            let gridLinesHtml = `<div class="grid grid-cols-[104px_1fr] lg:grid-cols-[190px_1fr] absolute inset-0 pointer-events-none px-5 pt-11 pb-5">
                 <div></div>
                 <div class="relative h-full">
             `;
@@ -822,7 +824,7 @@
                 const barWidth = Math.max(2, endPct - startPct);
 
                 rowsHtml += `
-                    <div class="grid grid-cols-[190px_1fr] items-center py-4 min-h-[128px]">
+                    <div class="grid grid-cols-[104px_1fr] lg:grid-cols-[190px_1fr] items-center py-4 min-h-[128px]">
                         <!-- Bal oldali verseny név -->
                         <div class="pr-4">
                             <div class="flex items-center gap-2">
@@ -889,7 +891,7 @@
                         <!-- Mérföldkő pont vagy gyémánt (Döntő) -->
                         ${ev.isFinal ? `
                             <button type="button" data-event-id="${ev.id}" title="${ev.title}"
-                                class="timeline-event-trigger diamond-dot ${isSelected ? 'active' : ''} absolute top-1/2 w-4 h-4 rotate-45 bg-amber-400 border-2 border-amber-800 shadow cursor-pointer z-20"
+                                class="timeline-event-trigger diamond-dot ${isSelected ? 'active' : ''} absolute top-1/2 w-4 h-4 bg-amber-400 border-2 border-amber-800 shadow cursor-pointer z-20"
                                 style="left: ${pct}%;">
                             </button>
                         ` : `
