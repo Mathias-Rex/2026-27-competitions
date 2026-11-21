@@ -1249,9 +1249,37 @@
             renderEventDetail();
             renderChronologicalList();
             renderDetailedInfoCards();
+            saveState();
         }
 
-        // Eseménykezelő az "Összes ki-/bekapcsolása" gombhoz
+        // Kapcsolók állapotának mentése / betöltése (localStorage)
+        const STATE_KEY = 'competitionsUiState';
+        function saveState() {
+            try {
+                const state = {
+                    active: Object.fromEntries(competitions.map(c => [c.id, c.active])),
+                    timeFilter,
+                    isDetailsSectionOpen
+                };
+                localStorage.setItem(STATE_KEY, JSON.stringify(state));
+            } catch (e) { /* localStorage nem elérhető */ }
+        }
+        function loadState() {
+            try {
+                const raw = localStorage.getItem(STATE_KEY);
+                if (!raw) return;
+                const state = JSON.parse(raw);
+                if (state.active) {
+                    competitions.forEach(c => {
+                        if (typeof state.active[c.id] === 'boolean') c.active = state.active[c.id];
+                    });
+                }
+                if (state.timeFilter === 'all' || state.timeFilter === 'upcoming') timeFilter = state.timeFilter;
+                if (typeof state.isDetailsSectionOpen === 'boolean') isDetailsSectionOpen = state.isDetailsSectionOpen;
+            } catch (e) { /* hibás vagy nem elérhető mentés: alapértelmezés */ }
+        }
+
+        // "Összes ki-/bekapcsolása" gomb
         document.getElementById('toggleAllBtn').addEventListener('click', () => {
             const allActive = competitions.every(c => c.active);
             const targetState = !allActive;
@@ -1259,36 +1287,39 @@
             updateAll();
         });
 
-        // Eseménykezelők az időszűrő gombokhoz ("Összes" / "Csak hátralévő")
+        // Időszűrő gombok ("Összes" / "Csak hátralévő")
+        function applyTimeFilterUI() {
+            document.querySelectorAll('.time-filter-btn').forEach(b => {
+                b.className = b.dataset.timefilter === timeFilter
+                    ? 'time-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-white text-slate-900 shadow-sm transition cursor-pointer'
+                    : 'time-filter-btn px-3 py-1 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition cursor-pointer';
+            });
+        }
         document.querySelectorAll('.time-filter-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 timeFilter = btn.dataset.timefilter;
-                document.querySelectorAll('.time-filter-btn').forEach(b => {
-                    b.className = 'time-filter-btn px-3 py-1 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition cursor-pointer';
-                });
-                btn.className = 'time-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-white text-slate-900 shadow-sm transition cursor-pointer';
+                applyTimeFilterUI();
                 renderChronologicalList();
+                saveState();
             });
         });
 
-        // Eseménykezelő az alsó versenykiírások szekció összecsukásához/kinyitásához
-        document.getElementById('toggleDetailsSectionBtn').addEventListener('click', () => {
-            isDetailsSectionOpen = !isDetailsSectionOpen;
+        // Alsó versenykiírások szekció összecsukása/kinyitása
+        function applyDetailsSectionUI() {
             const wrapper = document.getElementById('detailedInfoWrapper');
             const textEl = document.getElementById('toggleDetailsSectionText');
             const iconEl = document.getElementById('toggleDetailsSectionIcon');
             const btnEl = document.getElementById('toggleDetailsSectionBtn');
 
             btnEl.setAttribute('aria-expanded', String(isDetailsSectionOpen));
-            if (isDetailsSectionOpen) {
-                wrapper.classList.remove('hidden');
-                textEl.textContent = 'Részletek elrejtése';
-                iconEl.style.transform = 'rotate(0deg)';
-            } else {
-                wrapper.classList.add('hidden');
-                textEl.textContent = 'Részletek megjelenítése';
-                iconEl.style.transform = 'rotate(180deg)';
-            }
+            wrapper.classList.toggle('hidden', !isDetailsSectionOpen);
+            textEl.textContent = isDetailsSectionOpen ? 'Részletek elrejtése' : 'Részletek megjelenítése';
+            iconEl.style.transform = isDetailsSectionOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+        }
+        document.getElementById('toggleDetailsSectionBtn').addEventListener('click', () => {
+            isDetailsSectionOpen = !isDetailsSectionOpen;
+            applyDetailsSectionUI();
+            saveState();
         });
 
         // Téma váltó
@@ -1320,6 +1351,9 @@
 
         // Kezdő kirajzolás
         window.addEventListener('DOMContentLoaded', () => {
+            loadState();
+            applyTimeFilterUI();
+            applyDetailsSectionUI();
             selectedEventId = pickDefaultSelectedEvent();
             updateThemeButton();
             updateAll();
