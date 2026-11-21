@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informatikai Diákversenyek – Közös Idővonal (2026/2027)</title>
+    <!-- Tailwind CSS betöltése -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+        /* Egyedi görgetősáv az idővonalhoz mobilon */
+        .timeline-scroll::-webkit-scrollbar {
+            height: 8px;
+        }
+        .timeline-scroll::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 9999px;
+        }
+        .timeline-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        .timeline-scroll::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        /* Finom animációk a mérföldkő pontokhoz */
+        .milestone-dot {
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+        }
+        .milestone-dot:hover, .milestone-dot.active {
+            transform: translate(-50%, -50%) scale(1.3);
+            z-index: 40;
+        }
+        .diamond-dot {
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+        }
+        .diamond-dot:hover, .diamond-dot.active {
+            transform: translate(-50%, -50%) rotate(45deg) scale(1.25);
+            z-index: 40;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Fejléc -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+                <div class="flex items-center gap-2.5">
+                    <span class="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-slate-900 text-white font-bold text-lg shadow-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    </span>
+                    <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900">
+                        Informatikai Diákversenyek – Közös Idővonal (2026/2027)
+                    </h1>
+                </div>
+                <p class="text-sm text-slate-500 mt-1">
+                    2026. november – 2027. április • Kapcsold ki/be a versenyeket az idővonal, a teendők és a kiírások szűréséhez
+                </p>
+            </div>
+
+            <!-- Gyors vezérlők és dinamikus aktuális dátum jelző -->
+            <div class="flex flex-wrap items-center gap-2.5">
+                <div id="headerTodayBadge" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-semibold">
+                    <span class="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
+                    <span id="headerTodayText">Mai nap: betöltés...</span>
+                </div>
+                <button id="toggleAllBtn" type="button" class="px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-700 text-xs font-semibold transition cursor-pointer border border-slate-300">
+                    Összes ki-/bekapcsolása
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Fő tartalom -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+        <!-- 1. SZEKCIÓ: Verseny kapcsolók (Toggle kártyák) -->
+        <section aria-label="Versenyek szűrése">
+            <div id="filterCardsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- A JS dinamikusan tölti fel a 3 verseny kapcsolókártyáját -->
+            </div>
+        </section>
+
+        <!-- 2. SZEKCIÓ: Közös Idővonal (Eredeti letisztult Gantt / Timeline elrendezés) -->
+        <section class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <div class="px-5 py-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-3 bg-slate-50/60">
+                <div>
+                    <h2 class="text-base font-bold text-slate-800">Közös időtengely és mérföldkövek</h2>
+                    <p class="text-xs text-slate-500">Kattints bármelyik pontra a részletes teendők megtekintéséhez!</p>
+                </div>
+                <!-- Jelmagyarázat -->
+                <div class="flex flex-wrap items-center gap-4 text-xs text-slate-600">
+                    <span class="inline-flex items-center gap-1.5">
+                        <span class="w-3 h-3 rounded-full bg-slate-600 inline-block border-2 border-white shadow"></span>
+                        Forduló / Határidő
+                    </span>
+                    <span class="inline-flex items-center gap-1.5 font-semibold text-amber-800">
+                        <span class="w-3.5 h-3.5 rotate-45 bg-amber-400 border-2 border-amber-700 inline-block shadow-sm"></span>
+                        Döntő
+                    </span>
+                    <span id="legendTodayItem" class="inline-flex items-center gap-1.5 text-red-600 font-medium">
+                        <span class="w-0.5 h-4 border-l-2 border-dashed border-red-500 inline-block"></span>
+                        <span id="legendTodayText">Mai nap</span>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Görgethető konténer kisebb képernyőkhöz -->
+            <div class="overflow-x-auto timeline-scroll">
+                <div id="timelineWrapper" class="min-w-[880px] p-5 relative select-none">
+                    <!-- Ide épül fel a közös idővonal -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. SZEKCIÓ: Kiválasztott esemény kiemelt kártyája + Időrendi teendőlista -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+            <!-- Bal/Felső oszlop: Részletes nézet az aktuálisan kiválasztott eseményről -->
+            <aside class="lg:col-span-4 bg-white rounded-2xl border border-slate-200 shadow-sm p-5 lg:sticky lg:top-24">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-slate-500">Kiválasztott esemény</h3>
+                    <span id="detailStatusBadge" class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600">
+                        Részletek
+                    </span>
+                </div>
+                <div id="eventDetailPanel">
+                    <!-- Dinamikus esemény részletező -->
+                </div>
+            </aside>
+
+            <!-- Jobb/Alsó oszlop: Szűrt, időrendi lista a teendőkről -->
+            <section class="lg:col-span-8 bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4 mb-4">
+                    <div>
+                        <h3 class="text-base font-bold text-slate-800">Időrendi teendők és dátumok</h3>
+                        <p id="listSubtitle" class="text-xs text-slate-500 mt-0.5">Az aktív versenyek összes eseménye időrendben</p>
+                    </div>
+                    <!-- Szűrő: Összes / Csak hátralévő -->
+                    <div class="inline-flex rounded-xl bg-slate-100 p-1 self-start sm:self-auto">
+                        <button type="button" data-timefilter="all" class="time-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-white text-slate-900 shadow-sm transition cursor-pointer">
+                            Összes
+                        </button>
+                        <button type="button" data-timefilter="upcoming" class="time-filter-btn px-3 py-1 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition cursor-pointer">
+                            Csak hátralévő
+                        </button>
+                    </div>
+                </div>
+
+                <div id="chronologicalList" class="space-y-3">
+                    <!-- Dinamikus lista -->
+                </div>
+            </section>
+
+        </div>
+
+        <!-- 4. SZEKCIÓ: Versenykiírások, Feltételek és Linkek (Összecsukható / áttekinthető kártyák) -->
+        <section aria-label="Versenykiírások, Feltételek és Linkek" class="pt-2">
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="px-5 py-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-3 bg-slate-50/60">
+                    <div>
+                        <h2 class="text-base sm:text-lg font-extrabold text-slate-900">Versenykiírások, Feltételek és Linkek</h2>
+                        <p class="text-xs text-slate-500">A bekapcsolt versenyek részletes kiírása, kategóriái, díjazása és hivatalos elérhetőségei</p>
+                    </div>
+                    <button id="toggleDetailsSectionBtn" type="button" aria-expanded="true"
+                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 text-xs font-semibold border border-slate-300 shadow-xs transition cursor-pointer">
+                        <span id="toggleDetailsSectionText">Részletek elrejtése</span>
+                        <svg id="toggleDetailsSectionIcon" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                    </button>
+                </div>
+
+                <div id="detailedInfoWrapper" class="p-5">
+                    <div id="detailedInfoCardsContainer" class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
+                        <!-- A JS dinamikusan tölti fel a bekapcsolt versenyek részletes kártyáit -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Lábléc -->
+    <footer class="bg-white border-t border-slate-200 mt-10 py-4 px-4 text-center text-xs text-slate-400">
+        Összesített verseny-idővonal • Radnóti HACK &amp; CODE • Neumann János Informatikai Verseny • Árpád-kupa
+    </footer>
+
+    <script>
+        // =========================================================================
+        // 1. DINAMIKUS DÁTUM KEZELÉS (new Date() alapján) & IDŐTENGELY HATÁROK
+        // =========================================================================
+        const HU_MONTHS_SHORT = ['jan.', 'febr.', 'márc.', 'ápr.', 'máj.', 'jún.', 'júl.', 'aug.', 'szept.', 'okt.', 'nov.', 'dec.'];
+
+        function getTodayInfo() {
+            const now = new Date();
+            const yyyy = now.getFullYear();
+            const mm = String(now.getMonth() + 1).padStart(2, '0');
+            const dd = String(now.getDate()).padStart(2, '0');
+            const isoStr = `${yyyy}-${mm}-${dd}`;
+            const shortHu = `${HU_MONTHS_SHORT[now.getMonth()]} ${now.getDate()}.`;
+            const fullHu = `${yyyy}. ${shortHu}`;
+            return { now, isoStr, shortHu, fullHu };
+        }
+
+        const TODAY_INFO = getTodayInfo();
+        const TODAY_STR = TODAY_INFO.isoStr;
+
+        // Egységes vízszintes időtengely: 2026. november – 2027. április
+        const TIMELINE_START = new Date('2026-10-28T00:00:00');
+        const TIMELINE_END   = new Date('2027-04-18T23:59:59');
+
+        // =========================================================================
+        // 2. VERSENYEK TELJES ADATMODELLJE
+        // =========================================================================
+        const competitions = [
+            {
+                id: 'radnoti',
+                name: 'Radnóti HACK & CODE a bolygóért',
+                shortName: 'Radnóti HACK & CODE',
+                organizer: 'Baranya Vármegyei SZC Radnóti Miklós Közgazdasági Technikum',
+                address: '7633 Pécs, Esztergár L. út 6.',
+                targetGroup: '7–8. évfolyamos diákok (2–4 fős csapatok)',
+                color: '#16A34A',        // Zöld
+                bgLight: '#DCFCE7',
+                bgBar: 'rgba(22, 163, 74, 0.16)',
+                borderColor: '#86EFAC',
+                textDark: '#14532D',
+                active: true,
+                details: {
+                    participants: '7–8. évfolyamos tanulókból álló 2–4 fős csapatok. Egy iskolából tetszőleges számú csapat nevezhető; a regisztrációt a felkészítő tanár végzi, és minden tanulónak kötelező a szülői nyilatkozat leadása.',
+                    theme: '„Egy élhetőbb jövő – technológiai megoldások a globális felmelegedés kihívásaira."',
+                    roundsSummary: [
+                        '2026. nov. 6.: Nevezési határidő (ingyenes, előzetes regisztrációhoz kötött)',
+                        '2026. nov. 16.: I. online forduló kezdete (informatikai, logikai és kreatív feladatok)',
+                        '2026. dec. 11.: I. forduló feladatainak leadási határideje',
+                        '2026. dec. 18.: I. forduló kiértékelése és a továbbjutók értesítése',
+                        '2027. jan. 8.: II. személyes forduló Pécsen (1. rész: 30 perces szabadulószoba-kihívás; 2. rész: 60 perces Scratch-programozás; 3. rész: 30 perces iskolaismereti játék)',
+                        '2027. jan. 15.: II. forduló kiértékelése és a döntősök értesítése',
+                        '2027. febr. 5.: III. forduló – Döntő (komplex projekt prezentálása szakmai zsűri előtt)'
+                    ],
+                    prizes: 'Oklevél minden döntősnek, értékes vásárlási utalványok az 1–3. helyezett csapatoknak, a felkészítő pedagógusok külön jutalmazása, valamint az I. helyezett csapat tagjainak felvételi lehetőség az iskolába.',
+                    contacts: 'Verseny e-mail: pecsiradnoti.verseny@gmail.com | Titkárság: titkar@radnoti-pecs.hu | Tel: 72/257-859',
+                    links: [
+                        { label: 'Regisztrációs űrlap (Google Forms)', url: 'https://forms.gle/eR3HK92LVR8pH4cw5', primary: true },
+                        { label: 'Iskola honlapja (radnoti-pecs.hu)', url: 'http://www.radnoti-pecs.hu', primary: false }
+                    ]
+                },
+                events: [
+                    {
+                        id: 'radnoti-1',
+                        date: '2026-11-06',
+                        displayDate: '2026. nov. 6.',
+                        shortLabel: 'Nevezés',
+                        title: 'Nevezési határidő',
+                        description: 'Ingyenes, előzetes regisztrációhoz kötött nevezés: a regisztrációs űrlapot a felkészítő tanár tölti ki, és minden tanulónak kötelező a szülői nyilatkozat leadása.',
+                        location: 'Online (Google Űrlap)',
+                        linkUrl: 'https://forms.gle/eR3HK92LVR8pH4cw5',
+                        linkLabel: 'Regisztrációs űrlap',
+                        isFinal: false,
+                        laneOffset: -1
+                    },
+                    {
+                        id: 'radnoti-2',
+                        date: '2026-11-16',
+                        displayDate: '2026. nov. 16.',
+                        shortLabel: 'I. ford. rajt',
+                        title: 'I. online forduló kezdete',
+                        description: 'Informatikai, logikai és kreatív feladatok megoldása az „Egy élhetőbb jövő – technológiai megoldások a globális felmelegedés kihívásaira” témakörben.',
+                        location: 'Online',
+                        linkUrl: 'http://www.radnoti-pecs.hu',
+                        linkLabel: 'Iskola honlapja',
+                        isFinal: false,
+                        laneOffset: 1
+                    },
+                    {
+                        id: 'radnoti-3',
+                        date: '2026-12-11',
+                        displayDate: '2026. dec. 11.',
+                        shortLabel: 'I. ford. leadás',
+                        title: 'I. forduló feladatainak leadási határideje',
+                        description: 'Az I. online forduló informatikai, logikai és kreatív feladatmegoldásainak végleges beküldése.',
+                        location: 'Online',
+                        linkUrl: 'http://www.radnoti-pecs.hu',
+                        linkLabel: 'Iskola honlapja',
+                        isFinal: false,
+                        laneOffset: -1
+                    },
+                    {
+                        id: 'radnoti-4',
+                        date: '2026-12-18',
+                        displayDate: '2026. dec. 18.',
+                        shortLabel: 'I. eredmény',
+                        title: 'I. forduló kiértékelése és továbbjutók értesítése',
+                        description: 'Az I. online forduló kiértékelése és a II. személyes fordulóba jutó csapatok értesítése.',
+                        location: 'E-mail értesítés',
+                        isFinal: false,
+                        laneOffset: 1
+                    },
+                    {
+                        id: 'radnoti-5',
+                        date: '2027-01-08',
+                        displayDate: '2027. jan. 8.',
+                        shortLabel: 'II. ford. (Pécs)',
+                        title: 'II. személyes forduló Pécsen',
+                        description: '1. rész: 30 perces szabadulószoba-kihívás; 2. rész: 60 perces Scratch-programozás; 3. rész: 30 perces iskolaismereti játék.',
+                        location: '7633 Pécs, Esztergár L. út 6.',
+                        isFinal: false,
+                        laneOffset: -1
+                    },
+                    {
+                        id: 'radnoti-6',
+                        date: '2027-01-15',
+                        displayDate: '2027. jan. 15.',
+                        shortLabel: 'II. eredmény',
+                        title: 'II. forduló kiértékelése és döntősök értesítése',
+                        description: 'A személyes forduló kiértékelése és a III. fordulóba (döntőbe) jutott csapatok értesítése.',
+                        location: 'E-mail értesítés',
+                        isFinal: false,
+                        laneOffset: 1
+                    },
+                    {
+                        id: 'radnoti-7',
+                        date: '2027-02-05',
+                        displayDate: '2027. febr. 5.',
+                        shortLabel: 'III. ford. DÖNTŐ',
+                        title: 'III. forduló – Döntő',
+                        description: 'Komplex projekt prezentálása szakmai zsűri előtt. Díjazás: oklevél minden döntősnek, vásárlási utalványok az 1–3. helyezetteknek, felvételi lehetőség az I. helyezettnek.',
+                        location: '7633 Pécs, Esztergár L. út 6.',
+                        isFinal: true,
+                        laneOffset: -1
+                    }
+                ]
+            },
+            {
+                id: 'neumann',
+                name: '23. Neumann János Kárpát-medencei Informatikai Programtermék Verseny',
+                shortName: 'Neumann János Verseny',
+                organizer: 'Szekszárdi I. Béla Gimnázium & NJSzT',
+                address: 'Szekszárdi I. Béla Gimnázium (Döntő helyszíne)',
+                targetGroup: 'Általános és középiskolások (20 év alatt, egyéni vagy csapat)',
+                color: '#2563EB',        // Kék
+                bgLight: '#DBEAFE',
+                bgBar: 'rgba(37, 99, 235, 0.16)',
+                borderColor: '#93C5FD',
+                textDark: '#1E3A8A',
+                active: true,
+                details: {
+                    participants: 'Általános és középiskolás diákok (akik 2027. március 18-ig még nem töltötték be a 20. életévüket), egyénileg vagy csapatban (csoportos pályázat esetén max. 2 főnek biztosítanak szállást). Nevezési díj nincs.',
+                    categories: [
+                        '1. Alkalmazói programok (oktatóprogramok, webalkalmazások, felhasználói problémát megoldó alkalmazások)',
+                        '2. Játékprogramok (saját készítésű játékok)',
+                        '3. Megépített (digitális) automata berendezés (hardver) és vezérlése (szoftver) – osztatlan kategória',
+                        '4. Számítógépes grafika (kép, portré, karikatúra stb.) – osztatlan kategória',
+                        '5. Animáció (számítógéppel előállított animáció)',
+                        '6. Számítógéppel támogatott tervezés (CAD programokkal szerkesztett tárgyak, objektumok)'
+                    ],
+                    roundsSummary: [
+                        '2027. febr. 14. (24:00): Online nevezési határidő regisztráció után (kötelező max. 10 perces bemutató videó mellékelése)',
+                        '2027. febr. 22.: Előzsűri értesítése a döntőbe jutóknak (max. 80 fő jut a döntőbe)',
+                        '2027. márc. 18–19.: Döntő Szekszárdon (személyes bemutatók, nyilvános zsűrizés)'
+                    ],
+                    prizes: 'A kategóriák 1–3. helyezettjei és a döntősök a támogatók által felajánlott értékes díjakban részesülnek; a rendező szállást biztosít a döntősöknek.',
+                    contacts: 'E-mail: neumann.ibela@gmail.com',
+                    links: [
+                        { label: 'Online nevezési felület (neumannverseny.hu)', url: 'https://neumannverseny.hu', primary: true },
+                        { label: 'Verseny információk (ibela.edu.hu/neumann)', url: 'http://ibela.edu.hu/neumann', primary: false }
+                    ]
+                },
+                events: [
+                    {
+                        id: 'neumann-1',
+                        date: '2026-11-02',
+                        displayDate: '2026. nov. 2.',
+                        shortLabel: 'Kiírás',
+                        title: 'Verseny meghirdetése (6 kategóriában)',
+                        description: 'A 23. Neumann János Kárpát-medencei Informatikai Programtermék Verseny meghirdetése 6 kategóriában (nevezési díj nincs).',
+                        location: 'neumannverseny.hu',
+                        linkUrl: 'https://neumannverseny.hu',
+                        linkLabel: 'Online nevezési felület',
+                        isFinal: false,
+                        laneOffset: -1
+                    },
+                    {
+                        id: 'neumann-2',
+                        date: '2027-02-14',
+                        displayDate: '2027. febr. 14. (24:00)',
+                        shortLabel: 'Nevezés (+videó)',
+                        title: 'Online nevezési határidő (24:00)',
+                        description: 'Online nevezési határidő regisztráció után a neumannverseny.hu felületén, kötelező max. 10 perces bemutató videó mellékelésével.',
+                        location: 'Online (neumannverseny.hu)',
+                        linkUrl: 'https://neumannverseny.hu',
+                        linkLabel: 'Online nevezési felület',
+                        isFinal: false,
+                        laneOffset: 1
+                    },
+                    {
+                        id: 'neumann-3',
+                        date: '2027-02-22',
+                        displayDate: '2027. febr. 22.',
+                        shortLabel: 'Értesítés',
+                        title: 'Előzsűri értesítése a döntőbe jutóknak',
+                        description: 'Az előzsűri értesítést küld a döntőbe jutó versenyzőknek (max. 80 fő jut a döntőbe).',
+                        location: 'E-mail értesítés',
+                        isFinal: false,
+                        laneOffset: -1
+                    },
+                    {
+                        id: 'neumann-4',
+                        date: '2027-03-18',
+                        endDate: '2027-03-19',
+                        displayDate: '2027. márc. 18–19.',
+                        shortLabel: 'DÖNTŐ (Szekszárd)',
+                        title: 'Döntő Szekszárdon',
+                        description: 'Személyes bemutatók és nyilvános zsűrizés a Szekszárdi I. Béla Gimnáziumban (a rendező szállást biztosít, csoportos pályázat esetén max. 2 főnek).',
+                        location: 'Szekszárdi I. Béla Gimnázium',
+                        linkUrl: 'http://ibela.edu.hu/neumann',
+                        linkLabel: 'Verseny információk',
+                        isFinal: true,
+                        laneOffset: 1
+                    }
+                ]
+            },
+            {
+                id: 'arpad',
+                name: '„Árpád-kupa” Digitális Kultúra Verseny',
+                shortName: 'Árpád-kupa',
+                organizer: 'Pécsi Árpád Fejedelem Gimnázium és Általános Iskola',
+                address: '7632 Pécs, Aidinger János út 41.',
+                targetGroup: '7–8. évfolyamos tanulók (2 fős csapatok)',
+                color: '#EA580C',        // Narancssárga
+                bgLight: '#FFEDD5',
+                bgBar: 'rgba(234, 88, 12, 0.16)',
+                borderColor: '#FDBA74',
+                textDark: '#7C2D12',
+                active: true,
+                details: {
+                    participants: '7–8. évfolyamos tanulókból álló 2 fős csapatok (vegyesen 7. és 8. osztályos tagok is alkothatnak csapatot; a megye általános és középiskoláiból).',
+                    theme: 'Témakörök és eszközök: Matematikai, logikai feladatok, grafika, szövegszerkesztés, prezentáció, táblázatkezelés, micro:bit programozása (használható programok: Microsoft Office programcsomag, képszerkesztő program).',
+                    roundsSummary: [
+                        '2026. nov. 20. (éjfél): Regisztrációs határidő',
+                        '2026. dec. 19.: 1. forduló – online tesztmegoldás',
+                        '2027. febr. 19.: 1. forduló – online beadandó feladat beküldése',
+                        '2027. ápr. 6. 14:00: 2. forduló – Döntő Pécsen (az online fordulók után az 5 legjobban teljesítő csapat kap meghívást e-mailben; micro:bit-tel megoldandó szabadulószoba)'
+                    ],
+                    prizes: 'A döntőben résztvevők jutalomban részesülnek.',
+                    contacts: 'Verseny e-mail: arpad-kupa@arpad-pecs.hu | Iskola e-mail: afg@arpad-pecs.hu | Tel: 72/450-351',
+                    links: [
+                        { label: 'Regisztrációs űrlap (Microsoft Forms)', url: 'https://forms.office.com/e/cxF0cqnv8M?origin=lprLink', primary: true },
+                        { label: 'Iskola honlapja (arpad-pecs.hu)', url: 'https://www.arpad-pecs.hu', primary: false },
+                        { label: 'Facebook oldal (facebook.com/arpad.pecs)', url: 'https://www.facebook.com/arpad.pecs', primary: false }
+                    ]
+                },
+                events: [
+                    {
+                        id: 'arpad-1',
+                        date: '2026-11-20',
+                        displayDate: '2026. nov. 20. (éjfél)',
+                        shortLabel: 'Regisztráció',
+                        title: 'Regisztrációs határidő (éjfél)',
+                        description: '2 fős csapatok (7–8. évfolyam, vegyesen is) jelentkezése az online regisztrációs űrlap beküldésével.',
+                        location: 'Online (Microsoft Forms)',
+                        linkUrl: 'https://forms.office.com/e/cxF0cqnv8M?origin=lprLink',
+                        linkLabel: 'Regisztrációs űrlap',
+                        isFinal: false,
+                        laneOffset: -1
+                    },
+                    {
+                        id: 'arpad-2',
+                        date: '2026-12-19',
+                        displayDate: '2026. dec. 19.',
+                        shortLabel: '1. ford. teszt',
+                        title: '1. forduló – online tesztmegoldás',
+                        description: 'Online forduló tesztmegoldása: matematikai, logikai feladatok és digitális kultúra tananyag.',
+                        location: 'Online',
+                        linkUrl: 'https://www.arpad-pecs.hu',
+                        linkLabel: 'Iskola honlapja',
+                        isFinal: false,
+                        laneOffset: 1
+                    },
+                    {
+                        id: 'arpad-3',
+                        date: '2027-02-19',
+                        displayDate: '2027. febr. 19.',
+                        shortLabel: '1. ford. beadandó',
+                        title: '1. forduló – online beadandó feladat beküldése',
+                        description: 'Digitális kultúra beadandó feladat beküldése (grafika, szövegszerkesztés, prezentáció, táblázatkezelés – Microsoft Office és képszerkesztő használatával).',
+                        location: 'Online',
+                        linkUrl: 'https://www.arpad-pecs.hu',
+                        linkLabel: 'Iskola honlapja',
+                        isFinal: false,
+                        laneOffset: -1
+                    },
+                    {
+                        id: 'arpad-4',
+                        date: '2027-04-06',
+                        displayDate: '2027. ápr. 6. 14:00',
+                        shortLabel: '2. ford. DÖNTŐ',
+                        title: '2. forduló – Döntő Pécsen',
+                        description: 'Az online fordulók után az 5 legjobban teljesítő csapat kap meghívást e-mailben: micro:bit-tel megoldandó szabadulószoba.',
+                        location: '7632 Pécs, Aidinger János út 41.',
+                        linkUrl: 'https://www.arpad-pecs.hu',
+                        linkLabel: 'Iskola honlapja',
+                        isFinal: true,
+                        laneOffset: 1
+                    }
+                ]
+            }
+        ];
+
+        // Állapot változók
+        let selectedEventId = null;
+        let timeFilter = 'all'; // 'all' vagy 'upcoming'
+        let isDetailsSectionOpen = true;
+
+        // =========================================================================
+        // 3. SEGÉDFÜGGVÉNYEK
+        // =========================================================================
+        function parseDate(dateStr) {
+            return new Date(dateStr + 'T12:00:00');
+        }
+
+        function getPercentPosition(dateStr) {
+            const d = parseDate(dateStr);
+            const totalMs = TIMELINE_END.getTime() - TIMELINE_START.getTime();
+            const currentMs = d.getTime() - TIMELINE_START.getTime();
+            const pct = (currentMs / totalMs) * 100;
+            return Math.max(0, Math.min(100, pct));
+        }
+
+        function isTodayWithinTimeline() {
+            const todayDate = parseDate(TODAY_STR);
+            return todayDate >= TIMELINE_START && todayDate <= TIMELINE_END;
+        }
+
+        function isPast(dateStr) {
+            return dateStr < TODAY_STR;
+        }
+
+        function getDaysDiff(dateStr) {
+            const target = new Date(dateStr + 'T00:00:00');
+            const today = new Date(TODAY_STR + 'T00:00:00');
+            const diffTime = target - today;
+            return Math.round(diffTime / (1000 * 60 * 60 * 24));
+        }
+
+        function formatRelativeDays(dateStr) {
+            const diff = getDaysDiff(dateStr);
+            if (diff === 0) return 'Ma van!';
+            if (diff === 1) return 'Holnap';
+            if (diff > 1) return `${diff} nap múlva`;
+            if (diff === -1) return 'Tegnap lejárt';
+            return `${Math.abs(diff)} napja lejárt`;
+        }
+
+        function findEventById(eventId) {
+            if (!eventId) return null;
+            for (const comp of competitions) {
+                const ev = comp.events.find(e => e.id === eventId);
+                if (ev) return { comp, ev };
+            }
+            return null;
+        }
+
+        function pickDefaultSelectedEvent() {
+            const activeComps = competitions.filter(c => c.active);
+            const allActiveEvents = [];
+            activeComps.forEach(c => {
+                c.events.forEach(e => allActiveEvents.push(e));
+            });
+            allActiveEvents.sort((a, b) => a.date.localeCompare(b.date));
+            const nextUpcoming = allActiveEvents.find(e => !isPast(e.date));
+            if (nextUpcoming) return nextUpcoming.id;
+            return allActiveEvents.length > 0 ? allActiveEvents[0].id : null;
+        }
+
+        // =========================================================================
+        // 4. RENDERELŐ FÜGGVÉNYEK
+        // =========================================================================
+
+        // 4.0 Fejléc és jelmagyarázat mai dátumának beállítása
+        function renderTodayBadges() {
+            const headerText = document.getElementById('headerTodayText');
+            const legendText = document.getElementById('legendTodayText');
+            const legendItem = document.getElementById('legendTodayItem');
+
+            headerText.textContent = `Mai nap: ${TODAY_INFO.fullHu}`;
+            if (isTodayWithinTimeline()) {
+                legendItem.classList.remove('hidden');
+                legendText.textContent = `Ma (${TODAY_INFO.shortHu})`;
+            } else {
+                legendItem.classList.add('hidden');
+            }
+        }
+
+        // 4.1 Verseny kapcsolókártyák (Toggle switches)
+        function renderFilterCards() {
+            const container = document.getElementById('filterCardsContainer');
+            container.innerHTML = '';
+
+            competitions.forEach(comp => {
+                const upcomingCount = comp.events.filter(e => !isPast(e.date)).length;
+                const card = document.createElement('div');
+                card.className = `rounded-2xl border-2 p-4 transition-all duration-200 cursor-pointer select-none flex flex-col justify-between ${
+                    comp.active
+                        ? 'bg-white shadow-sm'
+                        : 'bg-slate-100/70 border-slate-200 opacity-65 hover:opacity-90'
+                }`;
+                if (comp.active) {
+                    card.style.borderColor = comp.color;
+                }
+
+                card.innerHTML = `
+                    <div class="flex items-start justify-between gap-3">
+                        <div class="flex items-start gap-3">
+                            <span class="w-4 h-4 rounded-full mt-1 shrink-0 shadow-inner" style="background-color: ${comp.color};"></span>
+                            <div>
+                                <h2 class="font-bold text-sm sm:text-base text-slate-900 leading-snug">${comp.name}</h2>
+                                <p class="text-xs text-slate-500 mt-0.5">${comp.targetGroup}</p>
+                            </div>
+                        </div>
+
+                        <!-- Toggle Switch -->
+                        <button type="button" role="switch" aria-checked="${comp.active}" aria-label="${comp.name} ki/bekapcsolása"
+                            class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none"
+                            style="background-color: ${comp.active ? comp.color : '#cbd5e1'};">
+                            <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
+                                comp.active ? 'translate-x-5' : 'translate-x-0'
+                            }"></span>
+                        </button>
+                    </div>
+
+                    <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs">
+                        <span class="text-slate-500 truncate max-w-[62%]" title="${comp.organizer}">📍 ${comp.organizer}</span>
+                        <span class="font-semibold px-2 py-0.5 rounded-md" style="background-color: ${comp.active ? comp.bgLight : '#e2e8f0'}; color: ${comp.active ? comp.textDark : '#475569'};">
+                            ${upcomingCount} hátralévő esemény
+                        </span>
+                    </div>
+                `;
+
+                card.addEventListener('click', () => {
+                    comp.active = !comp.active;
+                    updateAll();
+                });
+
+                container.appendChild(card);
+            });
+
+            // "Összes ki-/bekapcsolása" gomb felirat frissítése
+            const allActive = competitions.every(c => c.active);
+            const toggleAllBtn = document.getElementById('toggleAllBtn');
+            toggleAllBtn.textContent = allActive ? 'Összes kikapcsolása' : 'Összes bekapcsolása';
+        }
+
+        // 4.2 Közös Idővonal-diagram (Az első verzió tiszta vízszintes Gantt / Timeline elrendezése)
+        function renderTimeline() {
+            const wrapper = document.getElementById('timelineWrapper');
+            const activeComps = competitions.filter(c => c.active);
+
+            if (activeComps.length === 0) {
+                wrapper.innerHTML = `
+                    <div class="py-16 text-center text-slate-400">
+                        <p class="text-base font-semibold text-slate-600">Nincs kiválasztott verseny</p>
+                        <p class="text-xs mt-1">Kapcsold be legalább az egyik versenyt a fenti kártyákon az idővonal megjelenítéséhez!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Havi osztások meghatározása (2026. nov. – 2027. ápr.)
+            const months = [
+                { label: '2026. nov.', date: '2026-11-01' },
+                { label: '2026. dec.', date: '2026-12-01' },
+                { label: '2027. jan.', date: '2027-01-01' },
+                { label: '2027. febr.', date: '2027-02-01' },
+                { label: '2027. márc.', date: '2027-03-01' },
+                { label: '2027. ápr.', date: '2027-04-01' }
+            ];
+
+            // Rács fejléc (hónapok)
+            let gridHeaderHtml = `
+                <div class="grid grid-cols-[190px_1fr] items-end pb-2 border-b border-slate-200">
+                    <div class="text-xs font-bold uppercase tracking-wider text-slate-400 pr-3">Verseny</div>
+                    <div class="relative h-6">
+            `;
+
+            months.forEach(m => {
+                const pct = getPercentPosition(m.date);
+                gridHeaderHtml += `
+                    <div class="absolute top-0 -translate-x-1/2 text-xs font-semibold text-slate-600 whitespace-nowrap" style="left: ${pct}%;">
+                        ${m.label}
+                    </div>
+                `;
+            });
+
+            gridHeaderHtml += `</div></div>`;
+
+            // Függőleges segédvonalak + dinamikus MA vonal réteg
+            let gridLinesHtml = `<div class="grid grid-cols-[190px_1fr] absolute inset-0 pointer-events-none px-5 pt-11 pb-5">
+                <div></div>
+                <div class="relative h-full">
+            `;
+
+            months.forEach(m => {
+                const pct = getPercentPosition(m.date);
+                gridLinesHtml += `
+                    <div class="absolute top-0 bottom-0 border-l border-slate-200/80" style="left: ${pct}%;"></div>
+                `;
+            });
+
+            // Dinamikus piros "Mai nap" szaggatott vonal (ha az időtengelyen belül van)
+            if (isTodayWithinTimeline()) {
+                const todayPct = getPercentPosition(TODAY_STR);
+                gridLinesHtml += `
+                    <div class="absolute top-0 bottom-0 border-l-2 border-dashed border-red-500 z-20" style="left: ${todayPct}%;">
+                        <span class="absolute -top-1 left-1.5 bg-red-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded shadow-sm whitespace-nowrap">
+                            Ma (${TODAY_INFO.shortHu})
+                        </span>
+                    </div>
+                `;
+            }
+
+            gridLinesHtml += `</div></div>`;
+
+            // Versenysávok (Sávonként egy sor)
+            let rowsHtml = `<div class="divide-y divide-slate-100 relative z-10">`;
+
+            activeComps.forEach(comp => {
+                const firstDate = comp.events[0].date;
+                const lastEvent = comp.events[comp.events.length - 1];
+                const lastDate = lastEvent.endDate || lastEvent.date;
+
+                const startPct = getPercentPosition(firstDate);
+                const endPct = getPercentPosition(lastDate);
+                const barWidth = Math.max(2, endPct - startPct);
+
+                rowsHtml += `
+                    <div class="grid grid-cols-[190px_1fr] items-center py-4 min-h-[128px]">
+                        <!-- Bal oldali verseny név -->
+                        <div class="pr-4">
+                            <div class="flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full shrink-0" style="background-color: ${comp.color};"></span>
+                                <span class="font-bold text-sm text-slate-800 leading-tight">${comp.shortName}</span>
+                            </div>
+                            <span class="text-[11px] text-slate-400 block mt-1 pl-5">
+                                ${comp.events[0].displayDate.replace(' (éjfél)', '')} – ${lastEvent.displayDate.replace(' 14:00', '')}
+                            </span>
+                        </div>
+
+                        <!-- Jobb oldali idővonal sáv -->
+                        <div class="relative h-24 flex items-center">
+                            <!-- Háttér sáv (teljes időtartam) -->
+                            <div class="absolute h-3.5 rounded-full transition-all"
+                                style="left: ${startPct}%; width: ${barWidth}%; background-color: ${comp.bgBar}; border: 1px solid ${comp.borderColor};">
+                            </div>
+                `;
+
+                // Mérföldkövek elhelyezése
+                comp.events.forEach(ev => {
+                    const pct = getPercentPosition(ev.date);
+                    const past = isPast(ev.date);
+                    const isSelected = ev.id === selectedEventId;
+                    const isAbove = ev.laneOffset === -1;
+
+                    // Összekötő vonal a pont és a címke között
+                    const connectorClass = isAbove
+                        ? 'bottom-1/2 mb-2 h-4'
+                        : 'top-1/2 mt-2 h-4';
+
+                    // Címke pozíció
+                    const labelPosClass = isAbove
+                        ? 'bottom-1/2 mb-6'
+                        : 'top-1/2 mt-6';
+
+                    // Döntő kiemelése
+                    const badgeStyle = ev.isFinal
+                        ? `background-color: #FEF3C7; border-color: #D97706; color: #78350F;`
+                        : `background-color: ${past ? '#F8FAFC' : '#FFFFFF'}; border-color: ${past ? '#CBD5E1' : comp.color}; color: ${past ? '#64748B' : '#0F172A'};`;
+
+                    const activeRing = isSelected ? 'ring-2 ring-offset-1 ring-slate-900 shadow-md scale-105 z-30' : 'shadow-sm hover:z-30';
+
+                    const compactDate = ev.displayDate
+                        .replace('2026. ', '')
+                        .replace('2027. ', '')
+                        .replace(' (éjfél)', '')
+                        .replace(' (24:00)', '');
+
+                    rowsHtml += `
+                        <!-- Függőleges összekötő -->
+                        <div class="absolute w-px ${connectorClass} -translate-x-1/2 pointer-events-none"
+                            style="left: ${pct}%; background-color: ${past ? '#CBD5E1' : comp.color};">
+                        </div>
+
+                        <!-- Címke kártya -->
+                        <button type="button" data-event-id="${ev.id}"
+                            class="timeline-event-trigger absolute ${labelPosClass} -translate-x-1/2 px-2 py-1 rounded-lg border text-[11px] leading-tight text-center whitespace-nowrap cursor-pointer transition ${activeRing}"
+                            style="left: ${pct}%; ${badgeStyle}">
+                            <span class="font-bold block">${compactDate}</span>
+                            <span class="font-medium ${ev.isFinal ? 'font-extrabold' : ''}">${ev.shortLabel}</span>
+                        </button>
+
+                        <!-- Mérföldkő pont vagy gyémánt (Döntő) -->
+                        ${ev.isFinal ? `
+                            <button type="button" data-event-id="${ev.id}" title="${ev.title}"
+                                class="timeline-event-trigger diamond-dot ${isSelected ? 'active' : ''} absolute top-1/2 w-4 h-4 rotate-45 bg-amber-400 border-2 border-amber-800 shadow cursor-pointer z-20"
+                                style="left: ${pct}%;">
+                            </button>
+                        ` : `
+                            <button type="button" data-event-id="${ev.id}" title="${ev.title}"
+                                class="timeline-event-trigger milestone-dot ${isSelected ? 'active' : ''} absolute top-1/2 w-3.5 h-3.5 rounded-full border-2 border-white shadow cursor-pointer z-20"
+                                style="left: ${pct}%; background-color: ${past ? '#94A3B8' : comp.color};">
+                            </button>
+                        `}
+                    `;
+                });
+
+                rowsHtml += `</div></div>`;
+            });
+
+            rowsHtml += `</div>`;
+
+            wrapper.innerHTML = gridLinesHtml + gridHeaderHtml + rowsHtml;
+
+            // Eseménykezelők csatolása az idővonal elemeihez (kattintás és rámutatás)
+            wrapper.querySelectorAll('.timeline-event-trigger').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    selectedEventId = btn.dataset.eventId;
+                    updateAll();
+                });
+                btn.addEventListener('mouseenter', () => {
+                    selectedEventId = btn.dataset.eventId;
+                    renderEventDetail();
+                });
+            });
+        }
+
+        // 4.3 Részletező panel (Bal oldali doboz, beágyazott linkkel)
+        function renderEventDetail() {
+            const panel = document.getElementById('eventDetailPanel');
+            const badge = document.getElementById('detailStatusBadge');
+            const found = findEventById(selectedEventId);
+
+            if (!found) {
+                panel.innerHTML = `<p class="text-sm text-slate-500">Válassz ki egy eseményt az idővonalon vagy a listából!</p>`;
+                badge.className = 'text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600';
+                badge.textContent = 'Részletek';
+                return;
+            }
+
+            const { comp, ev } = found;
+            const past = isPast(ev.date);
+            const relText = formatRelativeDays(ev.date);
+
+            if (past) {
+                badge.className = 'text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-500';
+                badge.textContent = 'Már elmúlt';
+            } else {
+                badge.className = 'text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200';
+                badge.textContent = relText;
+            }
+
+            panel.innerHTML = `
+                <div class="space-y-4">
+                    <div>
+                        <span class="inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-lg mb-2"
+                            style="background-color: ${comp.bgLight}; color: ${comp.textDark};">
+                            <span class="w-2 h-2 rounded-full" style="background-color: ${comp.color};"></span>
+                            ${comp.shortName}
+                        </span>
+                        <h4 class="text-lg font-extrabold text-slate-900 leading-snug">
+                            ${ev.isFinal ? '🏆 ' : ''}${ev.title}
+                        </h4>
+                    </div>
+
+                    <div class="bg-slate-50 rounded-xl p-3 border border-slate-200/80 space-y-2 text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span class="text-slate-500 font-medium">Időpont:</span>
+                            <span class="font-bold text-slate-900 text-right">${ev.displayDate}</span>
+                        </div>
+                        <div class="flex items-center justify-between gap-2">
+                            <span class="text-slate-500 font-medium">Helyszín / Forma:</span>
+                            <span class="font-semibold text-slate-800 text-right">${ev.location}</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h5 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">Teendő és tudnivalók</h5>
+                        <p class="text-sm text-slate-700 leading-relaxed">
+                            ${ev.description}
+                        </p>
+                    </div>
+
+                    ${ev.linkUrl ? `
+                        <div class="pt-1">
+                            <a href="${ev.linkUrl}" target="_blank" rel="noopener noreferrer"
+                               class="inline-flex items-center justify-center gap-1.5 w-full px-3.5 py-2.5 rounded-xl text-xs font-bold text-white shadow-sm transition hover:opacity-90"
+                               style="background-color: ${comp.color};">
+                                <span>🔗 ${ev.linkLabel || 'Hivatkozás megnyitása'}</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                            </a>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+
+        // 4.4 Időrendi teendőlista (Jobb oldali szekció, beágyazott linkekkel)
+        function renderChronologicalList() {
+            const listContainer = document.getElementById('chronologicalList');
+            const subtitle = document.getElementById('listSubtitle');
+
+            // Aktív versenyek eseményeinek összegyűjtése és rendezése
+            let allEvents = [];
+            competitions.filter(c => c.active).forEach(comp => {
+                comp.events.forEach(ev => {
+                    allEvents.push({ comp, ev });
+                });
+            });
+
+            if (timeFilter === 'upcoming') {
+                allEvents = allEvents.filter(item => !isPast(item.ev.date));
+            }
+
+            allEvents.sort((a, b) => a.ev.date.localeCompare(b.ev.date));
+
+            subtitle.textContent = `${allEvents.length} megjelenített esemény időrendi sorrendben`;
+
+            if (allEvents.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="py-10 text-center text-slate-400 bg-slate-50 rounded-xl border border-dashed border-slate-200">
+                        <p class="text-sm font-medium text-slate-600">Nincs megjeleníthető esemény a jelenlegi szűréssel.</p>
+                        <p class="text-xs mt-1">Kapcsold be a versenyeket fent, vagy válts az „Összes” nézetre.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            listContainer.innerHTML = '';
+
+            allEvents.forEach(({ comp, ev }) => {
+                const past = isPast(ev.date);
+                const isSelected = ev.id === selectedEventId;
+                const relText = formatRelativeDays(ev.date);
+
+                const item = document.createElement('div');
+                item.className = `p-4 rounded-xl border transition cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
+                    isSelected
+                        ? 'bg-slate-50 border-slate-900 ring-1 ring-slate-900'
+                        : past
+                            ? 'bg-slate-50/50 border-slate-200/70 opacity-70 hover:opacity-100'
+                            : 'bg-white border-slate-200 hover:border-slate-300 hover:shadow-sm'
+                }`;
+
+                const shortDisplayDate = ev.displayDate
+                    .replace('2026. ', '')
+                    .replace('2027. ', '')
+                    .replace(' (éjfél)', '')
+                    .replace(' (24:00)', '');
+
+                item.innerHTML = `
+                    <div class="flex items-start gap-3.5">
+                        <!-- Dátum jelvény -->
+                        <div class="w-28 shrink-0 rounded-xl px-2.5 py-2 text-center border"
+                            style="background-color: ${ev.isFinal ? '#FEF3C7' : (past ? '#F1F5F9' : comp.bgLight)}; border-color: ${ev.isFinal ? '#F59E0B' : (past ? '#CBD5E1' : comp.borderColor)};">
+                            <span class="block text-xs font-extrabold ${ev.isFinal ? 'text-amber-900' : (past ? 'text-slate-500' : 'text-slate-900')}">
+                                ${shortDisplayDate}
+                            </span>
+                            <span class="block text-[10px] font-semibold mt-0.5 ${past ? 'text-slate-400' : 'text-slate-600'}">
+                                ${ev.date.slice(0, 4)}
+                            </span>
+                        </div>
+
+                        <!-- Tartalom -->
+                        <div>
+                            <div class="flex flex-wrap items-center gap-2">
+                                <span class="text-[11px] font-bold px-2 py-0.5 rounded-md"
+                                    style="background-color: ${comp.bgLight}; color: ${comp.textDark};">
+                                    ${comp.shortName}
+                                </span>
+                                ${ev.isFinal ? `
+                                    <span class="text-[11px] font-extrabold px-2 py-0.5 rounded-md bg-amber-100 text-amber-800 border border-amber-300">
+                                        🏆 DÖNTŐ
+                                    </span>
+                                ` : ''}
+                            </div>
+                            <h4 class="font-bold text-sm text-slate-900 mt-1 ${past ? 'line-through decoration-slate-400' : ''}">
+                                ${ev.title}
+                            </h4>
+                            <p class="text-xs text-slate-600 mt-0.5 line-clamp-2">${ev.description}</p>
+                        </div>
+                    </div>
+
+                    <!-- Jobb oldali státusz és link -->
+                    <div class="sm:text-right shrink-0 flex sm:flex-col items-center sm:items-end justify-between border-t sm:border-t-0 pt-2 sm:pt-0 border-slate-100 gap-1">
+                        <span class="text-xs font-semibold px-2.5 py-1 rounded-full ${
+                            past
+                                ? 'bg-slate-100 text-slate-500'
+                                : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                        }">
+                            ${past ? 'Lejárt' : relText}
+                        </span>
+                        <span class="text-[11px] text-slate-400">📍 ${ev.location}</span>
+                        ${ev.linkUrl ? `
+                            <a href="${ev.linkUrl}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();"
+                               class="text-[11px] font-bold underline hover:opacity-80 mt-0.5"
+                               style="color: ${comp.color};">
+                                🔗 ${ev.linkLabel || 'Megnyitás'}
+                            </a>
+                        ` : ''}
+                    </div>
+                `;
+
+                item.addEventListener('click', () => {
+                    selectedEventId = ev.id;
+                    updateAll();
+                });
+
+                listContainer.appendChild(item);
+            });
+        }
+
+        // 4.5 Versenykiírások, Feltételek és Linkek kártyák (4. szekció)
+        function renderDetailedInfoCards() {
+            const container = document.getElementById('detailedInfoCardsContainer');
+            const activeComps = competitions.filter(c => c.active);
+
+            if (activeComps.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full py-10 text-center text-slate-400 bg-slate-50 rounded-xl border border-dashed border-slate-200">
+                        <p class="text-sm font-medium text-slate-600">Nincs megjeleníthető versenykiírás.</p>
+                        <p class="text-xs mt-1">Kapcsold be a versenyeket az oldal tetején a részletes kiírások megtekintéséhez!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = '';
+
+            activeComps.forEach(comp => {
+                const d = comp.details;
+                const card = document.createElement('article');
+                card.className = 'bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden flex flex-col justify-between';
+
+                // Kategóriák vagy Témakörök blokk
+                let topicOrCategoryHtml = '';
+                if (d.categories) {
+                    topicOrCategoryHtml = `
+                        <div>
+                            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">6 versenykategória</h4>
+                            <ul class="space-y-1 text-xs text-slate-700 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                                ${d.categories.map(cat => `<li class="leading-snug">${cat}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `;
+                } else if (d.theme) {
+                    topicOrCategoryHtml = `
+                        <div>
+                            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Téma és feladatok</h4>
+                            <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">${d.theme}</p>
+                        </div>
+                    `;
+                }
+
+                // Fordulók összefoglalója
+                const roundsHtml = `
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">Fordulók és dátumok</h4>
+                        <ul class="space-y-1 text-xs text-slate-700 bg-slate-50/80 p-3 rounded-xl border border-slate-100 list-disc list-inside">
+                            ${d.roundsSummary.map(r => `<li class="leading-snug">${r}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+
+                // Kattintható linkek
+                const linksHtml = d.links.map(link => {
+                    if (link.primary) {
+                        return `
+                            <a href="${link.url}" target="_blank" rel="noopener noreferrer"
+                               class="inline-flex items-center justify-center gap-1.5 w-full px-3.5 py-2.5 rounded-xl text-xs font-bold text-white shadow-sm transition hover:opacity-90"
+                               style="background-color: ${comp.color};">
+                                <span>🔗 ${link.label}</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                            </a>
+                        `;
+                    }
+                    return `
+                        <a href="${link.url}" target="_blank" rel="noopener noreferrer"
+                           class="inline-flex items-center justify-center gap-1.5 w-full px-3.5 py-2 rounded-xl text-xs font-semibold border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-800 transition">
+                            <span>🌐 ${link.label}</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 shrink-0 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                        </a>
+                    `;
+                }).join('');
+
+                card.innerHTML = `
+                    <div>
+                        <!-- Színes fejléc sáv -->
+                        <div class="px-5 py-4 border-b border-slate-100" style="background-color: ${comp.bgLight};">
+                            <div class="flex items-center gap-2 mb-1.5">
+                                <span class="w-3 h-3 rounded-full shrink-0" style="background-color: ${comp.color};"></span>
+                                <span class="text-xs font-extrabold uppercase tracking-wider" style="color: ${comp.textDark};">
+                                    ${comp.shortName}
+                                </span>
+                            </div>
+                            <h3 class="text-base font-extrabold text-slate-900 leading-snug">${comp.name}</h3>
+                            <p class="text-xs text-slate-700 mt-1.5 font-medium">🏛️ ${comp.organizer}</p>
+                            <p class="text-xs text-slate-600 mt-0.5">📍 ${comp.address}</p>
+                        </div>
+
+                        <!-- Tartalmi blokkok -->
+                        <div class="p-5 space-y-4">
+                            <div>
+                                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Kiknek szól &amp; feltételek</h4>
+                                <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">${d.participants}</p>
+                            </div>
+
+                            ${topicOrCategoryHtml}
+
+                            ${roundsHtml}
+
+                            <div>
+                                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Díjazás</h4>
+                                <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">${d.prizes}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Alsó linkek és elérhetőségek -->
+                    <div class="px-5 pb-5 pt-3 border-t border-slate-100 bg-slate-50/50 space-y-2.5">
+                        <div class="space-y-2">
+                            ${linksHtml}
+                        </div>
+                        <p class="text-[11px] text-slate-500 leading-relaxed pt-1">
+                            ✉️ ${d.contacts}
+                        </p>
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        // =========================================================================
+        // 5. FŐ FRISSÍTŐ ÉS INICIALIZÁLÓ LOGIKA
+        // =========================================================================
+        function updateAll() {
+            // Ha a kiválasztott esemény versenye ki lett kapcsolva, válasszunk egy aktívat
+            const current = findEventById(selectedEventId);
+            if (!current || !current.comp.active) {
+                selectedEventId = pickDefaultSelectedEvent();
+            }
+
+            renderTodayBadges();
+            renderFilterCards();
+            renderTimeline();
+            renderEventDetail();
+            renderChronologicalList();
+            renderDetailedInfoCards();
+        }
+
+        // Eseménykezelő az "Összes ki-/bekapcsolása" gombhoz
+        document.getElementById('toggleAllBtn').addEventListener('click', () => {
+            const allActive = competitions.every(c => c.active);
+            const targetState = !allActive;
+            competitions.forEach(c => c.active = targetState);
+            updateAll();
+        });
+
+        // Eseménykezelők az időszűrő gombokhoz ("Összes" / "Csak hátralévő")
+        document.querySelectorAll('.time-filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                timeFilter = btn.dataset.timefilter;
+                document.querySelectorAll('.time-filter-btn').forEach(b => {
+                    b.className = 'time-filter-btn px-3 py-1 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition cursor-pointer';
+                });
+                btn.className = 'time-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-white text-slate-900 shadow-sm transition cursor-pointer';
+                renderChronologicalList();
+            });
+        });
+
+        // Eseménykezelő az alsó versenykiírások szekció összecsukásához/kinyitásához
+        document.getElementById('toggleDetailsSectionBtn').addEventListener('click', () => {
+            isDetailsSectionOpen = !isDetailsSectionOpen;
+            const wrapper = document.getElementById('detailedInfoWrapper');
+            const textEl = document.getElementById('toggleDetailsSectionText');
+            const iconEl = document.getElementById('toggleDetailsSectionIcon');
+            const btnEl = document.getElementById('toggleDetailsSectionBtn');
+
+            btnEl.setAttribute('aria-expanded', String(isDetailsSectionOpen));
+            if (isDetailsSectionOpen) {
+                wrapper.classList.remove('hidden');
+                textEl.textContent = 'Részletek elrejtése';
+                iconEl.style.transform = 'rotate(0deg)';
+            } else {
+                wrapper.classList.add('hidden');
+                textEl.textContent = 'Részletek megjelenítése';
+                iconEl.style.transform = 'rotate(180deg)';
+            }
+        });
+
+        // Kezdő kirajzolás
+        window.addEventListener('DOMContentLoaded', () => {
+            selectedEventId = pickDefaultSelectedEvent();
+            updateAll();
+        });
+    </script>
+</body>
+</html>
