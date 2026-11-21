@@ -246,7 +246,10 @@
                         '2027. jan. 15.: II. forduló kiértékelése és a döntősök értesítése',
                         '2027. febr. 5.: III. forduló – Döntő (komplex projekt prezentálása szakmai zsűri előtt)'
                     ],
-                    ourTeams: 'Iskolánkat 2 csapat képviseli: a 3 fős „Code Trio” (csak hetedikesek) és a 4 fős „x0d15ea5e” csapat.',
+                    ourTeams: [
+                        { name: 'Code Trio', size: '3 fős', grade: 'csak hetedikesek' },
+                        { name: 'x0d15ea5e', size: '4 fős', grade: 'csak nyolcadikosok' }
+                    ],
                     prizes: 'Oklevél minden döntősnek, értékes vásárlási utalványok az 1–3. helyezett csapatoknak, a felkészítő pedagógusok külön jutalmazása, valamint az I. helyezett csapat tagjainak felvételi lehetőség az iskolába.',
                     contacts: 'Verseny e-mail: pecsiradnoti.verseny@gmail.com | Titkárság: titkar@radnoti-pecs.hu | Tel: 72/257-859',
                     links: [
@@ -1125,8 +1128,15 @@
 
                             ${d.ourTeams ? `
                             <div class="rounded-xl p-3 border" style="background-color: ${comp.bgLight}; border-color: ${comp.borderColor};">
-                                <h4 class="text-xs font-bold uppercase tracking-wider mb-1" style="color: ${comp.textDark};">Csapataink</h4>
-                                <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">${d.ourTeams}</p>
+                                <h4 class="text-xs font-bold uppercase tracking-wider mb-2" style="color: ${comp.textDark};">Csapataink (${d.ourTeams.length} csapat)</h4>
+                                <ul class="space-y-1.5">
+                                    ${d.ourTeams.map(t => `
+                                        <li class="flex flex-wrap items-center gap-x-2 gap-y-1 bg-white/80 rounded-lg px-2.5 py-1.5 border border-white">
+                                            <span class="text-sm font-extrabold text-slate-900">${t.name}</span>
+                                            <span class="text-[11px] font-semibold px-2 py-0.5 rounded-md" style="background-color: ${comp.bgLight}; color: ${comp.textDark};">${t.size}</span>
+                                            <span class="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-slate-100 text-slate-700">${t.grade}</span>
+                                        </li>`).join('')}
+                                </ul>
                             </div>` : ''}
 
                             ${topicOrCategoryHtml}
