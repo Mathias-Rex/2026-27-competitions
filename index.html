@@ -98,34 +98,42 @@
 <body class="min-h-screen flex flex-col">
 
     <!-- Fejléc -->
-    <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div>
-                <div class="flex items-center gap-2.5">
-                    <span class="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-slate-900 text-white font-bold text-lg shadow-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                    </span>
-                    <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900">
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+            <!-- Márka: ikon + cím + egysoros alcím -->
+            <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                <span class="inline-flex shrink-0 items-center justify-center w-8 h-8 rounded-lg bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                </span>
+                <div class="min-w-0">
+                    <h1 class="text-sm sm:text-base lg:text-lg font-extrabold tracking-tight text-slate-900 leading-tight">
                         Mátyás király utcai Általános Iskola versenycsapatok versenyei
                     </h1>
+                    <p class="hidden sm:block text-[11px] text-slate-500 leading-tight">
+                        2026. november – 2027. április
+                    </p>
                 </div>
-                <p class="text-sm text-slate-500 mt-1">
-                    2026. november – 2027. április • Kapcsold ki/be a versenyeket az idővonal, a teendők és a kiírások szűréséhez
-                </p>
             </div>
 
-            <!-- Gyors vezérlők és dinamikus aktuális dátum jelző -->
-            <div class="flex flex-wrap items-center gap-2.5">
-                <div id="headerTodayBadge" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-semibold">
+            <!-- Hamburger gomb (csak mobilon) -->
+            <button id="menuToggleBtn" type="button" aria-expanded="false" aria-controls="headerControls" aria-label="Menü megnyitása"
+                class="md:hidden inline-flex items-center justify-center w-9 h-9 rounded-lg bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-700 border border-slate-300 transition cursor-pointer">
+                <svg id="menuIconOpen" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                <svg id="menuIconClose" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>
+            </button>
+
+            <!-- Vezérlők: asztali nézeten sorban, mobilon a hamburger menü alatt -->
+            <div id="headerControls" class="hidden flex w-full md:w-auto flex-col md:flex-row md:items-center gap-2 pb-2 md:pb-0 border-t border-slate-100 pt-2 md:border-0 md:pt-0 md:flex">
+                <div id="headerTodayBadge" class="inline-flex items-center gap-2 px-2.5 py-1 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs font-semibold">
                     <span class="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
                     <span id="headerTodayText">Mai nap: betöltés...</span>
                 </div>
                 <button id="themeToggleBtn" type="button" aria-label="Téma váltása" title="Világos / sötét mód"
-                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-700 text-xs font-semibold transition cursor-pointer border border-slate-300">
+                    class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-700 text-xs font-semibold transition cursor-pointer border border-slate-300">
                     <span id="themeToggleIcon" aria-hidden="true">🌙</span>
                     <span id="themeToggleText">Sötét mód</span>
                 </button>
-                <button id="toggleAllBtn" type="button" class="px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-700 text-xs font-semibold transition cursor-pointer border border-slate-300">
+                <button id="toggleAllBtn" type="button" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-700 text-xs font-semibold transition cursor-pointer border border-slate-300">
                     Összes ki-/bekapcsolása
                 </button>
             </div>
@@ -178,7 +186,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 
             <!-- Bal/Felső oszlop: Részletes nézet az aktuálisan kiválasztott eseményről -->
-            <aside class="lg:col-span-4 bg-white rounded-2xl border border-slate-200 shadow-sm p-5 lg:sticky lg:top-24">
+            <aside class="lg:col-span-4 bg-white rounded-2xl border border-slate-200 shadow-sm p-5 lg:sticky lg:top-20">
                 <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
                     <h3 class="text-sm font-bold uppercase tracking-wider text-slate-500">Kiválasztott esemény</h3>
                     <span id="detailStatusBadge" class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600">
@@ -1320,6 +1328,17 @@
             isDetailsSectionOpen = !isDetailsSectionOpen;
             applyDetailsSectionUI();
             saveState();
+        });
+
+        // Hamburger menü (mobil)
+        document.getElementById('menuToggleBtn').addEventListener('click', () => {
+            const controls = document.getElementById('headerControls');
+            const open = controls.classList.toggle('hidden') === false;
+            const btn = document.getElementById('menuToggleBtn');
+            btn.setAttribute('aria-expanded', String(open));
+            btn.setAttribute('aria-label', open ? 'Menü bezárása' : 'Menü megnyitása');
+            document.getElementById('menuIconOpen').classList.toggle('hidden', open);
+            document.getElementById('menuIconClose').classList.toggle('hidden', !open);
         });
 
         // Téma váltó
