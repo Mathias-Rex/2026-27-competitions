@@ -766,9 +766,14 @@
                 { label: '2027. ápr.', date: '2027-04-01' }
             ];
 
-            // Rács fejléc (hónapok)
+            // A "Mai nap" buborék a hónapfeliratok FÖLÖTT kap helyet (külön sáv), ha a mai nap látszik
+            const todayVisible = isTodayWithinTimeline();
+            const bubbleZonePx = todayVisible ? 28 : 0;
+
+            // Rács fejléc (hónapok) – a piros vonal fölött jelenik meg (z-10)
             let gridHeaderHtml = `
-                <div class="grid grid-cols-[104px_1fr] lg:grid-cols-[190px_1fr] items-end pb-2 border-b border-slate-200">
+                ${todayVisible ? `<div style="height: ${bubbleZonePx}px;"></div>` : ''}
+                <div class="grid grid-cols-[104px_1fr] lg:grid-cols-[190px_1fr] items-end pb-2 border-b border-slate-200 relative z-10">
                     <div class="text-xs font-bold uppercase tracking-wider text-slate-400 pr-3">Verseny</div>
                     <div class="relative h-6">
             `;
@@ -776,7 +781,7 @@
             months.forEach(m => {
                 const pct = getPercentPosition(m.date);
                 gridHeaderHtml += `
-                    <div class="absolute top-0 -translate-x-1/2 text-xs font-semibold text-slate-600 whitespace-nowrap" style="left: ${pct}%;">
+                    <div class="absolute top-0 -translate-x-1/2 text-xs font-semibold text-slate-600 whitespace-nowrap bg-white px-1" style="left: ${pct}%;">
                         ${m.label}
                     </div>
                 `;
@@ -785,7 +790,7 @@
             gridHeaderHtml += `</div></div>`;
 
             // Függőleges segédvonalak + dinamikus MA vonal réteg
-            let gridLinesHtml = `<div class="grid grid-cols-[104px_1fr] lg:grid-cols-[190px_1fr] absolute inset-0 pointer-events-none px-5 pt-11 pb-5">
+            let gridLinesHtml = `<div class="grid grid-cols-[104px_1fr] lg:grid-cols-[190px_1fr] absolute inset-0 pointer-events-none px-5 pb-5" style="padding-top: ${44 + bubbleZonePx}px;">
                 <div></div>
                 <div class="relative h-full">
             `;
@@ -797,19 +802,25 @@
                 `;
             });
 
-            // Dinamikus piros "Mai nap" szaggatott vonal (ha az időtengelyen belül van)
-            if (isTodayWithinTimeline()) {
+            gridLinesHtml += `</div></div>`;
+
+            // Dinamikus piros "Mai nap" réteg: a vonal a feliratok és kártyák ALATT fut (z-index: 1),
+            // a buborék a hónapfeliratok fölött, külön sávban áll.
+            if (todayVisible) {
                 const todayPct = getPercentPosition(TODAY_STR);
                 gridLinesHtml += `
-                    <div class="absolute top-0 bottom-0 border-l-2 border-dashed border-red-500 z-20" style="left: ${todayPct}%;">
-                        <span class="absolute -top-1 left-1.5 bg-red-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded shadow-sm whitespace-nowrap">
-                            Ma (${TODAY_INFO.shortHu})
-                        </span>
+                    <div class="grid grid-cols-[104px_1fr] lg:grid-cols-[190px_1fr] absolute inset-0 pointer-events-none px-5 pt-5 pb-5">
+                        <div></div>
+                        <div class="relative h-full">
+                            <div class="absolute top-2 bottom-0 border-l-2 border-dashed border-red-500" style="left: ${todayPct}%; z-index: 1;"></div>
+                            <span class="absolute top-0 -translate-x-1/2 bg-red-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded shadow-sm whitespace-nowrap z-10" style="left: ${todayPct}%;">
+                                Ma (${TODAY_INFO.shortHu})
+                            </span>
+                        </div>
                     </div>
                 `;
             }
 
-            gridLinesHtml += `</div></div>`;
 
             // Versenysávok (Sávonként egy sor)
             let rowsHtml = `<div class="divide-y divide-slate-100 relative z-10">`;
