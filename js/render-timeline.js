@@ -106,7 +106,7 @@ function renderTimeline() {
     let gridHeaderHtml = `
         ${todayVisible ? `<div style="height: ${bubbleZonePx}px;"></div>` : ''}
         <div class="grid grid-cols-[104px_1fr] lg:grid-cols-[190px_1fr] items-end border-b border-slate-200">
-            <div class="text-xs font-bold uppercase tracking-wider text-slate-400 pb-2 pr-3 lg:-mb-px lg:border-b lg:border-slate-200 lg:sticky lg:left-0 lg:z-[60] lg:bg-slate-50 lg:shadow-[8px_0_8px_-8px_rgba(15,23,42,0.18)] lg:-ml-5 lg:pl-5 lg:self-stretch lg:flex lg:items-end">Verseny</div>
+            <div class="text-xs font-bold uppercase tracking-wider text-slate-400 pb-2 pr-3 lg:-mb-px lg:border-b lg:border-slate-200 lg:sticky lg:left-0 lg:z-[60] lg:bg-slate-50 lg:shadow-[8px_0_8px_-8px_rgba(15,23,42,0.18)] lg:-ml-5 lg:pl-5 lg:self-stretch lg:flex lg:items-end" style="margin-top: -${bubbleZonePx + 20}px; padding-top: ${bubbleZonePx + 20}px;">Verseny</div>
             <div class="relative z-10 h-6 mb-2">
     `;
 
@@ -122,7 +122,7 @@ function renderTimeline() {
     gridHeaderHtml += `</div></div>`;
 
     // Függőleges segédvonalak + dinamikus MA vonal réteg
-    let gridLinesHtml = `<div class="grid grid-cols-[104px_1fr] lg:grid-cols-[190px_1fr] absolute inset-0 pointer-events-none px-5 pb-5" style="padding-top: ${44 + bubbleZonePx}px;">
+    let gridLinesHtml = `<div class="grid grid-cols-[104px_1fr] lg:grid-cols-[190px_1fr] absolute inset-0 pointer-events-none px-5 pb-0" style="padding-top: ${44 + bubbleZonePx}px;">
         <div></div>
         <div class="relative h-full">
     `;
@@ -141,7 +141,7 @@ function renderTimeline() {
     if (todayVisible) {
         const todayPct = getPercentPosition(TODAY_STR);
         gridLinesHtml += `
-            <div class="grid grid-cols-[104px_1fr] lg:grid-cols-[190px_1fr] absolute inset-0 pointer-events-none px-5 pt-5 pb-5">
+            <div class="grid grid-cols-[104px_1fr] lg:grid-cols-[190px_1fr] absolute inset-0 pointer-events-none px-5 pt-5 pb-0">
                 <div></div>
                 <div class="relative h-full">
                     <div class="absolute top-2 bottom-0 border-l-2 border-dashed border-red-500" style="left: ${todayPct}%; z-index: 1;"></div>
@@ -169,7 +169,7 @@ function renderTimeline() {
         rowsHtml += `
             <div class="grid grid-cols-[104px_1fr] lg:grid-cols-[190px_1fr] items-center min-h-[128px]">
                 <!-- Bal oldali verseny név -->
-                <div class="py-4 pr-4 ${compIdx > 0 ? 'lg:-mt-px lg:border-t lg:border-slate-100' : ''} lg:sticky lg:left-0 lg:z-[60] lg:bg-slate-50 lg:shadow-[8px_0_8px_-8px_rgba(15,23,42,0.18)] lg:-ml-5 lg:pl-5 lg:self-stretch lg:flex lg:flex-col lg:justify-center">
+                <div class="py-4 pr-4 ${compIdx > 0 ? 'lg:-mt-px lg:border-t lg:border-slate-100' : ''} lg:sticky lg:left-0 lg:z-[60] lg:bg-slate-50 lg:shadow-[8px_0_8px_-8px_rgba(15,23,42,0.18)] lg:-ml-5 lg:pl-5 lg:self-stretch lg:flex lg:flex-col lg:justify-center"${compIdx === activeComps.length - 1 ? ' style="margin-bottom: -20px; padding-bottom: 36px;"' : ''}>
                     <div class="flex items-center gap-2">
                         <span class="w-3 h-3 rounded-full shrink-0" style="background-color: ${cc(comp, 'color')};"></span>
                         <span class="font-bold text-sm text-slate-800 leading-tight">${comp.shortName}</span>
