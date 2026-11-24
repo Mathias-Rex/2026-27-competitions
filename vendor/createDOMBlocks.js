@@ -2500,9 +2500,8 @@ function render(root) {
     root.classList.toggle("is-dragscroll", !!params.dragScroll);
     root.style.setProperty("--gantt-label-w", `${labelWidth}px`);
     root.style.setProperty("--gantt-track-w", layout.fit ? "480px" : `${layout.trackWidth}px`);
-    root.textContent = "";
     if (state.rows.length === 0) {
-        root.appendChild(el("div", "gantt-empty", (0,_i18n__WEBPACK_IMPORTED_MODULE_0__.resolveText)(params.emptyText ?? (0,_i18n__WEBPACK_IMPORTED_MODULE_0__.builtin)("gantt.empty", "Nincs megjeleníthető sor"))));
+        root.replaceChildren(el("div", "gantt-empty", (0,_i18n__WEBPACK_IMPORTED_MODULE_0__.resolveText)(params.emptyText ?? (0,_i18n__WEBPACK_IMPORTED_MODULE_0__.builtin)("gantt.empty", "Nincs megjeleníthető sor"))));
         return;
     }
     const showToday = params.showToday !== false && layout.todayAbs >= layout.from && layout.todayAbs <= layout.to;
@@ -2550,7 +2549,8 @@ function render(root) {
     }
     chart.appendChild(overlay);
     scroll.appendChild(chart);
-    root.appendChild(scroll);
+    // az új tartalom egyben cserél: ha a felépítés közben hiba van, a korábbi tartalom megmarad
+    root.replaceChildren(scroll);
     if (prevScroll !== undefined)
         scroll.scrollLeft = prevScroll;
 }

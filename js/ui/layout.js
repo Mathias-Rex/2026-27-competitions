@@ -187,6 +187,24 @@ function ganttRows() {
 
 // Közös idővonal: egyszer jön létre, utána csak a sorait cseréli (a görgetés megmarad)
 function renderTimeline() {
+    try {
+        renderTimelineInner();
+    } catch (err) {
+        // hiba esetén látható üzenet (és a konzolban a részletek), ne maradjon üresen a szekció
+        console.error('Az idővonal nem rajzolható ki:', err);
+        const box = document.getElementById('timelineContainer');
+        if (box && !box.querySelector('.cmp-empty')) {
+            E({
+                tag: 'div', attrs: { class: 'cmp-empty' }, parent: box, children: [
+                    h('strong', '', 'Az idővonal nem jeleníthető meg.'),
+                    h('span', '', String((err && err.message) || err))
+                ]
+            });
+        }
+    }
+}
+
+function renderTimelineInner() {
     if (!gantt) {
         const wide = window.innerWidth >= 1024;
         gantt = B.createGantt({
