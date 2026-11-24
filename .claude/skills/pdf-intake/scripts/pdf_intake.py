@@ -8,12 +8,12 @@ Parancsok (a projekt gyökeréből futtatva):
   mark --comp ID [--title T --desc D] F...
              A PDF-eket átmozgatja az inputs/-ból a downloads/-ba, rögzíti az SHA-256 ujjlenyomatot és a
              versenyt (ID a js/data.js versenyeinek id-ja, vagy "altalanos") a memory fájlban, majd
-             automatikusan frissíti az index.html versenyenkénti letöltési kártyáit.
+             automatikusan frissíti a js/downloads.js letöltési adatait (versenyenkénti kártyák).
   assign --comp ID F...
              Már feldolgozott PDF versenyhez rendelésének módosítása (eredeti fájlnév alapján).
   describe F --title T --desc D
              Egy feldolgozott PDF oldalon megjelenő címének és ismertetőjének beállítása/módosítása.
-  sync-html  A letöltési kártyák újragenerálása az index.html jelölői között (a mark ezt maga is hívja).
+  sync-html  A letöltési adatok újragenerálása a js/downloads.js jelölői között (a mark ezt maga is hívja).
   status     A memory fájl tartalmának kiírása.
 
 Csak a Python standard könyvtárat és a PyMuPDF-et (import pymupdf) használja.
@@ -30,16 +30,12 @@ import sys
 import unicodedata
 from pathlib import Path
 
-START = "<!-- PDF-DOWNLOADS:START -->"
-END = "<!-- PDF-DOWNLOADS:END -->"
+START = "/* PDF-DOWNLOADS:START */"
+END = "/* PDF-DOWNLOADS:END */"
 MEMORY_NAME = "pdf-intake-fingerprints"
 HEADER_COLS = "| sha256 | eredeti fájlnév | PDF (downloads/) | Markdown (data/) | verseny | cím | ismertető | feldolgozva |"
 DUP_DIR = "_duplicates"
 GENERAL = "altalanos"
-_SVG = ('<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
-        'stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{}</svg>')
-EYE_SVG = _SVG.format('<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>')
-DOWN_SVG = _SVG.format('<path d="M12 4v12"/><path d="m6 11 6 6 6-6"/><path d="M5 20h14"/>')
 
 
 # ------------------------------------------------------------------ segédek
@@ -64,8 +60,19 @@ def slug_for(pdf: Path, h: str, man: dict) -> str:
     return f"{base}-{h[:8]}" if base in taken else base
 
 
+def main_worktree_root(root: Path) -> Path:
+    """A fő munkamappa (git worktree esetén is): a memory fájl így minden worktree-nek közös."""
+    import subprocess
+    try:
+        out = subprocess.run(["git", "-C", str(root), "rev-parse", "--path-format=absolute", "--git-common-dir"],
+                             capture_output=True, text=True, check=True).stdout.strip()
+        return Path(out).parent
+    except Exception:
+        return root
+
+
 def default_memory_path(root: Path) -> Path:
-    slug = re.sub(r"[^A-Za-z0-9]", "-", str(root.resolve()))
+    slug = re.sub(r"[^A-Za-z0-9]", "-", str(main_worktree_root(root).resolve()))
     return Path.home() / ".claude" / "projects" / slug / "memory" / f"{MEMORY_NAME}.md"
 
 
@@ -313,6 +320,7 @@ def cmd_describe(a):
 
 
 def cmd_sync_html(a):
+    """A letöltési adatok (DOWNLOADS) újragenerálása a js/downloads.js jelölői között."""
     root = Path(a.root)
     page = root / a.html
     src = page.read_text(encoding="utf-8")
@@ -322,7 +330,7 @@ def cmd_sync_html(a):
     groups = [(c["id"], c["name"], c["color"]) for c in html_competitions(root / a.data_js)]
     groups.append((GENERAL, "Általános dokumentumok", "#64748B"))
     known = {g[0] for g in groups}
-    cards, total = [], 0
+    out, total = [], 0
     for cid, cname, color in groups:
         docs = [v for v in man.values()
                 if (v["comp"] if v["comp"] in known else GENERAL) == cid
@@ -333,36 +341,20 @@ def cmd_sync_html(a):
         for v in sorted(docs, key=lambda v: v["name"].lower()):
             f = root / a.downloads / v["download"]
             title = v["title"] or re.sub(r"\s*\(\d+\)$", "", Path(v["name"]).stem).replace("_", " ").strip()
-            kb = max(1, round(f.stat().st_size / 1024))
-            href = f'{a.downloads}/{html.escape(v["download"])}'
-            t = html.escape(title)
-            desc = f'<span class="block text-xs font-normal text-slate-500 leading-snug mt-0.5">{html.escape(v["desc"])}</span>' if v["desc"] else ""
-            btn = ("inline-flex items-center justify-center w-9 h-9 rounded-lg border border-slate-200 bg-white "
-                   "text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition")
-            items.append(
-                f'<li class="flex items-start justify-between gap-3">'
-                f'<div class="min-w-0"><span class="block text-sm font-semibold text-slate-800 leading-snug">{t}</span>{desc}'
-                f'<span class="block text-[11px] text-slate-400 mt-0.5">PDF, {kb} KB</span></div>'
-                f'<div class="flex items-center gap-1.5 shrink-0">'
-                f'<a href="{href}" target="_blank" rel="noopener noreferrer" class="{btn}" title="Megnézés" aria-label="Megnézés: {t}">{EYE_SVG}</a>'
-                f'<a href="{href}" download class="{btn}" title="Letöltés" aria-label="Letöltés: {t}">{DOWN_SVG}</a>'
-                f'</div></li>'
-            )
+            items.append({
+                "title": title,
+                "desc": v["desc"] or "",
+                "href": f'{a.downloads}/{v["download"]}',
+                "size": max(1, round(f.stat().st_size / 1024)),
+            })
             total += 1
-        cards.append(
-            f'<div class="rounded-xl border border-slate-200 bg-white p-4 border-l-4" '
-            f'style="border-left-color: {color};">\n'
-            f'<h3 class="flex items-center gap-2 text-sm font-bold text-slate-900 mb-2">'
-            f'<span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: {color};"></span>'
-            f'{html.escape(cname)}</h3>\n'
-            f'<ul class="space-y-3">\n' + "\n".join(items) + "\n</ul>\n</div>"
-        )
-    block = (f'{START}\n<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">\n'
-             + "\n".join(cards) + f"\n</div>\n{END}")
+        out.append({"id": cid, "name": cname, "color": color, "docs": items})
+    data = json.dumps(out, ensure_ascii=False, indent=2)
+    block = START + "\nconst DOWNLOADS = " + data + ";\n" + END
     new = re.sub(re.escape(START) + r".*?" + re.escape(END), lambda _: block, src, flags=re.S)
     if new != src:
         page.write_text(new, encoding="utf-8")
-    print(f"index.html letöltési kártyák: {len(cards)} kártya, {total} PDF")
+    print(f"{a.html} letöltési adatok: {len(out)} kártya, {total} PDF")
 
 
 def cmd_status(a):
@@ -378,13 +370,13 @@ def main():
     p.add_argument("--inputs", default="inputs")
     p.add_argument("--downloads", default="downloads")
     p.add_argument("--data", default="data")
-    p.add_argument("--html", default="index.html", help="az oldal, amelyben a letöltési kártyák vannak")
+    p.add_argument("--html", default="js/downloads.js", help="a letöltési adatokat tartalmazó JS fájl")
     p.add_argument("--data-js", default="js/data.js", help="a versenyek adatait tartalmazó JS fájl")
     p.add_argument("--memory", type=Path, default=None)
     sub = p.add_subparsers(dest="cmd", required=True)
     sub.add_parser("scan")
     m = sub.add_parser("mark")
-    m.add_argument("--comp", required=True, help="verseny id az index.html-ből, vagy altalanos")
+    m.add_argument("--comp", required=True, help="verseny id a js/data.js-ből, vagy altalanos")
     m.add_argument("--title", default="", help="rövid, olvasható cím az oldalra (egy fájlnál)")
     m.add_argument("--desc", default="", help="egymondatos ismertető az oldalra (egy fájlnál)")
     m.add_argument("files", nargs="+")

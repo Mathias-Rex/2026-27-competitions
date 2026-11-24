@@ -30,10 +30,12 @@ A publikálás GitHub Pages-szel történik a `main` ágról.
 
 | Hely | Tartalom |
 |---|---|
-| `index.html` | A HTML váz |
-| `css/style.css` | Egyedi stílusok, sötét mód |
+| `index.html` | Üres váz (`#app`), meta és téma-előbetöltő |
+| `css/theme.css` | Az oldal témája (a createDOMBlocks CSS-változói), sötét mód |
+| `vendor/` | A createDOMBlocks helyi buildje (`node scripts/sync-domblocks.mjs`) |
 | `js/data.js` | Az összes adat (`competitions` tömb: versenyek, események) |
-| `js/*.js` | Megjelenítés, naptár, állapotkezelés (lásd `CLAUDE.md`) |
+| `js/ui/*.js` | A felület a createDOMBlocks komponenseiből (lásd `CLAUDE.md`) |
+| `js/*.js` | Adatok, naptár, segédek, állapotkezelés |
 | `js/changelog.js` | Az újdonságok ablak verziózott szövegei |
 | `downloads/` | Feldolgozott, letölthető PDF-ek |
 | `data/` | A PDF-ekből készült Markdownok |
