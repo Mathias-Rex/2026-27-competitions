@@ -11,10 +11,10 @@ Egyetlen oldalas, statikus weboldal (`index.html` + `css/` + `js/` + `vendor/`, 
   - `data.js`: a mai dátum, az időtengely határai és a `competitions` tömb (`details` + `events`), az összes adat,
   - `downloads.js`: a letölthető dokumentumok adata (`DOWNLOADS`), a pdf-intake skill generálja,
   - `changelog.js`: az újdonságok ablak szövegei (verziózva),
-  - `helpers.js`: témasegédek (`isDark`, `cc`, `compVars`), dátum- és eseménysegédek,
+  - `helpers.js`: a könyvtár (`B`), témasegédek (`isDark`, `cc`, `compVars`), dátum- és eseménysegédek,
   - `calendar.js`: naptár-adatok (Google, Outlook, `.ics`) és az eltérés-tooltip szövege,
   - `derive.js`: a nézet számára származtatott adatok (`derive`): a forrás-állapotból (versenykapcsolók, időszűrő, kiválasztott esemény, téma) kész szövegek és listák; a listaelemek azonossága megmarad, ha a tartalom nem változott,
-  - `ui/kit.js`: ikonok és kis segédek, `ui/calendar-menu.js`: a „Naptárba” menü,
+  - `icons.js`: az SVG ikonok, `calendar-menu.js`: a „Naptárba” menü,
   - `app.js`: a forrás-állapot (`ui.state`), az eseménykezelők, a mentés (localStorage) és az indítás (csak egyszer fut).
 - `inputs/`: új PDF-ek érkezési helye (feldolgozás után kiürül, nem verziókezelt).
 - `data/`: a PDF-ekből készült Markdownok.

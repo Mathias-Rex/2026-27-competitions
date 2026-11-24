@@ -1,4 +1,7 @@
-/* Téma- és színsegédek, állapotváltozók, dátum- és eseménysegédek. */
+/* A könyvtár, téma- és színsegédek, dátum- és eseménysegédek. */
+
+// A createDOMBlocks (vendor/createDOMBlocks.js): a felületet ez építi az index.html YAML leírásából
+const B = window.CreateDOMBlocks;
 
 // Téma kezelés: <html data-theme="light|dark">
 function isDark() { return document.documentElement.getAttribute('data-theme') === 'dark'; }
