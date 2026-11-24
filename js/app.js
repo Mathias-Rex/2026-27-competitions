@@ -75,8 +75,12 @@ function hasSavedTheme() {
     try { const t = localStorage.getItem('theme'); return t === 'dark' || t === 'light'; } catch (e) { return false; }
 }
 
-// Kezdő kirajzolás
-window.addEventListener('DOMContentLoaded', () => {
+// Kezdő kirajzolás. Csak egyszer futhat: egyes böngészőbővítmények a betöltés után újra elsütik a
+// DOMContentLoaded eseményt, ilyenkor a váz újraépítése az idővonalat levált konténerben hagyná.
+let appStarted = false;
+function startApp() {
+    if (appStarted) return;
+    appStarted = true;
     loadState();
     selectedEventId = pickDefaultSelectedEvent();
     buildPage();
@@ -93,4 +97,10 @@ window.addEventListener('DOMContentLoaded', () => {
             if (!hasSavedTheme()) applyTheme(e.matches ? 'dark' : 'light');
         });
     }
-});
+}
+
+if (document.readyState === 'loading') {
+    window.addEventListener('DOMContentLoaded', startApp);
+} else {
+    startApp();
+}
