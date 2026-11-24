@@ -259,6 +259,7 @@ function renderTimeline() {
             e.stopPropagation();
             selectedEventId = btn.dataset.eventId;
             updateAll();
+            openEventModal(btn.dataset.eventId);
         });
         btn.addEventListener('mouseenter', () => {
             selectedEventId = btn.dataset.eventId;

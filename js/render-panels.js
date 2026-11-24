@@ -1,31 +1,9 @@
 /* Részletező panel, időrendi lista és versenykártyák. */
 
-// 4.3 Részletező panel (Bal oldali doboz, beágyazott linkkel)
-function renderEventDetail() {
-    const panel = document.getElementById('eventDetailPanel');
-    const badge = document.getElementById('detailStatusBadge');
-    const found = findEventById(selectedEventId);
-
-    if (!found) {
-        panel.innerHTML = `<p class="text-sm text-slate-500">Válassz ki egy eseményt az idővonalon vagy a listából!</p>`;
-        badge.className = 'text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600';
-        badge.textContent = 'Részletek';
-        return;
-    }
-
-    const { comp, ev } = found;
+// Az esemény részletező HTML-je (az oldalsó panel és a felugró ablak közös tartalma)
+function eventDetailHtml(comp, ev, where) {
     const past = isPast(ev.date);
-    const relText = formatRelativeDays(ev.date);
-
-    if (past) {
-        badge.className = 'text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-500';
-        badge.textContent = 'Már elmúlt';
-    } else {
-        badge.className = 'text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200';
-        badge.textContent = relText;
-    }
-
-    panel.innerHTML = `
+    return `
         <div class="space-y-4">
             <div>
                 <span class="inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-lg mb-2"
@@ -76,11 +54,39 @@ function renderEventDetail() {
 
             ${past ? '' : `
                 <div class="${ev.linkUrl ? '' : 'pt-1'}">
-                    ${calButtonHtml(ev.id, 'detail', 'inline-flex items-center justify-center gap-1.5 w-full px-3.5 py-2.5 rounded-xl text-xs font-bold border border-slate-300 text-slate-800 bg-white shadow-sm transition hover:bg-slate-50')}
+                    ${calButtonHtml(ev.id, where, 'inline-flex items-center justify-center gap-1.5 w-full px-3.5 py-2.5 rounded-xl text-xs font-bold border border-slate-300 text-slate-800 bg-white shadow-sm transition hover:bg-slate-50')}
                 </div>
             `}
         </div>
     `;
+}
+
+// 4.3 Részletező panel (Bal oldali doboz, beágyazott linkkel)
+function renderEventDetail() {
+    const panel = document.getElementById('eventDetailPanel');
+    const badge = document.getElementById('detailStatusBadge');
+    const found = findEventById(selectedEventId);
+
+    if (!found) {
+        panel.innerHTML = `<p class="text-sm text-slate-500">Válassz ki egy eseményt az idővonalon vagy a listából!</p>`;
+        badge.className = 'text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600';
+        badge.textContent = 'Részletek';
+        return;
+    }
+
+    const { comp, ev } = found;
+    const past = isPast(ev.date);
+    const relText = formatRelativeDays(ev.date);
+
+    if (past) {
+        badge.className = 'text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-500';
+        badge.textContent = 'Már elmúlt';
+    } else {
+        badge.className = 'text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200';
+        badge.textContent = relText;
+    }
+
+    panel.innerHTML = eventDetailHtml(comp, ev, 'detail');
 }
 
 // 4.4 Időrendi teendőlista (Jobb oldali szekció, beágyazott linkekkel)

@@ -166,3 +166,32 @@ window.addEventListener('DOMContentLoaded', () => {
         scroller.scrollLeft = Math.max(0, x - scroller.clientWidth / 3);
     })();
 });
+
+// Esemény felugró ablak (idővonalon rákattintva)
+(function () {
+    const modal = document.getElementById('eventModal');
+    const body = document.getElementById('eventModalBody');
+    let lastFocus = null, hideTimer = null;
+    window.openEventModal = function (id) {
+        const found = findEventById(id);
+        if (!found) return;
+        body.innerHTML = eventDetailHtml(found.comp, found.ev, 'modal');
+        lastFocus = document.activeElement;
+        clearTimeout(hideTimer);
+        modal.classList.remove('hidden');
+        void modal.offsetWidth; // az átmenet induljon a rejtett állapotból
+        modal.classList.add('modal-open');
+        document.getElementById('eventModalClose').focus();
+    };
+    function close() {
+        modal.classList.remove('modal-open');
+        clearTimeout(hideTimer);
+        hideTimer = setTimeout(() => modal.classList.add('hidden'), 220);
+        if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+    document.getElementById('eventModalClose').addEventListener('click', close);
+    modal.addEventListener('click', e => { if (e.target === modal) close(); });
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && !modal.classList.contains('hidden')) close();
+    });
+})();

@@ -26,6 +26,14 @@ body {
 }
 .timeline-grab { cursor: grab; }
 .timeline-grabbing, .timeline-grabbing * { cursor: grabbing !important; user-select: none; }
+/* Felugró ablak animáció: háttér áttűnés, a doboz finoman felúszik */
+.anim-modal { opacity: 0; transition: opacity 0.2s ease; }
+.anim-modal > div { transform: translateY(12px) scale(0.97); transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.3, 1); }
+.anim-modal.modal-open { opacity: 1; }
+.anim-modal.modal-open > div { transform: none; }
+@media (prefers-reduced-motion: reduce) {
+    .anim-modal, .anim-modal > div { transition: none; }
+}
 /* Finom animációk a mérföldkő pontokhoz */
 .milestone-dot {
     transform: translate(-50%, -50%);

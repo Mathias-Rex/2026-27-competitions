@@ -153,7 +153,7 @@ function openCalMenu(evId, anchor) {
     const menu = document.createElement('div');
     menu.id = 'calMenu';
     menu.dataset.ev = evId + '|' + (anchor.dataset.calAnchor || '');
-    menu.className = 'fixed z-50 w-60 rounded-xl border border-slate-200 bg-white shadow-xl p-1.5 text-xs';
+    menu.className = 'fixed z-[70] w-60 rounded-xl border border-slate-200 bg-white shadow-xl p-1.5 text-xs';
     const itemCls = 'flex items-center gap-2 w-full text-left px-3 py-2 rounded-lg font-semibold text-slate-800 hover:bg-slate-100';
     menu.innerHTML = `
         <a class="${itemCls}" target="_blank" rel="noopener noreferrer" href="${googleCalUrl(ev)}">📅 Google Naptár</a>
