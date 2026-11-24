@@ -7,7 +7,7 @@ Parancsok (a projekt gyökeréből futtatva):
              másolatokat az inputs/_duplicates/ mappába teszi (nem töröl semmit).
   mark --comp ID [--title T --desc D] F...
              A PDF-eket átmozgatja az inputs/-ból a downloads/-ba, rögzíti az SHA-256 ujjlenyomatot és a
-             versenyt (ID az index.html versenyeinek id-ja, vagy "altalanos") a memory fájlban, majd
+             versenyt (ID a js/data.js versenyeinek id-ja, vagy "altalanos") a memory fájlban, majd
              automatikusan frissíti az index.html versenyenkénti letöltési kártyáit.
   assign --comp ID F...
              Már feldolgozott PDF versenyhez rendelésének módosítása (eredeti fájlnév alapján).
@@ -86,7 +86,7 @@ def unique_path(p: Path) -> Path:
 
 
 def html_competitions(page: Path) -> list:
-    """Az index.html versenyeinek id / név / szín értékei, a megadás sorrendjében."""
+    """A versenyek (js/data.js) id / név / szín értékei, a megadás sorrendjében."""
     src = page.read_text(encoding="utf-8")
     pat = r"id:\s*'([a-z0-9-]+)',\s*name:\s*'(?:[^'\\]|\\.)*',\s*shortName:\s*'((?:[^'\\]|\\.)*)'"
     out = []
@@ -101,7 +101,7 @@ def html_competitions(page: Path) -> list:
 
 
 def check_comp(a, comp: str) -> str:
-    ids = [c["id"] for c in html_competitions(Path(a.root) / a.html)] + [GENERAL]
+    ids = [c["id"] for c in html_competitions(Path(a.root) / a.data_js)] + [GENERAL]
     if comp not in ids:
         sys.exit(f"Ismeretlen verseny: {comp!r}. Választható: {', '.join(ids)}")
     return comp
@@ -251,7 +251,7 @@ def cmd_scan(a):
                 needs_visual_read=not has_text,
             )
         report.append(entry)
-    comps = [c["id"] for c in html_competitions(root / a.html)] + [GENERAL]
+    comps = [c["id"] for c in html_competitions(root / a.data_js)] + [GENERAL]
     print(json.dumps({"memory": str(a.memory), "competitions": comps, "files": report},
                      ensure_ascii=False, indent=2))
 
@@ -319,7 +319,7 @@ def cmd_sync_html(a):
     if START not in src or END not in src:
         sys.exit(f"Hiányzik a {START} / {END} jelölő az {a.html} fájlból.")
     man = load_manifest(a.memory)
-    groups = [(c["id"], c["name"], c["color"]) for c in html_competitions(page)]
+    groups = [(c["id"], c["name"], c["color"]) for c in html_competitions(root / a.data_js)]
     groups.append((GENERAL, "Általános dokumentumok", "#64748B"))
     known = {g[0] for g in groups}
     cards, total = [], 0
@@ -378,7 +378,8 @@ def main():
     p.add_argument("--inputs", default="inputs")
     p.add_argument("--downloads", default="downloads")
     p.add_argument("--data", default="data")
-    p.add_argument("--html", default="index.html")
+    p.add_argument("--html", default="index.html", help="az oldal, amelyben a letöltési kártyák vannak")
+    p.add_argument("--data-js", default="js/data.js", help="a versenyek adatait tartalmazó JS fájl")
     p.add_argument("--memory", type=Path, default=None)
     sub = p.add_subparsers(dest="cmd", required=True)
     sub.add_parser("scan")
