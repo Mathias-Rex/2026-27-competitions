@@ -5911,6 +5911,180 @@ function builtin(key, fallback) {
 
 /***/ },
 
+/***/ "./src/index.ts"
+/*!**********************!*\
+  !*** ./src/index.ts ***!
+  \**********************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SpecError: () => (/* reexport safe */ _spec_errors__WEBPACK_IMPORTED_MODULE_6__.SpecError),
+/* harmony export */   Store: () => (/* reexport safe */ _spec_store__WEBPACK_IMPORTED_MODULE_7__.Store),
+/* harmony export */   YamlError: () => (/* reexport safe */ _spec_parseYaml__WEBPACK_IMPORTED_MODULE_5__.YamlError),
+/* harmony export */   asyncImage: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.asyncImage),
+/* harmony export */   buildUI: () => (/* reexport safe */ _spec_build__WEBPACK_IMPORTED_MODULE_3__.buildUI),
+/* harmony export */   closeDrawer: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.closeDrawer),
+/* harmony export */   closeModal: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.closeModal),
+/* harmony export */   createAccordion: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createAccordion),
+/* harmony export */   createAlert: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createAlert),
+/* harmony export */   createAvatar: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createAvatar),
+/* harmony export */   createBadge: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createBadge),
+/* harmony export */   createBlockquote: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createBlockquote),
+/* harmony export */   createBreadcrumb: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createBreadcrumb),
+/* harmony export */   createButton: () => (/* reexport safe */ _buttons_createButton__WEBPACK_IMPORTED_MODULE_25__.createButton),
+/* harmony export */   createButtonInput: () => (/* reexport safe */ _buttons_createButtonInput__WEBPACK_IMPORTED_MODULE_26__.createButtonInput),
+/* harmony export */   createCard: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createCard),
+/* harmony export */   createCarousel: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createCarousel),
+/* harmony export */   createCheckbox: () => (/* reexport safe */ _inputs_createCheckbox__WEBPACK_IMPORTED_MODULE_20__.createCheckbox),
+/* harmony export */   createCodeBlock: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createCodeBlock),
+/* harmony export */   createColorInput: () => (/* reexport safe */ _inputs_createColorInput__WEBPACK_IMPORTED_MODULE_21__.createColorInput),
+/* harmony export */   createContainer: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createContainer),
+/* harmony export */   createCustomDatePicker: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createCustomDatePicker),
+/* harmony export */   createCustomDateRangePicker: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createCustomDateRangePicker),
+/* harmony export */   createCustomDateTimePicker: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createCustomDateTimePicker),
+/* harmony export */   createCustomMonthPicker: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createCustomMonthPicker),
+/* harmony export */   createCustomSelect: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createCustomSelect),
+/* harmony export */   createCustomWeekPicker: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createCustomWeekPicker),
+/* harmony export */   createDateInput: () => (/* reexport safe */ _inputs_createDateInput__WEBPACK_IMPORTED_MODULE_15__.createDateInput),
+/* harmony export */   createDatetimeInput: () => (/* reexport safe */ _inputs_createDatetimeInput__WEBPACK_IMPORTED_MODULE_16__.createDatetimeInput),
+/* harmony export */   createDivider: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createDivider),
+/* harmony export */   createDragAndDropFileInput: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createDragAndDropFileInput),
+/* harmony export */   createDrawer: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createDrawer),
+/* harmony export */   createEmailInput: () => (/* reexport safe */ _inputs_createEmailInput__WEBPACK_IMPORTED_MODULE_12__.createEmailInput),
+/* harmony export */   createFileInput: () => (/* reexport safe */ _inputs_createFileInput__WEBPACK_IMPORTED_MODULE_22__.createFileInput),
+/* harmony export */   createForm: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createForm),
+/* harmony export */   createGantt: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createGantt),
+/* harmony export */   createGrid: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createGrid),
+/* harmony export */   createHiddenInput: () => (/* reexport safe */ _inputs_createHiddenInput__WEBPACK_IMPORTED_MODULE_24__.createHiddenInput),
+/* harmony export */   createImage: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createImage),
+/* harmony export */   createLink: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createLink),
+/* harmony export */   createLocalizedElem: () => (/* reexport safe */ _dom__WEBPACK_IMPORTED_MODULE_2__.createDOMElem),
+/* harmony export */   createMenu: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createMenu),
+/* harmony export */   createModal: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createModal),
+/* harmony export */   createMonthInput: () => (/* reexport safe */ _inputs_createMonthInput__WEBPACK_IMPORTED_MODULE_18__.createMonthInput),
+/* harmony export */   createMusicPlayer: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createMusicPlayer),
+/* harmony export */   createNav: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createNav),
+/* harmony export */   createNumberInput: () => (/* reexport safe */ _inputs_createNumberInput__WEBPACK_IMPORTED_MODULE_14__.createNumberInput),
+/* harmony export */   createOrderedList: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createOrderedList),
+/* harmony export */   createParagraph: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createParagraph),
+/* harmony export */   createPasswordInput: () => (/* reexport safe */ _inputs_createPasswordInput__WEBPACK_IMPORTED_MODULE_13__.createPasswordInput),
+/* harmony export */   createProgressBar: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createProgressBar),
+/* harmony export */   createRadio: () => (/* reexport safe */ _selection_createRadio__WEBPACK_IMPORTED_MODULE_30__.createRadio),
+/* harmony export */   createRangeInput: () => (/* reexport safe */ _inputs_createRangeInput__WEBPACK_IMPORTED_MODULE_23__.createRangeInput),
+/* harmony export */   createResetInput: () => (/* reexport safe */ _buttons_createResetInput__WEBPACK_IMPORTED_MODULE_28__.createResetInput),
+/* harmony export */   createSearchInput: () => (/* reexport safe */ _inputs_createSearchInput__WEBPACK_IMPORTED_MODULE_11__.createSearchInput),
+/* harmony export */   createSelect: () => (/* reexport safe */ _selection_createSelect__WEBPACK_IMPORTED_MODULE_29__.createSelect),
+/* harmony export */   createSpinner: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createSpinner),
+/* harmony export */   createSubmitInput: () => (/* reexport safe */ _buttons_createSubmitInput__WEBPACK_IMPORTED_MODULE_27__.createSubmitInput),
+/* harmony export */   createTable: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createTable),
+/* harmony export */   createTabs: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createTabs),
+/* harmony export */   createTelInput: () => (/* reexport safe */ _inputs_createTelInput__WEBPACK_IMPORTED_MODULE_9__.createTelInput),
+/* harmony export */   createTextInput: () => (/* reexport safe */ _inputs_createTextInput__WEBPACK_IMPORTED_MODULE_8__.createTextInput),
+/* harmony export */   createTextarea: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createTextarea),
+/* harmony export */   createTimeInput: () => (/* reexport safe */ _inputs_createTimeInput__WEBPACK_IMPORTED_MODULE_17__.createTimeInput),
+/* harmony export */   createTimeline: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createTimeline),
+/* harmony export */   createTitle: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createTitle),
+/* harmony export */   createToast: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createToast),
+/* harmony export */   createTooltip: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createTooltip),
+/* harmony export */   createUnorderedList: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createUnorderedList),
+/* harmony export */   createUrlInput: () => (/* reexport safe */ _inputs_createUrlInput__WEBPACK_IMPORTED_MODULE_10__.createUrlInput),
+/* harmony export */   createVideo: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.createVideo),
+/* harmony export */   createWeekInput: () => (/* reexport safe */ _inputs_createWeekInput__WEBPACK_IMPORTED_MODULE_19__.createWeekInput),
+/* harmony export */   defineMessages: () => (/* reexport safe */ _i18n__WEBPACK_IMPORTED_MODULE_1__.defineMessages),
+/* harmony export */   enMessages: () => (/* reexport safe */ _locales__WEBPACK_IMPORTED_MODULE_0__.en),
+/* harmony export */   flattenMessages: () => (/* reexport safe */ _i18n__WEBPACK_IMPORTED_MODULE_1__.flattenMessages),
+/* harmony export */   getFallbackLocale: () => (/* reexport safe */ _i18n__WEBPACK_IMPORTED_MODULE_1__.getFallbackLocale),
+/* harmony export */   getLocale: () => (/* reexport safe */ _i18n__WEBPACK_IMPORTED_MODULE_1__.getLocale),
+/* harmony export */   getLocales: () => (/* reexport safe */ _i18n__WEBPACK_IMPORTED_MODULE_1__.getLocales),
+/* harmony export */   huMessages: () => (/* reexport safe */ _locales__WEBPACK_IMPORTED_MODULE_0__.hu),
+/* harmony export */   isReactiveText: () => (/* reexport safe */ _i18n__WEBPACK_IMPORTED_MODULE_1__.isReactiveText),
+/* harmony export */   loadMessages: () => (/* reexport safe */ _i18n__WEBPACK_IMPORTED_MODULE_1__.loadMessages),
+/* harmony export */   mountYaml: () => (/* reexport safe */ _spec_mount__WEBPACK_IMPORTED_MODULE_4__.mountYaml),
+/* harmony export */   newLine: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.newLine),
+/* harmony export */   onLocaleChange: () => (/* reexport safe */ _i18n__WEBPACK_IMPORTED_MODULE_1__.onLocaleChange),
+/* harmony export */   openDrawer: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.openDrawer),
+/* harmony export */   openModal: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_31__.openModal),
+/* harmony export */   parseYaml: () => (/* reexport safe */ _spec_parseYaml__WEBPACK_IMPORTED_MODULE_5__.parseYaml),
+/* harmony export */   registerMessages: () => (/* reexport safe */ _i18n__WEBPACK_IMPORTED_MODULE_1__.registerMessages),
+/* harmony export */   registerTranslations: () => (/* reexport safe */ _i18n__WEBPACK_IMPORTED_MODULE_1__.registerTranslations),
+/* harmony export */   resolveText: () => (/* reexport safe */ _i18n__WEBPACK_IMPORTED_MODULE_1__.resolveText),
+/* harmony export */   setFallbackLocale: () => (/* reexport safe */ _i18n__WEBPACK_IMPORTED_MODULE_1__.setFallbackLocale),
+/* harmony export */   setLocale: () => (/* reexport safe */ _i18n__WEBPACK_IMPORTED_MODULE_1__.setLocale),
+/* harmony export */   t: () => (/* reexport safe */ _i18n__WEBPACK_IMPORTED_MODULE_1__.t),
+/* harmony export */   tr: () => (/* reexport safe */ _i18n__WEBPACK_IMPORTED_MODULE_1__.tr),
+/* harmony export */   watchLocale: () => (/* reexport safe */ _i18n__WEBPACK_IMPORTED_MODULE_1__.watchLocale)
+/* harmony export */ });
+/* harmony import */ var _locales__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./locales */ "./src/locales.ts");
+/* harmony import */ var _i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./i18n */ "./src/i18n.ts");
+/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dom */ "./src/dom.ts");
+/* harmony import */ var _spec_build__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./spec/build */ "./src/spec/build.ts");
+/* harmony import */ var _spec_mount__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./spec/mount */ "./src/spec/mount.ts");
+/* harmony import */ var _spec_parseYaml__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./spec/parseYaml */ "./src/spec/parseYaml.ts");
+/* harmony import */ var _spec_errors__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./spec/errors */ "./src/spec/errors.ts");
+/* harmony import */ var _spec_store__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./spec/store */ "./src/spec/store.ts");
+/* harmony import */ var _inputs_createTextInput__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./inputs/createTextInput */ "./src/inputs/createTextInput.ts");
+/* harmony import */ var _inputs_createTelInput__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./inputs/createTelInput */ "./src/inputs/createTelInput.ts");
+/* harmony import */ var _inputs_createUrlInput__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./inputs/createUrlInput */ "./src/inputs/createUrlInput.ts");
+/* harmony import */ var _inputs_createSearchInput__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./inputs/createSearchInput */ "./src/inputs/createSearchInput.ts");
+/* harmony import */ var _inputs_createEmailInput__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./inputs/createEmailInput */ "./src/inputs/createEmailInput.ts");
+/* harmony import */ var _inputs_createPasswordInput__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./inputs/createPasswordInput */ "./src/inputs/createPasswordInput.ts");
+/* harmony import */ var _inputs_createNumberInput__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./inputs/createNumberInput */ "./src/inputs/createNumberInput.ts");
+/* harmony import */ var _inputs_createDateInput__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./inputs/createDateInput */ "./src/inputs/createDateInput.ts");
+/* harmony import */ var _inputs_createDatetimeInput__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./inputs/createDatetimeInput */ "./src/inputs/createDatetimeInput.ts");
+/* harmony import */ var _inputs_createTimeInput__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./inputs/createTimeInput */ "./src/inputs/createTimeInput.ts");
+/* harmony import */ var _inputs_createMonthInput__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./inputs/createMonthInput */ "./src/inputs/createMonthInput.ts");
+/* harmony import */ var _inputs_createWeekInput__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./inputs/createWeekInput */ "./src/inputs/createWeekInput.ts");
+/* harmony import */ var _inputs_createCheckbox__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./inputs/createCheckbox */ "./src/inputs/createCheckbox.ts");
+/* harmony import */ var _inputs_createColorInput__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./inputs/createColorInput */ "./src/inputs/createColorInput.ts");
+/* harmony import */ var _inputs_createFileInput__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./inputs/createFileInput */ "./src/inputs/createFileInput.ts");
+/* harmony import */ var _inputs_createRangeInput__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./inputs/createRangeInput */ "./src/inputs/createRangeInput.ts");
+/* harmony import */ var _inputs_createHiddenInput__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./inputs/createHiddenInput */ "./src/inputs/createHiddenInput.ts");
+/* harmony import */ var _buttons_createButton__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./buttons/createButton */ "./src/buttons/createButton.ts");
+/* harmony import */ var _buttons_createButtonInput__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./buttons/createButtonInput */ "./src/buttons/createButtonInput.ts");
+/* harmony import */ var _buttons_createSubmitInput__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./buttons/createSubmitInput */ "./src/buttons/createSubmitInput.ts");
+/* harmony import */ var _buttons_createResetInput__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./buttons/createResetInput */ "./src/buttons/createResetInput.ts");
+/* harmony import */ var _selection_createSelect__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./selection/createSelect */ "./src/selection/createSelect.ts");
+/* harmony import */ var _selection_createRadio__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./selection/createRadio */ "./src/selection/createRadio.ts");
+/* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./components */ "./src/components/index.ts");
+// Nyelvesítés: a beépített feliratok (hu, en) regisztrálása, majd a nyilvános i18n API
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/***/ },
+
 /***/ "./src/inputs/createCheckbox.ts"
 /*!**************************************!*\
   !*** ./src/inputs/createCheckbox.ts ***!
@@ -6571,6 +6745,2298 @@ function createSelect(params) {
 
 /***/ },
 
+/***/ "./src/spec/build.ts"
+/*!***************************!*\
+  !*** ./src/spec/build.ts ***!
+  \***************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   buildUI: () => (/* binding */ buildUI)
+/* harmony export */ });
+/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../dom */ "./src/dom.ts");
+/* harmony import */ var _i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../i18n */ "./src/i18n.ts");
+/* harmony import */ var _components_createModal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/createModal */ "./src/components/createModal.ts");
+/* harmony import */ var _components_createDrawer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/createDrawer */ "./src/components/createDrawer.ts");
+/* harmony import */ var _parseYaml__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./parseYaml */ "./src/spec/parseYaml.ts");
+/* harmony import */ var _expr__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./expr */ "./src/spec/expr.ts");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./store */ "./src/spec/store.ts");
+/* harmony import */ var _errors__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./errors */ "./src/spec/errors.ts");
+/* harmony import */ var _registry__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./registry */ "./src/spec/registry.ts");
+
+
+
+
+
+
+
+
+
+class Owner {
+    constructor() {
+        this.fns = [];
+    }
+    add(fn) {
+        this.fns.push(fn);
+    }
+    dispose() {
+        for (const f of this.fns.splice(0))
+            f();
+    }
+}
+const EVENTS = new Set([
+    "click", "dblclick", "input", "change", "submit", "keydown", "keyup", "keypress", "focus", "blur", "mouseover", "mouseout",
+    "mouseenter", "mouseleave", "mousedown", "mouseup", "pointerdown", "pointerup", "scroll", "wheel", "contextmenu", "dragstart",
+    "dragend", "dragover", "drop", "touchstart", "touchend",
+]);
+const RAW_RESERVED = new Set(["text", "html", "t", "args", "children", "style", "class", "attrs", "bind"]);
+const ACTIONS = new Set(["set", "toggle", "inc", "push", "open", "close"]);
+/** Új hatókör: null-prototípusú, hogy az `Object.prototype` nevei (toString, ...) ne oldódjanak fel. */
+function child(scope, vars) {
+    return Object.assign(Object.create(null), scope, vars);
+}
+/** Szöveg-paraméterek: a szám / logikai érték itt szöveggé alakul (a komponensek csak szöveget írnak ki). */
+const TEXT_PARAMS = new Set(["text", "title", "message", "label", "labelText", "placeholder", "caption", "author", "ariaLabel", "alt", "name"]);
+const DATA_REF = /^\$([A-Za-z_]\w*(?:\.\w+|\[\w+\])*)$/;
+const templateCache = new Map();
+function template(s, path) {
+    if (templateCache.has(s))
+        return templateCache.get(s);
+    let t;
+    try {
+        t = (0,_expr__WEBPACK_IMPORTED_MODULE_5__.compileTemplate)(s);
+    }
+    catch (e) {
+        throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError(e.message, path);
+    }
+    templateCache.set(s, t);
+    return t;
+}
+/** A `${...}` csoportokat egyben tartó darabolás a `#` és `.` jeleknél. */
+function parseSelector(key, path) {
+    const m = /^([A-Za-z][A-Za-z0-9-]*)(?:\((\d+)\))?/.exec(key);
+    if (!m)
+        throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError(`érvénytelen csomópont-név: "${key}"`, path);
+    const sel = { type: m[1], classes: [] };
+    if (m[2] !== undefined)
+        sel.level = Number(m[2]);
+    let i = m[0].length;
+    while (i < key.length) {
+        const kind = key[i];
+        if (kind !== "#" && kind !== ".")
+            throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError(`érvénytelen csomópont-név: "${key}" ("#id" vagy ".osztály" következhet)`, path);
+        let j = i + 1;
+        let depth = 0;
+        for (; j < key.length; j++) {
+            if (key[j] === "$" && key[j + 1] === "{") {
+                depth++;
+                j++;
+                continue;
+            }
+            if (depth > 0) {
+                if (key[j] === "{")
+                    depth++;
+                else if (key[j] === "}")
+                    depth--;
+                continue;
+            }
+            if (key[j] === "#" || key[j] === ".")
+                break;
+        }
+        const part = key.slice(i + 1, j);
+        if (!part)
+            throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError(`üres ${kind === "#" ? "azonosító" : "osztály"} a névben: "${key}"`, path);
+        if (kind === "#")
+            sel.id = part;
+        else
+            sel.classes.push(part);
+        i = j;
+    }
+    return sel;
+}
+/* ===== Kifejezés-környezet és értékek ===== */
+function makeEnv(scope, ctx, deps, dataFirst = false) {
+    const stateKeys = ctx.store.snapshot;
+    return {
+        resolve(name) {
+            if (dataFirst && name in ctx.data)
+                return { value: ctx.data[name] };
+            if (name in scope)
+                return { value: scope[name] };
+            if (name in stateKeys)
+                return { value: stateKeys[name], statePath: name };
+            if (name in ctx.data)
+                return { value: ctx.data[name] };
+            // még nem létező állapot-kulcs: később beállítható, ezért követjük
+            return { value: undefined, statePath: name };
+        },
+        read: deps ? (p) => void deps.add(p) : undefined,
+    };
+}
+function evalValue(v, scope, ctx, deps, path) {
+    if (typeof v === "string") {
+        const dm = DATA_REF.exec(v);
+        if (dm) {
+            try {
+                return (0,_expr__WEBPACK_IMPORTED_MODULE_5__.evalExpr)((0,_expr__WEBPACK_IMPORTED_MODULE_5__.parseExpr)(dm[1]), makeEnv(scope, ctx, deps, true));
+            }
+            catch (e) {
+                throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError(e.message, path);
+            }
+        }
+        const tpl = template(v, path);
+        if (!tpl)
+            return v;
+        try {
+            return (0,_expr__WEBPACK_IMPORTED_MODULE_5__.evalTemplate)(tpl, makeEnv(scope, ctx, deps));
+        }
+        catch (e) {
+            if (e instanceof _expr__WEBPACK_IMPORTED_MODULE_5__.ExprError)
+                throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError(e.message, path);
+            throw e;
+        }
+    }
+    if (Array.isArray(v))
+        return v.map((x, i) => evalValue(x, scope, ctx, deps, `${path}[${i}]`));
+    if (v && typeof v === "object") {
+        const out = {};
+        for (const [k, x] of Object.entries(v))
+            out[k] = evalValue(x, scope, ctx, deps, `${path}.${k}`);
+        return out;
+    }
+    return v;
+}
+/** Szöveg-érték kiértékelése szöveggé (undefined / null → üres). */
+const asText = (v) => (v === null || v === undefined ? "" : String(v));
+/* ===== Visszahívások és beépített műveletek ===== */
+function checkHandler(name, ctx, path) {
+    const h = ctx.handlers[name];
+    if (typeof h !== "function") {
+        throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError(`ismeretlen eseménykezelő: "@${name}"${(0,_errors__WEBPACK_IMPORTED_MODULE_7__.didYouMean)(name, Object.keys(ctx.handlers))} (a buildUI handlers beállításában kell megadni)`, path);
+    }
+    return h;
+}
+function runAction(action, scope, ctx, path) {
+    const keys = Object.keys(action);
+    if (keys.length !== 1 || !ACTIONS.has(keys[0])) {
+        throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError(`ismeretlen művelet: ${JSON.stringify(action)} (engedélyezett: ${[...ACTIONS].join(", ")}, vagy "@kezelő")`, path);
+    }
+    const [op] = keys;
+    const arg = action[op];
+    const store = ctx.store;
+    /** Az útvonalak sablonok is lehetnek: `toggle: "active.${c.id}"` (az each változói elérhetők). */
+    const at = (p) => asText(evalValue(String(p), scope, ctx, null, path));
+    switch (op) {
+        case "set":
+            store.batch(() => {
+                for (const [k, v] of Object.entries(arg))
+                    store.set(at(k), evalValue(v, scope, ctx, null, `${path}.set.${k}`));
+            });
+            return;
+        case "toggle":
+            store.batch(() => (Array.isArray(arg) ? arg : [arg]).forEach((p) => store.toggle(at(p))));
+            return;
+        case "inc":
+            if (arg && typeof arg === "object") {
+                store.batch(() => Object.entries(arg).forEach(([k, by]) => store.inc(at(k), Number(evalValue(by, scope, ctx, null, path)))));
+            }
+            else
+                store.inc(at(arg));
+            return;
+        case "push":
+            store.batch(() => {
+                for (const [k, v] of Object.entries(arg))
+                    store.push(at(k), evalValue(v, scope, ctx, null, `${path}.push.${k}`));
+            });
+            return;
+        case "open":
+        case "close": {
+            const id = String(evalValue(arg, scope, ctx, null, path));
+            const isModal = !!document.getElementById(`${id}-portal`);
+            if (op === "open")
+                (isModal ? _components_createModal__WEBPACK_IMPORTED_MODULE_2__.openModal : _components_createDrawer__WEBPACK_IMPORTED_MODULE_3__.openDrawer)(id);
+            else
+                (isModal ? _components_createModal__WEBPACK_IMPORTED_MODULE_2__.closeModal : _components_createDrawer__WEBPACK_IMPORTED_MODULE_3__.closeDrawer)(id);
+            return;
+        }
+    }
+}
+/** `@kezelő`, művelet-objektum vagy ezek listája → függvény (a hibákat már építéskor jelzi). */
+function toCallback(spec, scope, ctx, path) {
+    const items = Array.isArray(spec) ? spec : [spec];
+    const steps = items.map((item, i) => {
+        const p = Array.isArray(spec) ? `${path}[${i}]` : path;
+        if (typeof item === "string" && item.startsWith("@")) {
+            const name = item.slice(1);
+            const handler = checkHandler(name, ctx, p);
+            return (args) => {
+                const event = args[0] instanceof Event ? args[0] : undefined;
+                handler({ state: ctx.store, ui: ctx.ui, event, el: event?.currentTarget ?? null, args }, ...args);
+            };
+        }
+        if (item && typeof item === "object" && !Array.isArray(item)) {
+            const keys = Object.keys(item);
+            if (keys.length !== 1 || !ACTIONS.has(keys[0])) {
+                throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError(`ismeretlen művelet: ${JSON.stringify(item)}${(0,_errors__WEBPACK_IMPORTED_MODULE_7__.didYouMean)(keys[0] ?? "", ACTIONS)} (engedélyezett: ${[...ACTIONS].join(", ")}, vagy "@kezelő")`, p);
+            }
+            return () => runAction(item, scope, ctx, p);
+        }
+        throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError(`visszahívásnak "@kezelő" vagy művelet kell, nem ez: ${JSON.stringify(item)}`, p);
+    });
+    return (...args) => steps.forEach((s) => s(args));
+}
+/* ===== Beviteli kötés ===== */
+function setupBind(root, kind, statePath, ctx, owner, path) {
+    const store = ctx.store;
+    if (kind === "radio") {
+        const radios = Array.from(root.querySelectorAll('input[type="radio"]'));
+        if (!radios.length)
+            throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError("a bind: nem talál rádiógombot", path);
+        const sync = () => radios.forEach((r) => (r.checked = r.value === asText(store.get(statePath))));
+        sync();
+        radios.forEach((r) => r.addEventListener("change", () => r.checked && store.set(statePath, r.value)));
+        owner.add(store.subscribe([statePath], sync));
+        return;
+    }
+    const input = root.matches("input,select,textarea") ? root : root.querySelector("input,select,textarea");
+    if (!input)
+        throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError("a bind: nem talál beviteli elemet a komponensben", path);
+    if (kind === "checked") {
+        const sync = () => void (input.checked = !!store.get(statePath));
+        sync();
+        input.addEventListener("change", () => store.set(statePath, input.checked));
+        owner.add(store.subscribe([statePath], sync));
+        return;
+    }
+    const numeric = input.type === "number" || input.type === "range";
+    const sync = () => {
+        const v = asText(store.get(statePath));
+        if (input.value !== v)
+            input.value = v;
+    };
+    sync();
+    const write = () => store.set(statePath, numeric && input.value !== "" ? Number(input.value) : input.value);
+    input.addEventListener("input", write);
+    input.addEventListener("change", write);
+    owner.add(store.subscribe([statePath], sync));
+}
+/* ===== DOM-segédek ===== */
+function nodesBetween(first, last) {
+    const out = [];
+    for (let n = first; n; n = n.nextSibling) {
+        out.push(n);
+        if (n === last)
+            break;
+    }
+    return out;
+}
+function removeRange(first, last) {
+    nodesBetween(first, last).forEach((n) => n.parentNode?.removeChild(n));
+}
+function insertAll(nodes, parent, ref) {
+    nodes.forEach((n) => parent.insertBefore(n, ref));
+}
+function autoId(ctx, type) {
+    const base = type.toLowerCase();
+    ctx.counters[base] = (ctx.counters[base] ?? 0) + 1;
+    let id = `${base}-${ctx.counters[base]}`;
+    while (ctx.byId.has(id) || document.getElementById(id)) {
+        ctx.counters[base]++;
+        id = `${base}-${ctx.counters[base]}`;
+    }
+    return id;
+}
+function register(ctx, id, el, path, explicit) {
+    if (explicit && ctx.byId.has(id))
+        throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError(`ismétlődő azonosító: "${id}"`, path);
+    ctx.byId.set(id, el);
+}
+/** Feliratkozás az állapot-függőségekre; a kimenet leiratkozása az `owner`-hez kerül. */
+function watch(deps, ctx, owner, fn, isStatic) {
+    if (isStatic || deps.size === 0)
+        return;
+    owner.add(ctx.store.subscribe([...deps], fn));
+}
+function renderNodes(list, env, parent, ref, path) {
+    if (list === null || list === undefined)
+        return [];
+    if (!Array.isArray(list))
+        throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError("lista kellene (a csomópontok listája, `- ...` elemekkel)", path);
+    return list.map((node, i) => renderNode(node, env, parent, ref, `${path}[${i}]`));
+}
+function renderNode(node, env, parent, ref, path) {
+    if (typeof node === "string" || typeof node === "number" || typeof node === "boolean")
+        return renderText(String(node), env, parent, ref, path);
+    if (!node || typeof node !== "object" || Array.isArray(node)) {
+        throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError(`csomópontnak szöveg vagy egykulcsos térkép kell, nem ez: ${JSON.stringify(node)}`, path);
+    }
+    const obj = node;
+    if ("each" in obj)
+        return renderEach(obj, env, parent, ref, path);
+    if ("if" in obj)
+        return renderIf(obj, env, parent, ref, path);
+    const keys = Object.keys(obj);
+    if (keys.length !== 1) {
+        throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError(`egy csomópont egy kulcsot tartalmazhat (a komponens neve), ez több: ${keys.join(", ")} – a behúzást ellenőrizd`, path);
+    }
+    const key = keys[0];
+    const sel = parseSelector(key, `${path}.${key}`);
+    const here = `${path}.${key}`;
+    const body = obj[key];
+    const isComponent = /^[A-Z]/.test(sel.type);
+    if (!isComponent)
+        return renderRaw(sel, body, env, parent, ref, here);
+    if (env.ctx.defs[sel.type])
+        return renderDefine(sel, body, env, parent, ref, here);
+    const def = (0,_registry__WEBPACK_IMPORTED_MODULE_8__.getDef)(sel.type);
+    if (!def) {
+        const known = [...(0,_registry__WEBPACK_IMPORTED_MODULE_8__.componentNames)(), ...Object.keys(env.ctx.defs)];
+        throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError(`ismeretlen komponens: ${sel.type}${(0,_errors__WEBPACK_IMPORTED_MODULE_7__.didYouMean)(sel.type, known)}`, here);
+    }
+    return renderComponent(def, sel, body, env, parent, ref, here);
+}
+function renderText(text, env, parent, ref, path) {
+    const { ctx, scope } = env;
+    const tpl = template(text, path);
+    const node = document.createTextNode("");
+    const deps = new Set();
+    const compute = (d) => asText(evalValue(text, scope, ctx, d, path));
+    node.data = tpl ? compute(deps) : text;
+    parent.insertBefore(node, ref);
+    if (tpl)
+        watch(deps, ctx, env.owner, () => void (node.data = compute(null)), env.isStatic);
+    return { first: node, last: node, dispose: () => node.parentNode?.removeChild(node) };
+}
+/* ----- feltétel ----- */
+function renderIf(obj, env, parent, ref, path) {
+    for (const k of Object.keys(obj)) {
+        if (!["if", "then", "else"].includes(k))
+            throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError(`ismeretlen kulcs az if csomópontban: "${k}"${(0,_errors__WEBPACK_IMPORTED_MODULE_7__.didYouMean)(k, ["then", "else"])}`, `${path}.if`);
+    }
+    if (!("then" in obj))
+        throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError('az if csomópontban hiányzik a "then" lista', `${path}.if`);
+    const { ctx, scope } = env;
+    const start = document.createComment("if");
+    const end = document.createComment("/if");
+    parent.insertBefore(start, ref);
+    parent.insertBefore(end, ref);
+    let inner = new Owner();
+    let current = [];
+    const deps = new Set();
+    const clear = () => {
+        inner.dispose();
+        inner = new Owner();
+        current.forEach((m) => m.dispose());
+        current = [];
+    };
+    const draw = (d) => {
+        clear();
+        const ok = !!evalValue(obj.if, scope, ctx, d, `${path}.if`);
+        const branch = ok ? obj.then : obj.else;
+        if (branch !== undefined)
+            current = renderNodes(branch, { ...env, owner: inner }, parent, end, `${path}.${ok ? "then" : "else"}`);
+    };
+    draw(deps);
+    watch(deps, ctx, env.owner, () => draw(null), env.isStatic);
+    return {
+        first: start,
+        last: end,
+        dispose: () => {
+            clear();
+            removeRange(start, end);
+        },
+    };
+}
+function renderEach(obj, env, parent, ref, path) {
+    for (const k of Object.keys(obj)) {
+        if (!["each", "do"].includes(k))
+            throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError(`ismeretlen kulcs az each csomópontban: "${k}"${(0,_errors__WEBPACK_IMPORTED_MODULE_7__.didYouMean)(k, ["do"])}`, `${path}.each`);
+    }
+    const spec = obj.each;
+    if (!spec || typeof spec !== "object" || !("in" in spec) || typeof spec.as !== "string") {
+        throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError('az each értéke { in: ..., as: név, key: ... } kell legyen', `${path}.each`);
+    }
+    if (!("do" in obj))
+        throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError('az each csomópontban hiányzik a "do" lista', `${path}.each`);
+    const { ctx, scope } = env;
+    const as = spec.as;
+    const start = document.createComment("each");
+    const end = document.createComment("/each");
+    parent.insertBefore(start, ref);
+    parent.insertBefore(end, ref);
+    let items = new Map();
+    const deps = new Set();
+    const keyOf = (value, index) => {
+        if (spec.key === undefined)
+            return index;
+        const k = evalValue(typeof spec.key === "string" && !spec.key.includes("${") ? `\${${spec.key}}` : spec.key, child(scope, { [as]: value, index }), ctx, null, `${path}.each.key`);
+        return k;
+    };
+    const draw = (d) => {
+        const raw = evalValue(spec.in, scope, ctx, d, `${path}.each.in`);
+        const list = Array.isArray(raw) ? raw : [];
+        const next = new Map();
+        const order = [];
+        list.forEach((value, index) => {
+            const key = keyOf(value, index);
+            if (next.has(key))
+                throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError(`ismétlődő kulcs az each-ben: ${JSON.stringify(key)}`, `${path}.each`);
+            const old = items.get(key);
+            let item;
+            if (old && Object.is(old.value, value)) {
+                item = old;
+                items.delete(key);
+            }
+            else {
+                item = { key, value, owner: new Owner(), mounted: [], first: end, last: end };
+                item.mounted = []; // a tényleges felépítés a rendezés közben, a helyes pozícióban történik
+            }
+            next.set(key, item);
+            order.push(item);
+        });
+        // a már nem szereplő elemek eltávolítása
+        for (const stale of items.values()) {
+            stale.owner.dispose();
+            stale.mounted.forEach((m) => m.dispose());
+        }
+        // rendezés / felépítés
+        let cursor = start.nextSibling ?? end;
+        order.forEach((item, index) => {
+            if (item.mounted.length === 0) {
+                const itemScope = child(scope, { [as]: item.value, index });
+                const before = cursor;
+                item.mounted = renderNodes(obj.do, { ...env, scope: itemScope, owner: item.owner }, parent, before, `${path}.do`);
+                if (item.mounted.length) {
+                    item.first = item.mounted[0].first;
+                    item.last = item.mounted[item.mounted.length - 1].last;
+                }
+                else {
+                    item.first = item.last = document.createComment("item");
+                    parent.insertBefore(item.first, before);
+                    item.mounted = [{ first: item.first, last: item.last, dispose: () => item.first.parentNode?.removeChild(item.first) }];
+                }
+            }
+            else if (item.first !== cursor) {
+                insertAll(nodesBetween(item.first, item.last), parent, cursor);
+            }
+            else {
+                cursor = item.last.nextSibling ?? end;
+                return;
+            }
+            cursor = item.last.nextSibling ?? end;
+        });
+        items = next;
+    };
+    draw(deps);
+    watch(deps, ctx, env.owner, () => draw(null), env.isStatic);
+    return {
+        first: start,
+        last: end,
+        dispose: () => {
+            items.forEach((it) => {
+                it.owner.dispose();
+                it.mounted.forEach((m) => m.dispose());
+            });
+            removeRange(start, end);
+        },
+    };
+}
+/* ----- saját részletek (define) ----- */
+function renderDefine(sel, body, env, parent, ref, path) {
+    const { ctx, scope } = env;
+    const def = ctx.defs[sel.type];
+    const given = body === null || body === undefined ? {} : typeof body === "object" && !Array.isArray(body) ? body : { [def.params[0] ?? "value"]: body };
+    for (const k of Object.keys(given)) {
+        if (!def.params.includes(k))
+            throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError(`ismeretlen paraméter a(z) ${sel.type} részletben: "${k}"${(0,_errors__WEBPACK_IMPORTED_MODULE_7__.didYouMean)(k, def.params)}`, path);
+    }
+    const start = document.createComment(sel.type);
+    const end = document.createComment(`/${sel.type}`);
+    parent.insertBefore(start, ref);
+    parent.insertBefore(end, ref);
+    let inner = new Owner();
+    let current = [];
+    const deps = new Set();
+    const clear = () => {
+        inner.dispose();
+        inner = new Owner();
+        current.forEach((m) => m.dispose());
+        current = [];
+    };
+    const draw = (d) => {
+        clear();
+        const vars = Object.create(null);
+        for (const p of def.params)
+            vars[p] = evalValue(given[p], scope, ctx, d, `${path}.${p}`);
+        current = renderNodes(def.body, { ctx, scope: vars, owner: inner, isStatic: env.isStatic }, parent, end, `${sel.type}.body`);
+    };
+    draw(deps);
+    watch(deps, ctx, env.owner, () => draw(null), env.isStatic);
+    return {
+        first: start,
+        last: end,
+        dispose: () => {
+            clear();
+            removeRange(start, end);
+        },
+    };
+}
+/* ----- nyers HTML elem ----- */
+function applyStyle(el, value) {
+    if (typeof value === "string") {
+        el.style.cssText = value;
+        return;
+    }
+    el.removeAttribute("style");
+    if (value && typeof value === "object") {
+        for (const [k, v] of Object.entries(value)) {
+            if (k.startsWith("--") || k.includes("-"))
+                el.style.setProperty(k, asText(v));
+            else
+                el.style[k] = asText(v);
+        }
+    }
+}
+function setAttr(el, name, value) {
+    if (value === false || value === null || value === undefined)
+        el.removeAttribute(name);
+    else
+        el.setAttribute(name, value === true ? "" : String(value));
+}
+function renderRaw(sel, body, env, parent, ref, path) {
+    const { ctx, scope } = env;
+    let params;
+    if (body === null || body === undefined)
+        params = {};
+    else if (Array.isArray(body))
+        params = { children: body };
+    else if (typeof body === "object")
+        params = { ...body };
+    else
+        params = { text: body };
+    const el = document.createElement(sel.type);
+    const owner = env.owner;
+    const dynamic = [];
+    /** Egy tulajdonság kiértékelése és alkalmazása; ha állapotfüggő, a változásra helyben frissít. */
+    const bindProp = (value, where, apply) => {
+        const deps = new Set();
+        apply(evalValue(value, scope, ctx, deps, where));
+        if (deps.size)
+            dynamic.push({ deps, apply: () => apply(evalValue(value, scope, ctx, null, where)) });
+    };
+    // azonosító és osztályok
+    let id;
+    if (sel.id !== undefined)
+        bindProp(sel.id, `${path}#id`, (v) => (v === undefined ? el.removeAttribute("id") : (el.id = asText(v))));
+    const classValues = [...sel.classes];
+    if (params.class !== undefined)
+        classValues.push(params.class);
+    if (classValues.length) {
+        const deps = new Set();
+        const compute = (d) => classValues.map((c, i) => asText(evalValue(c, scope, ctx, d, `${path}.class[${i}]`))).filter(Boolean).join(" ");
+        el.className = compute(deps);
+        if (deps.size)
+            dynamic.push({ deps, apply: () => void (el.className = compute(null)) });
+    }
+    // szöveg: t (nyelvesített) / text / html
+    if (params.t !== undefined) {
+        const args = params.args !== undefined ? evalValue(params.args, scope, ctx, null, `${path}.args`) : undefined;
+        el.append((0,_dom__WEBPACK_IMPORTED_MODULE_0__.createDOMElem)({ tag: "span", attrs: { class: "spec-t", style: "display:contents" }, text: (0,_i18n__WEBPACK_IMPORTED_MODULE_1__.tr)(asText(params.t), args) }));
+    }
+    else if (params.text !== undefined) {
+        const textNode = document.createTextNode("");
+        el.appendChild(textNode);
+        bindProp(params.text, `${path}.text`, (v) => void (textNode.data = asText(v)));
+    }
+    else if (params.html !== undefined) {
+        bindProp(params.html, `${path}.html`, (v) => void (el.innerHTML = asText(v)));
+    }
+    if (params.style !== undefined)
+        bindProp(params.style, `${path}.style`, (v) => applyStyle(el, v));
+    if (params.attrs !== undefined) {
+        if (typeof params.attrs !== "object" || params.attrs === null)
+            throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError("az attrs térkép kell legyen", `${path}.attrs`);
+        for (const [k, v] of Object.entries(params.attrs))
+            bindProp(v, `${path}.attrs.${k}`, (x) => setAttr(el, k, x));
+    }
+    // események és egyéb attribútumok
+    for (const [k, v] of Object.entries(params)) {
+        if (RAW_RESERVED.has(k))
+            continue;
+        if (EVENTS.has(k)) {
+            const cb = toCallback(v, scope, ctx, `${path}.${k}`);
+            el.addEventListener(k, (e) => cb(e));
+        }
+        else {
+            bindProp(v, `${path}.${k}`, (x) => setAttr(el, k, x));
+        }
+    }
+    parent.insertBefore(el, ref);
+    if (sel.id !== undefined || el.id) {
+        id = el.id;
+        if (id)
+            register(ctx, id, el, path, true);
+    }
+    const kids = params.children !== undefined ? renderNodes(params.children, env, el, null, `${path}.children`) : [];
+    if (params.bind !== undefined) {
+        const kind = el instanceof HTMLInputElement && (el.type === "checkbox") ? "checked" : "value";
+        setupBind(el, kind, String(params.bind), ctx, owner, `${path}.bind`);
+    }
+    // állapotfüggő tulajdonságok: helyben frissítés
+    for (const d of dynamic)
+        watch(d.deps, ctx, owner, d.apply, env.isStatic);
+    return {
+        first: el,
+        last: el,
+        dispose: () => {
+            kids.forEach((k) => k.dispose());
+            if (id)
+                ctx.byId.delete(id);
+            el.parentNode?.removeChild(el);
+        },
+    };
+}
+function renderComponent(def, sel, body, env, parent, ref, path) {
+    const { ctx, scope } = env;
+    // 1. a törzs normalizálása paraméter-térképpé
+    let raw;
+    if (body === null || body === undefined)
+        raw = {};
+    else if (Array.isArray(body)) {
+        raw = { [def.array ?? "children"]: body };
+    }
+    else if (typeof body === "object")
+        raw = { ...body };
+    else {
+        if (!def.text)
+            throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError(`a(z) ${def.name} komponensnek nincs fő szöveg-paramétere, térképet adj meg`, path);
+        raw = { [def.text]: body };
+    }
+    if (sel.level !== undefined) {
+        if (!def.params.has("level"))
+            throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError(`a(z) ${def.name} nem fogad szintet ("${def.name}(${sel.level})")`, path);
+        raw.level = sel.level;
+    }
+    // 2. ellenőrzés: ismert paraméterek
+    const special = new Set(["t", "args", "bind"]);
+    for (const k of Object.keys(raw)) {
+        if (!def.params.has(k) && !special.has(k)) {
+            throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError(`ismeretlen paraméter: "${k}"${(0,_errors__WEBPACK_IMPORTED_MODULE_7__.didYouMean)(k, [...def.params, ...special])}`, `${path}.${k}`);
+        }
+        if (k === "parent")
+            throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError('a "parent" paraméter a beágyazásból adódik, nem adható meg', `${path}.parent`);
+    }
+    if (raw.t !== undefined && !def.text)
+        throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError(`a "t" kulcshoz a(z) ${def.name} komponensnek fő szöveg-paraméter kell`, `${path}.t`);
+    for (const k of def.required) {
+        if (raw[k] === undefined && !(k === def.text && raw.t !== undefined)) {
+            throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError(`hiányzó kötelező paraméter: "${k}"`, path);
+        }
+    }
+    // visszahívások építéskor ellenőrzöttek (hibás @név azonnal kiderül)
+    const callbacks = {};
+    for (const k of Object.keys(raw)) {
+        if (def.fns.has(k))
+            callbacks[k] = toCallback(raw[k], scope, ctx, `${path}.${k}`);
+    }
+    const slotParams = Object.keys(def.slots ?? {}).filter((k) => raw[k] !== undefined);
+    const staticOwner = () => ({ ctx, scope, owner: new Owner(), isStatic: true });
+    /** A paraméterek kiértékelése (a függőségek gyűjtésével); a gyerek-paraméterek nem értékek. */
+    const evaluate = (deps) => {
+        const out = {};
+        for (const [k, v] of Object.entries(raw)) {
+            if (special.has(k) || def.fns.has(k) || slotParams.includes(k) || def.elements?.includes(k) || def.items?.[k])
+                continue;
+            const value = evalValue(v, scope, ctx, deps, `${path}.${k}`);
+            out[k] = TEXT_PARAMS.has(k) && (typeof value === "number" || typeof value === "boolean") ? String(value) : value;
+        }
+        return out;
+    };
+    /** Statikus gyerek-elemek: elemlista-paraméterek és tartalmas elemek. */
+    const staticChildren = (kidSink) => {
+        const out = {};
+        const staticKids = kidSink;
+        const toElements = (nodes, where) => {
+            const holder = document.createElement("div");
+            const kids = renderNodes(nodes, staticOwner(), holder, null, where);
+            staticKids.push(...kids);
+            return Array.from(holder.children);
+        };
+        for (const k of def.elements ?? [])
+            if (raw[k] !== undefined)
+                out[k] = toElements(raw[k], `${path}.${k}`);
+        for (const [k, field] of Object.entries(def.items ?? {})) {
+            if (raw[k] === undefined)
+                continue;
+            if (!Array.isArray(raw[k]))
+                throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError("lista kellene", `${path}.${k}`);
+            out[k] = raw[k].map((item, i) => {
+                const copy = evalValue({ ...item, [field]: undefined }, scope, ctx, null, `${path}.${k}[${i}]`);
+                delete copy[field];
+                if (item[field] !== undefined)
+                    copy[field] = toElements(item[field], `${path}.${k}[${i}].${field}`);
+                return copy;
+            });
+        }
+        return out;
+    };
+    const construct = (values, deps, reuseId) => {
+        const owner = new Owner();
+        const staticKids = [];
+        owner.add(() => staticKids.forEach((m) => m.dispose()));
+        const params = { ...values, ...staticChildren(staticKids) };
+        // id és osztály
+        let id;
+        const explicit = sel.id !== undefined;
+        if (explicit)
+            id = asText(evalValue(sel.id, scope, ctx, deps, `${path}#id`));
+        else if (typeof params.id === "string")
+            id = params.id;
+        const finalId = reuseId ?? (id || autoId(ctx, def.name));
+        const classes = [...sel.classes.map((c, i) => asText(evalValue(c, scope, ctx, deps, `${path}.class[${i}]`))), asText(params.class)].filter(Boolean);
+        params.id = finalId;
+        if (classes.length)
+            params.class = classes.join(" ");
+        // nyelvesített szöveg
+        if (raw.t !== undefined) {
+            const args = raw.args !== undefined ? evalValue(raw.args, scope, ctx, deps, `${path}.args`) : undefined;
+            params[def.text] = (0,_i18n__WEBPACK_IMPORTED_MODULE_1__.tr)(asText(raw.t), args);
+        }
+        Object.assign(params, callbacks);
+        for (const k of slotParams)
+            params[k] = []; // a komponens létrehozza a tárolót
+        params.parent = ctx.scratch;
+        let el;
+        try {
+            el = def.create(params);
+        }
+        catch (e) {
+            if (e instanceof _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError)
+                throw e;
+            throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError(`a(z) ${def.name} létrehozása nem sikerült: ${e.message}`, path);
+        }
+        const portal = !!def.portal || el.parentNode !== ctx.scratch;
+        if (!portal)
+            el.remove();
+        // élő gyerekek a tárolókba
+        for (const k of slotParams) {
+            const selector = def.slots[k];
+            const container = selector === "" ? el : el.querySelector(selector);
+            if (!container)
+                throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError(`a(z) ${def.name} komponensben nincs "${selector}" tároló a(z) ${k} számára`, `${path}.${k}`);
+            const mountedKids = renderNodes(raw[k], { ctx, scope, owner, isStatic: env.isStatic }, container, null, `${path}.${k}`);
+            owner.add(() => mountedKids.forEach((m) => m.dispose()));
+        }
+        if (raw.bind !== undefined) {
+            if (!def.bind)
+                throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError(`a(z) ${def.name} komponensen nem használható a bind`, `${path}.bind`);
+            setupBind(el, def.bind, String(raw.bind), ctx, owner, `${path}.bind`);
+        }
+        register(ctx, finalId, el, path, explicit || typeof raw.id === "string");
+        return { id: finalId, el, params: values, deps, owner, portal };
+    };
+    const deps0 = new Set();
+    let built = construct(evaluate(deps0), deps0);
+    if (!built.portal)
+        parent.insertBefore(built.el, ref);
+    let unsub = null;
+    const subscribe = (deps) => {
+        unsub?.();
+        unsub = null;
+        if (env.isStatic || deps.size === 0)
+            return;
+        unsub = ctx.store.subscribe([...deps], refresh);
+    };
+    const same = (a, b) => {
+        if (Object.is(a, b))
+            return true;
+        try {
+            return JSON.stringify(a) === JSON.stringify(b);
+        }
+        catch {
+            return false;
+        }
+    };
+    function refresh() {
+        const deps = new Set();
+        const values = evaluate(deps);
+        const prev = built.params;
+        const changed = Object.keys({ ...prev, ...values }).filter((k) => !same(prev[k], values[k]));
+        if (changed.length === 0) {
+            built.deps = deps;
+            subscribe(deps);
+            return;
+        }
+        const live = def.updaters ?? {};
+        const el = built.el;
+        if (changed.every((k) => live[k] && typeof el[live[k]] === "function")) {
+            for (const k of changed)
+                el[live[k]](values[k]);
+            built.params = values;
+            built.deps = deps;
+            subscribe(deps);
+            return;
+        }
+        // egyébként újraépítés ugyanazzal az azonosítóval; a fókusz visszaáll
+        const active = document.activeElement;
+        const hadFocus = active && built.el.contains(active) ? active.id : "";
+        built.owner.dispose();
+        const old = built.el;
+        ctx.byId.delete(built.id);
+        const next = construct(values, deps, built.id);
+        if (old.parentNode && !next.portal)
+            old.parentNode.replaceChild(next.el, old);
+        else if (old.parentNode)
+            old.parentNode.removeChild(old);
+        built = next;
+        if (hadFocus)
+            document.getElementById(hadFocus)?.focus();
+        subscribe(deps);
+    }
+    subscribe(deps0);
+    return {
+        get first() {
+            return built.el;
+        },
+        get last() {
+            return built.el;
+        },
+        dispose: () => {
+            unsub?.();
+            built.owner.dispose();
+            ctx.byId.delete(built.id);
+            built.el.parentNode?.removeChild(built.el);
+        },
+    };
+}
+/* ===== Téma ===== */
+function applyTheme(theme, ownerList) {
+    const cssVars = (obj) => Object.entries(obj)
+        .filter(([, v]) => typeof v !== "object" || v === null)
+        .map(([k, v]) => `--${k.replace(/^--/, "").replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`)}:${String(v)};`)
+        .join("");
+    const dark = theme.dark && typeof theme.dark === "object" ? theme.dark : null;
+    const css = `:root{${cssVars(theme)}}${dark ? `:root[data-theme="dark"]{${cssVars(dark)}}` : ""}`;
+    const style = document.createElement("style");
+    style.setAttribute("data-spec-theme", "");
+    style.textContent = css;
+    document.head.appendChild(style);
+    ownerList.push(() => style.remove());
+}
+/* ===== Belépési pont ===== */
+/**
+ * Oldal felépítése deklaratív leírásból (YAML szöveg vagy objektum).
+ *
+ * A leírás kulcsai: `ui` (a csomópontok listája), `state` (kezdőállapot), `messages` (nyelvi szövegek),
+ * `theme` (CSS-változók), `define` (saját, paraméterezhető részletek).
+ */
+function buildUI(spec, options = {}) {
+    const doc = typeof spec === "string" ? (0,_parseYaml__WEBPACK_IMPORTED_MODULE_4__.parseYaml)(spec) : spec;
+    const root = (Array.isArray(doc) ? { ui: doc } : (doc ?? {}));
+    if (typeof root !== "object")
+        throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError("a leírás térkép (ui:, state:, ...) vagy a csomópontok listája kell legyen");
+    for (const k of Object.keys(root)) {
+        if (!["ui", "state", "messages", "theme", "define", "data"].includes(k)) {
+            throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError(`ismeretlen felső szintű kulcs: "${k}"${(0,_errors__WEBPACK_IMPORTED_MODULE_7__.didYouMean)(k, ["ui", "state", "messages", "theme", "define"])}`);
+        }
+    }
+    let host;
+    if (options.parent === undefined)
+        host = document.createElement("div");
+    else
+        host = typeof options.parent === "string" ? document.getElementById(options.parent) ?? document.querySelector(options.parent) : options.parent;
+    if (!host)
+        throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError(`a megadott szülő nem található: ${String(options.parent)}`);
+    const defs = {};
+    for (const [name, d] of Object.entries((root.define ?? {}))) {
+        if (!/^[A-Z]/.test(name))
+            throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError(`a saját részlet neve nagybetűvel kezdődjön: "${name}"`, `define.${name}`);
+        if ((0,_registry__WEBPACK_IMPORTED_MODULE_8__.getDef)(name))
+            throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError(`a(z) "${name}" név egy könyvtári komponensé`, `define.${name}`);
+        if (!Array.isArray(d?.body))
+            throw new _errors__WEBPACK_IMPORTED_MODULE_7__.SpecError('hiányzik a "body" lista', `define.${name}`);
+        defs[name] = { params: (d.params ?? []).map(String), body: d.body };
+    }
+    const cleanups = [];
+    if (root.messages)
+        (0,_i18n__WEBPACK_IMPORTED_MODULE_1__.registerTranslations)(root.messages);
+    if (root.theme && typeof root.theme === "object")
+        applyTheme(root.theme, cleanups);
+    const store = new _store__WEBPACK_IMPORTED_MODULE_6__.Store({ ...(root.state ?? {}), ...(options.state ?? {}) });
+    const ctx = {
+        store,
+        data: { ...(root.data ?? {}), ...(options.data ?? {}) },
+        handlers: options.handlers ?? {},
+        defs,
+        byId: new Map(),
+        counters: {},
+        scratch: document.createElement("div"),
+    };
+    const rootOwner = new Owner();
+    const ui = {
+        root: host,
+        state: store,
+        get: (id) => ctx.byId.get(id),
+        destroy: () => {
+            rootOwner.dispose();
+            mounted.forEach((m) => m.dispose());
+            mounted = [];
+            cleanups.splice(0).forEach((f) => f());
+            ctx.byId.clear();
+        },
+    };
+    ctx.ui = ui;
+    let mounted = [];
+    const scope = Object.create(null);
+    mounted = renderNodes(root.ui ?? [], { ctx, scope, owner: rootOwner, isStatic: false }, host, null, "ui");
+    return ui;
+}
+
+
+/***/ },
+
+/***/ "./src/spec/errors.ts"
+/*!****************************!*\
+  !*** ./src/spec/errors.ts ***!
+  \****************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SpecError: () => (/* binding */ SpecError),
+/* harmony export */   didYouMean: () => (/* binding */ didYouMean),
+/* harmony export */   suggest: () => (/* binding */ suggest)
+/* harmony export */ });
+/** Hiba a deklaratív leíró feldolgozásakor, a leíró fájlbeli útvonalával (pl. `ui[2].Card.body[0]`). */
+class SpecError extends Error {
+    constructor(message, path = "") {
+        super(path ? `${path}: ${message}` : message);
+        this.path = path;
+        this.name = "SpecError";
+    }
+}
+function distance(a, b) {
+    const dp = Array.from({ length: b.length + 1 }, (_, i) => i);
+    for (let i = 1; i <= a.length; i++) {
+        let prev = dp[0];
+        dp[0] = i;
+        for (let j = 1; j <= b.length; j++) {
+            const tmp = dp[j];
+            dp[j] = Math.min(dp[j] + 1, dp[j - 1] + 1, prev + (a[i - 1].toLowerCase() === b[j - 1].toLowerCase() ? 0 : 1));
+            prev = tmp;
+        }
+    }
+    return dp[b.length];
+}
+/** A legközelebbi ismert név (elgépelés esetén), vagy `undefined`, ha nincs elég közeli. */
+function suggest(name, known) {
+    let best;
+    let bestD = Infinity;
+    for (const k of known) {
+        const d = distance(name, k);
+        if (d < bestD) {
+            bestD = d;
+            best = k;
+        }
+    }
+    const limit = Math.max(2, Math.floor(name.length / 3));
+    return best !== undefined && bestD <= limit ? best : undefined;
+}
+/** „…, erre gondoltál: "x"?” kiegészítés a hibaüzenethez. */
+function didYouMean(name, known) {
+    const s = suggest(name, known);
+    return s ? `, erre gondoltál: "${s}"?` : "";
+}
+
+
+/***/ },
+
+/***/ "./src/spec/expr.ts"
+/*!**************************!*\
+  !*** ./src/spec/expr.ts ***!
+  \**************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ExprError: () => (/* binding */ ExprError),
+/* harmony export */   compileTemplate: () => (/* binding */ compileTemplate),
+/* harmony export */   evalExpr: () => (/* binding */ evalExpr),
+/* harmony export */   evalTemplate: () => (/* binding */ evalTemplate),
+/* harmony export */   hasTemplate: () => (/* binding */ hasTemplate),
+/* harmony export */   parseExpr: () => (/* binding */ parseExpr)
+/* harmony export */ });
+/**
+ * `eval`-mentes kifejezés-értelmező a `${...}` sablonokhoz.
+ *
+ * Támogatott: számok, szövegek (`'..'`, `".."`), `true` / `false` / `null`, útvonalak (`a.b[0].c`, `a[k]`),
+ * `! - + * / % < <= > >= == != && || ??`, ternáris `?:`, zárójelek és az engedélyezett függvények
+ * (`len`, `upper`, `lower`, `trim`, `join`, `round`, `min`, `max`, `str`, `plural`).
+ * Nincs hozzárendelés, nincs metódushívás, nincs globális hozzáférés, a `__proto__` / `constructor` /
+ * `prototype` kulcsok tiltottak.
+ */
+class ExprError extends Error {
+    constructor(message, source) {
+        super(`Kifejezés hiba: ${message} (${source})`);
+        this.source = source;
+        this.name = "ExprError";
+    }
+}
+const FORBIDDEN = new Set(["__proto__", "constructor", "prototype"]);
+function tokenize(src) {
+    const out = [];
+    let i = 0;
+    while (i < src.length) {
+        const c = src[i];
+        if (/\s/.test(c)) {
+            i++;
+            continue;
+        }
+        const prev = out[out.length - 1];
+        const afterValue = !!prev && (prev.k === "id" || prev.k === "num" || (prev.k === "op" && (prev.v === "]" || prev.v === ")")));
+        if (/[0-9]/.test(c) || (c === "." && !afterValue && /[0-9]/.test(src[i + 1] ?? ""))) {
+            const m = /^(\d+(\.\d+)?|\.\d+)([eE][-+]?\d+)?/.exec(src.slice(i));
+            out.push({ k: "num", v: m[0], n: Number(m[0]) });
+            i += m[0].length;
+            continue;
+        }
+        if (c === "'" || c === '"') {
+            let j = i + 1;
+            let s = "";
+            for (; j < src.length && src[j] !== c; j++) {
+                if (src[j] === "\\") {
+                    const n = src[++j];
+                    s += n === "n" ? "\n" : n === "t" ? "\t" : (n ?? "");
+                }
+                else
+                    s += src[j];
+            }
+            if (src[j] !== c)
+                throw new ExprError("nincs lezárva az idézőjel", src);
+            out.push({ k: "str", v: s });
+            i = j + 1;
+            continue;
+        }
+        if (/[A-Za-z_$]/.test(c)) {
+            const m = /^[A-Za-z_$][A-Za-z0-9_$]*/.exec(src.slice(i));
+            out.push({ k: "id", v: m[0] });
+            i += m[0].length;
+            continue;
+        }
+        const three = src.slice(i, i + 3);
+        const two = src.slice(i, i + 2);
+        if (three === "===" || three === "!==")
+            throw new ExprError(`használj ${three.slice(0, 2)} operátort`, src);
+        if (["==", "!=", "<=", ">=", "&&", "||", "??"].includes(two)) {
+            out.push({ k: "op", v: two });
+            i += 2;
+            continue;
+        }
+        if ("+-*/%<>!?:()[].,".includes(c)) {
+            out.push({ k: "op", v: c });
+            i++;
+            continue;
+        }
+        throw new ExprError(`ismeretlen karakter: "${c}"`, src);
+    }
+    out.push({ k: "end", v: "" });
+    return out;
+}
+/* ===== Parser (precedencia-mászó) ===== */
+const BIN_PREC = {
+    "??": 1, "||": 2, "&&": 3, "==": 4, "!=": 4, "<": 5, "<=": 5, ">": 5, ">=": 5, "+": 6, "-": 6, "*": 7, "/": 7, "%": 7,
+};
+class ExprParser {
+    constructor(src) {
+        this.src = src;
+        this.p = 0;
+        this.toks = tokenize(src);
+    }
+    parse() {
+        const node = this.ternary();
+        if (this.toks[this.p].k !== "end")
+            throw new ExprError(`váratlan: "${this.toks[this.p].v}"`, this.src);
+        return node;
+    }
+    is(v) {
+        const t = this.toks[this.p];
+        return t.k === "op" && t.v === v;
+    }
+    eat(v) {
+        if (!this.is(v))
+            throw new ExprError(`"${v}" hiányzik`, this.src);
+        this.p++;
+    }
+    ternary() {
+        const c = this.binary(1);
+        if (this.is("?")) {
+            this.p++;
+            const a = this.ternary();
+            this.eat(":");
+            const b = this.ternary();
+            return { t: "cond", c, a, b };
+        }
+        return c;
+    }
+    binary(minPrec) {
+        let left = this.unary();
+        for (;;) {
+            const t = this.toks[this.p];
+            const prec = t.k === "op" ? BIN_PREC[t.v] : undefined;
+            if (!prec || prec < minPrec)
+                return left;
+            this.p++;
+            const right = this.binary(prec + 1);
+            left = { t: "bin", op: t.v, a: left, b: right };
+        }
+    }
+    unary() {
+        if (this.is("!") || this.is("-") || this.is("+")) {
+            const op = this.toks[this.p++].v;
+            return { t: "un", op, a: this.unary() };
+        }
+        return this.postfix();
+    }
+    postfix() {
+        let node = this.primary();
+        for (;;) {
+            if (this.is(".")) {
+                this.p++;
+                const t = this.toks[this.p++];
+                if (t.k !== "id" && t.k !== "num")
+                    throw new ExprError("mezőnév hiányzik a „.” után", this.src);
+                if (FORBIDDEN.has(t.v))
+                    throw new ExprError(`tiltott mezőnév: ${t.v}`, this.src);
+                node = { t: "member", obj: node, key: t.v };
+            }
+            else if (this.is("[")) {
+                this.p++;
+                const key = this.ternary();
+                this.eat("]");
+                node = { t: "index", obj: node, key };
+            }
+            else
+                return node;
+        }
+    }
+    primary() {
+        const t = this.toks[this.p++];
+        if (t.k === "num")
+            return { t: "num", v: t.n };
+        if (t.k === "str")
+            return { t: "str", v: t.v };
+        if (t.k === "id") {
+            if (t.v === "true" || t.v === "false")
+                return { t: "bool", v: t.v === "true" };
+            if (t.v === "null")
+                return { t: "null", v: null };
+            if (this.is("(")) {
+                if (!(t.v in FUNCTIONS))
+                    throw new ExprError(`ismeretlen függvény: ${t.v} (engedélyezett: ${Object.keys(FUNCTIONS).join(", ")})`, this.src);
+                this.p++;
+                const args = [];
+                if (!this.is(")")) {
+                    for (;;) {
+                        args.push(this.ternary());
+                        if (this.is(",")) {
+                            this.p++;
+                            continue;
+                        }
+                        break;
+                    }
+                }
+                this.eat(")");
+                return { t: "call", name: t.v, args };
+            }
+            if (FORBIDDEN.has(t.v))
+                throw new ExprError(`tiltott azonosító: ${t.v}`, this.src);
+            return { t: "id", name: t.v };
+        }
+        if (t.k === "op" && t.v === "(") {
+            const inner = this.ternary();
+            this.eat(")");
+            return inner;
+        }
+        throw new ExprError(t.k === "end" ? "váratlan kifejezés-vég" : `váratlan: "${t.v}"`, this.src);
+    }
+}
+/** Kifejezés szövegének értelmezése (szintaktikai hiba esetén `ExprError`). */
+function parseExpr(src) {
+    return new ExprParser(src).parse();
+}
+/* ===== Függvények ===== */
+const num = (v) => (typeof v === "number" ? v : Number(v));
+const FUNCTIONS = {
+    len: (v) => (typeof v === "string" || Array.isArray(v) ? v.length : v && typeof v === "object" ? Object.keys(v).length : 0),
+    upper: (v) => String(v ?? "").toUpperCase(),
+    lower: (v) => String(v ?? "").toLowerCase(),
+    trim: (v) => String(v ?? "").trim(),
+    join: (v, sep) => (Array.isArray(v) ? v.join(sep === undefined ? ", " : String(sep)) : ""),
+    round: (v, digits) => {
+        const f = 10 ** (digits === undefined ? 0 : num(digits));
+        return Math.round(num(v) * f) / f;
+    },
+    min: (...a) => Math.min(...a.map(num)),
+    max: (...a) => Math.max(...a.map(num)),
+    str: (v) => (v === null || v === undefined ? "" : String(v)),
+    plural: (n, one, other) => (num(n) === 1 ? one : other),
+};
+/* ===== Kiértékelés ===== */
+const truthy = (v) => !!v;
+function evalRef(node, env) {
+    switch (node.t) {
+        case "id": {
+            const r = env.resolve(node.name);
+            return r ? { value: r.value, path: r.statePath } : { value: undefined };
+        }
+        case "member": {
+            const o = evalRef(node.obj, env);
+            if (FORBIDDEN.has(node.key))
+                return { value: undefined };
+            const v = o.value !== null && o.value !== undefined ? o.value[node.key] : undefined;
+            return { value: v, path: o.path !== undefined ? `${o.path}.${node.key}` : undefined };
+        }
+        case "index": {
+            const o = evalRef(node.obj, env);
+            const k = evalNode(node.key, env);
+            const key = String(k);
+            if (FORBIDDEN.has(key))
+                return { value: undefined };
+            const v = o.value !== null && o.value !== undefined ? o.value[key] : undefined;
+            return { value: v, path: o.path !== undefined ? `${o.path}.${key}` : undefined };
+        }
+        default:
+            return { value: evalNode(node, env) };
+    }
+}
+function evalNode(node, env) {
+    switch (node.t) {
+        case "num":
+        case "str":
+        case "bool":
+        case "null":
+            return node.v;
+        case "id":
+        case "member":
+        case "index": {
+            const r = evalRef(node, env);
+            if (r.path !== undefined)
+                env.read?.(r.path);
+            return r.value;
+        }
+        case "call":
+            return FUNCTIONS[node.name](...node.args.map((a) => evalNode(a, env)));
+        case "un": {
+            const v = evalNode(node.a, env);
+            if (node.op === "!")
+                return !truthy(v);
+            return node.op === "-" ? -num(v) : num(v);
+        }
+        case "cond":
+            return truthy(evalNode(node.c, env)) ? evalNode(node.a, env) : evalNode(node.b, env);
+        case "bin": {
+            if (node.op === "&&") {
+                const a = evalNode(node.a, env);
+                return truthy(a) ? evalNode(node.b, env) : a;
+            }
+            if (node.op === "||") {
+                const a = evalNode(node.a, env);
+                return truthy(a) ? a : evalNode(node.b, env);
+            }
+            if (node.op === "??") {
+                const a = evalNode(node.a, env);
+                return a === null || a === undefined ? evalNode(node.b, env) : a;
+            }
+            const a = evalNode(node.a, env);
+            const b = evalNode(node.b, env);
+            switch (node.op) {
+                case "+": return typeof a === "string" || typeof b === "string" ? `${a ?? ""}${b ?? ""}` : num(a) + num(b);
+                case "-": return num(a) - num(b);
+                case "*": return num(a) * num(b);
+                case "/": return num(a) / num(b);
+                case "%": return num(a) % num(b);
+                case "==": return a === b || (a == null && b == null);
+                case "!=": return !(a === b || (a == null && b == null));
+                case "<": return a < b;
+                case "<=": return a <= b;
+                case ">": return a > b;
+                case ">=": return a >= b;
+            }
+            throw new ExprError(`ismeretlen operátor: ${node.op}`, "");
+        }
+    }
+}
+/** Kifejezés kiértékelése a megadott környezetben. */
+function evalExpr(node, env) {
+    return evalNode(node, env);
+}
+/** Egy `${...}` záró `}` helye (beágyazott zárójelek és idézőjelek figyelembevételével); -1, ha nincs. */
+function findClose(s, from) {
+    let depth = 1;
+    let quote = "";
+    for (let i = from; i < s.length; i++) {
+        const c = s[i];
+        if (quote) {
+            if (c === "\\")
+                i++;
+            else if (c === quote)
+                quote = "";
+            continue;
+        }
+        if (c === "'" || c === '"')
+            quote = c;
+        else if (c === "{")
+            depth++;
+        else if (c === "}" && --depth === 0)
+            return i;
+    }
+    return -1;
+}
+/** `true`, ha a szöveg tartalmaz `${...}` kifejezést. */
+function hasTemplate(s) {
+    return /(^|[^$])\$\{/.test(s) || s.startsWith("${");
+}
+/** Sablon felbontása. `null`, ha nincs benne kifejezés (a `$${` literális `${`). */
+function compileTemplate(s) {
+    const parts = [];
+    let lit = "";
+    let any = false;
+    for (let i = 0; i < s.length; i++) {
+        if (s[i] === "$" && s[i + 1] === "$" && s[i + 2] === "{") {
+            lit += "${";
+            i += 2;
+            continue;
+        }
+        if (s[i] === "$" && s[i + 1] === "{") {
+            const close = findClose(s, i + 2);
+            if (close < 0)
+                throw new ExprError("a ${ nincs lezárva", s);
+            if (lit)
+                parts.push(lit);
+            lit = "";
+            const src = s.slice(i + 2, close).trim();
+            parts.push({ expr: parseExpr(src), src });
+            any = true;
+            i = close;
+            continue;
+        }
+        lit += s[i];
+    }
+    if (!any)
+        return null;
+    if (lit)
+        parts.push(lit);
+    return { parts, whole: parts.length === 1 && typeof parts[0] !== "string" };
+}
+/** Sablon kiértékelése: ha az egész szöveg egyetlen `${}`, a nyers értéket adja, egyébként szöveget. */
+function evalTemplate(tpl, env) {
+    if (tpl.whole)
+        return evalNode(tpl.parts[0].expr, env);
+    return tpl.parts
+        .map((p) => {
+        if (typeof p === "string")
+            return p;
+        const v = evalNode(p.expr, env);
+        return v === null || v === undefined ? "" : String(v);
+    })
+        .join("");
+}
+
+
+/***/ },
+
+/***/ "./src/spec/meta.generated.ts"
+/*!************************************!*\
+  !*** ./src/spec/meta.generated.ts ***!
+  \************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SPEC_PARAMS: () => (/* binding */ SPEC_PARAMS)
+/* harmony export */ });
+// GENERÁLT FÁJL: scripts/gen-props.mjs → scripts/spec-meta.mjs. Ne szerkeszd kézzel.
+const SPEC_PARAMS = {
+    Accordion: { all: ["parent", "id", "class", "items", "multiple"], required: ["parent", "id", "items"], fns: [] },
+    Alert: { all: ["parent", "id", "class", "type", "title", "message", "dismissible", "onDismiss"], required: ["parent", "id", "message"], fns: ["onDismiss"] },
+    Avatar: { all: ["parent", "id", "class", "src", "name", "size", "shape"], required: ["parent", "id"], fns: [] },
+    Badge: { all: ["parent", "id", "class", "text", "type"], required: ["parent", "id"], fns: [] },
+    Blockquote: { all: ["parent", "id", "class", "text", "author"], required: ["parent", "id", "text"], fns: [] },
+    Breadcrumb: { all: ["parent", "id", "class", "items", "separator"], required: ["parent", "id", "items"], fns: [] },
+    Button: { all: ["parent", "id", "class", "text", "style", "click", "handleEvent", "throttle", "debounce"], required: ["parent", "id"], fns: ["click"] },
+    ButtonInput: { all: ["type", "text", "parent", "id", "class", "name", "value", "placeholder", "labelText", "labelfirst", "checked", "onChange", "click", "handleEvent", "min", "max", "step", "start", "rows", "cols"], required: ["parent", "id"], fns: ["onChange", "click"] },
+    Card: { all: ["parent", "id", "class", "title", "body", "footer"], required: ["parent", "id"], fns: [] },
+    Carousel: { all: ["parent", "id", "class", "slides", "showArrows", "showDots", "startIndex", "onChange", "slideWidth", "height", "labels"], required: ["parent", "id", "slides"], fns: ["onChange", "labels"] },
+    Checkbox: { all: ["type", "parent", "id", "class", "name", "value", "placeholder", "labelText", "labelfirst", "checked", "onChange", "click", "handleEvent", "min", "max", "step", "start", "rows", "cols"], required: ["parent", "id"], fns: ["onChange", "click"] },
+    CodeBlock: { all: ["parent", "id", "class", "code", "language", "copyable"], required: ["parent", "id", "code"], fns: [] },
+    ColorInput: { all: ["type", "parent", "id", "class", "name", "value", "placeholder", "labelText", "labelfirst", "checked", "onChange", "click", "handleEvent", "min", "max", "step", "start", "rows", "cols"], required: ["parent", "id"], fns: ["onChange", "click"] },
+    Container: { all: ["parent", "id", "class", "children"], required: ["parent", "id"], fns: [] },
+    CustomDatePicker: { all: ["parent", "id", "class", "value", "min", "max", "labelText", "placeholder", "onChange"], required: ["parent", "id"], fns: ["onChange"] },
+    CustomDateRangePicker: { all: ["parent", "id", "class", "startValue", "endValue", "min", "max", "labelText", "placeholder", "onChange"], required: ["parent", "id"], fns: ["onChange"] },
+    CustomDateTimePicker: { all: ["parent", "id", "class", "value", "min", "max", "labelText", "placeholder", "onChange"], required: ["parent", "id"], fns: ["onChange"] },
+    CustomMonthPicker: { all: ["parent", "id", "class", "value", "min", "max", "labelText", "placeholder", "onChange"], required: ["parent", "id"], fns: ["onChange"] },
+    CustomSelect: { all: ["parent", "id", "class", "name", "value", "labelText", "placeholder", "options", "onChange"], required: ["parent", "id", "options"], fns: ["onChange"] },
+    CustomWeekPicker: { all: ["parent", "id", "class", "value", "min", "max", "labelText", "placeholder", "onChange"], required: ["parent", "id"], fns: ["onChange"] },
+    DateInput: { all: ["type", "parent", "id", "class", "name", "value", "placeholder", "labelText", "labelfirst", "checked", "onChange", "click", "handleEvent", "min", "max", "step", "start", "rows", "cols"], required: ["parent", "id"], fns: ["onChange", "click"] },
+    DatetimeInput: { all: ["type", "parent", "id", "class", "name", "value", "placeholder", "labelText", "labelfirst", "checked", "onChange", "click", "handleEvent", "min", "max", "step", "start", "rows", "cols"], required: ["parent", "id"], fns: ["onChange", "click"] },
+    Divider: { all: ["parent", "id", "class"], required: ["parent", "id"], fns: [] },
+    DragAndDropFileInput: { all: ["parent", "id", "class", "accept", "multiple", "maxFiles", "labelText", "dropText", "onFiles"], required: ["parent", "id"], fns: ["onFiles"] },
+    Drawer: { all: ["id", "title", "children", "items", "defaultState", "hasOverlay", "mode"], required: ["id"], fns: [] },
+    EmailInput: { all: ["type", "parent", "id", "class", "name", "value", "placeholder", "labelText", "labelfirst", "checked", "onChange", "click", "handleEvent", "min", "max", "step", "start", "rows", "cols"], required: ["parent", "id"], fns: ["onChange", "click"] },
+    FileInput: { all: ["type", "parent", "id", "class", "name", "value", "placeholder", "labelText", "labelfirst", "checked", "onChange", "click", "handleEvent", "min", "max", "step", "start", "rows", "cols"], required: ["parent", "id"], fns: ["onChange", "click"] },
+    Form: { all: ["parent", "id", "class", "action", "method", "inputs", "onSubmit"], required: ["parent", "id", "inputs"], fns: ["onSubmit"] },
+    Gantt: { all: ["parent", "id", "class", "rows", "groups", "from", "to", "monthWidth", "labelWidth", "rowHeight", "cardRowHeight", "axis", "barStyle", "showToday", "todayLabel", "today", "ongoingDays", "dimPast", "selectable", "selectedId", "draggableRows", "initialScroll", "onRowClick", "onSelect", "onMilestoneClick", "onMilestoneHover", "selectedMilestoneId", "dragScroll", "onReorder", "ariaLabel", "labelHeader", "emptyText"], required: ["parent", "id", "rows"], fns: ["onRowClick", "onSelect", "onMilestoneClick", "onMilestoneHover", "onReorder"] },
+    Grid: { all: ["parent", "id", "class", "columns", "gap", "minItemWidth", "children"], required: ["parent", "id"], fns: [] },
+    HiddenInput: { all: ["type", "parent", "id", "class", "name", "value", "placeholder", "labelText", "labelfirst", "checked", "onChange", "click", "handleEvent", "min", "max", "step", "start", "rows", "cols"], required: ["parent", "id"], fns: ["onChange", "click"] },
+    Image: { all: ["parent", "id", "class", "src", "alt", "caption", "width", "height", "lazy", "spinner", "fallback", "errorText", "retryText", "strategy", "fetchInit", "timeout", "retries", "onLoad", "onError", "onStateChange"], required: ["parent", "id", "src"], fns: ["spinner", "fallback", "onLoad", "onError", "onStateChange"] },
+    Link: { all: ["parent", "id", "class", "text", "href", "target", "click"], required: ["parent", "id", "text", "href"], fns: ["click"] },
+    Menu: { all: ["id", "items", "collapsible"], required: ["id", "items"], fns: [] },
+    Modal: { all: ["parent", "id", "class", "width", "maxWidth", "footer", "closeOnBackdrop", "closeOnEscape", "labels"], required: ["id"], fns: [] },
+    MonthInput: { all: ["type", "parent", "id", "class", "name", "value", "placeholder", "labelText", "labelfirst", "checked", "onChange", "click", "handleEvent", "min", "max", "step", "start", "rows", "cols"], required: ["parent", "id"], fns: ["onChange", "click"] },
+    MusicPlayer: { all: ["parent", "id", "class", "tracks", "startIndex", "autoplay", "loop", "volume", "showPlaylist", "showVolume", "labels", "onPlay", "onPause", "onTrackChange", "onEnded", "onStateChange"], required: ["parent", "id", "tracks"], fns: ["onPlay", "onPause", "onTrackChange", "onEnded", "onStateChange"] },
+    Nav: { all: ["parent", "id", "class", "items"], required: ["parent", "id", "items"], fns: [] },
+    NumberInput: { all: ["type", "parent", "id", "class", "name", "value", "placeholder", "labelText", "labelfirst", "checked", "onChange", "click", "handleEvent", "min", "max", "step", "start", "rows", "cols"], required: ["parent", "id"], fns: ["onChange", "click"] },
+    OrderedList: { all: ["parent", "id", "class", "start"], required: ["parent", "id"], fns: [] },
+    Paragraph: { all: ["parent", "text", "id", "class"], required: ["parent", "id"], fns: [] },
+    PasswordInput: { all: ["type", "showToggle", "showLabel", "hideLabel", "parent", "id", "class", "name", "value", "placeholder", "labelText", "labelfirst", "checked", "onChange", "click", "handleEvent", "min", "max", "step", "start", "rows", "cols"], required: ["parent", "id"], fns: ["onChange", "click"] },
+    ProgressBar: { all: ["parent", "id", "class", "value", "max", "label", "showPercentage", "color"], required: ["parent", "id", "value"], fns: [] },
+    Radio: { all: ["options", "parent", "id", "type", "class", "name", "value", "placeholder", "labelText", "labelfirst", "checked", "onChange", "click", "handleEvent", "min", "max", "step", "start", "rows", "cols"], required: ["options", "parent", "id"], fns: ["onChange", "click"] },
+    RangeInput: { all: ["type", "parent", "id", "class", "name", "value", "placeholder", "labelText", "labelfirst", "checked", "onChange", "click", "handleEvent", "min", "max", "step", "start", "rows", "cols"], required: ["parent", "id"], fns: ["onChange", "click"] },
+    ResetInput: { all: ["type", "text", "parent", "id", "class", "name", "value", "placeholder", "labelText", "labelfirst", "checked", "onChange", "click", "handleEvent", "min", "max", "step", "start", "rows", "cols"], required: ["parent", "id"], fns: ["onChange", "click"] },
+    SearchInput: { all: ["type", "parent", "id", "class", "name", "value", "placeholder", "labelText", "labelfirst", "checked", "onChange", "click", "handleEvent", "min", "max", "step", "start", "rows", "cols"], required: ["parent", "id"], fns: ["onChange", "click"] },
+    Select: { all: ["options", "parent", "id", "type", "class", "name", "value", "placeholder", "labelText", "labelfirst", "checked", "onChange", "click", "handleEvent", "min", "max", "step", "start", "rows", "cols"], required: ["options", "parent", "id"], fns: ["onChange", "click"] },
+    Spinner: { all: ["parent", "id", "class", "size", "color"], required: ["parent", "id"], fns: [] },
+    SubmitInput: { all: ["type", "text", "parent", "id", "class", "name", "value", "placeholder", "labelText", "labelfirst", "checked", "onChange", "click", "handleEvent", "min", "max", "step", "start", "rows", "cols"], required: ["parent", "id"], fns: ["onChange", "click"] },
+    Table: { all: ["parent", "id", "class", "hasHeader", "hasFooter", "showHeader", "showFooter", "addRowNumbers", "sumRowValues", "cellNames", "precision", "sortable", "filterable", "pageSize", "pageSizeOptions", "labels", "serverSide"], required: ["parent", "id"], fns: [] },
+    Tabs: { all: ["parent", "id", "class", "tabs", "activeTab", "ariaLabel", "onChange"], required: ["parent", "id", "tabs"], fns: ["onChange"] },
+    TelInput: { all: ["type", "parent", "id", "class", "name", "value", "placeholder", "labelText", "labelfirst", "checked", "onChange", "click", "handleEvent", "min", "max", "step", "start", "rows", "cols"], required: ["parent", "id"], fns: ["onChange", "click"] },
+    TextInput: { all: ["type", "parent", "id", "class", "name", "value", "placeholder", "labelText", "labelfirst", "checked", "onChange", "click", "handleEvent", "min", "max", "step", "start", "rows", "cols"], required: ["parent", "id"], fns: ["onChange", "click"] },
+    Textarea: { all: ["type", "parent", "id", "class", "name", "value", "placeholder", "labelText", "labelfirst", "checked", "onChange", "click", "handleEvent", "min", "max", "step", "start", "rows", "cols"], required: ["parent", "id"], fns: ["onChange", "click"] },
+    TimeInput: { all: ["type", "parent", "id", "class", "name", "value", "placeholder", "labelText", "labelfirst", "checked", "onChange", "click", "handleEvent", "min", "max", "step", "start", "rows", "cols"], required: ["parent", "id"], fns: ["onChange", "click"] },
+    Timeline: { all: ["parent", "id", "class", "items", "compact", "ariaLabel"], required: ["parent", "id", "items"], fns: [] },
+    Title: { all: ["parent", "text", "id", "class"], required: ["parent", "id"], fns: [] },
+    Toast: { all: ["parent", "id", "class", "type", "message", "duration", "position", "width"], required: ["parent", "id", "message"], fns: [] },
+    Tooltip: { all: ["parent", "id", "class", "text", "position", "trigger"], required: ["parent", "id", "text"], fns: [] },
+    UnorderedList: { all: ["parent", "id", "class", "start"], required: ["parent", "id"], fns: [] },
+    UrlInput: { all: ["type", "parent", "id", "class", "name", "value", "placeholder", "labelText", "labelfirst", "checked", "onChange", "click", "handleEvent", "min", "max", "step", "start", "rows", "cols"], required: ["parent", "id"], fns: ["onChange", "click"] },
+    Video: { all: ["parent", "id", "class", "src", "poster", "caption", "ariaLabel", "width", "height", "controls", "autoplay", "loop", "muted", "playsInline", "preload", "lazy", "spinner", "fallback", "errorText", "retryText", "timeout", "retries", "onLoad", "onError", "onStateChange"], required: ["parent", "id", "src"], fns: ["spinner", "fallback", "onLoad", "onError", "onStateChange"] },
+    WeekInput: { all: ["type", "parent", "id", "class", "name", "value", "placeholder", "labelText", "labelfirst", "checked", "onChange", "click", "handleEvent", "min", "max", "step", "start", "rows", "cols"], required: ["parent", "id"], fns: ["onChange", "click"] },
+};
+
+
+/***/ },
+
+/***/ "./src/spec/mount.ts"
+/*!***************************!*\
+  !*** ./src/spec/mount.ts ***!
+  \***************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   mountYaml: () => (/* binding */ mountYaml)
+/* harmony export */ });
+/* harmony import */ var _build__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./build */ "./src/spec/build.ts");
+/* harmony import */ var _errors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./errors */ "./src/spec/errors.ts");
+
+
+/**
+ * Oldal felépítése YAML-ból, egy lépésben.
+ *
+ * A `source` lehet:
+ * - YAML szöveg,
+ * - a leírást tartalmazó `<script type="text/yaml" id="...">` elem azonosítója `#id` alakban
+ *   (ez `file://` alól is működik, ellentétben a `fetch`-csel),
+ * - már beolvasott objektum.
+ */
+function mountYaml(target, source, options = {}) {
+    let spec = source;
+    if (typeof source === "string" && /^#[\w-]+$/.test(source.trim())) {
+        const el = document.getElementById(source.trim().slice(1));
+        if (!el)
+            throw new _errors__WEBPACK_IMPORTED_MODULE_1__.SpecError(`nem található a leírást tartalmazó elem: ${source}`);
+        spec = el.textContent ?? "";
+    }
+    return (0,_build__WEBPACK_IMPORTED_MODULE_0__.buildUI)(spec, { ...options, parent: target });
+}
+
+
+/***/ },
+
+/***/ "./src/spec/parseYaml.ts"
+/*!*******************************!*\
+  !*** ./src/spec/parseYaml.ts ***!
+  \*******************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   YamlError: () => (/* binding */ YamlError),
+/* harmony export */   parseYaml: () => (/* binding */ parseYaml)
+/* harmony export */ });
+/**
+ * Függőségmentes YAML-részhalmaz parser a deklaratív oldalleíróhoz.
+ *
+ * Támogatott: behúzásalapú térkép és lista (a lista a kulccsal azonos behúzással is), skalárok
+ * (szöveg, szám, `true`/`false`, `null`/`~`), idézőjeles szövegek (`'..'` és `".."` escape-ekkel),
+ * flow-forma (`[a, b]`, `{a: 1}`, többsoros is), `#` megjegyzés, `|` és `>` blokk-skalár (`-` / `+` jelzővel),
+ * valamint a `${...}` kifejezések (ezeken belül `:`, `,`, `#` stb. nem tördeli a szöveget).
+ *
+ * Nem támogatott (hibát dob): horgonyok és aliasok (`&a`, `*a`), címkék (`!tag`), több dokumentum,
+ * tabulátor behúzás, többsoros sima (idézőjel nélküli) skalár.
+ */
+class YamlError extends Error {
+    constructor(message, line, column = 1) {
+        super(`YAML hiba (${line}. sor): ${message}`);
+        this.line = line;
+        this.column = column;
+        this.name = "YamlError";
+    }
+}
+const isSpace = (c) => c === " " || c === "\t";
+/** Egy skalár elején álló idézőjel nyit-e idézett szöveget (a "don't" aposztrófja nem). */
+function opensQuote(s, i) {
+    if (s[i] !== "'" && s[i] !== '"')
+        return false;
+    if (i === 0)
+        return true;
+    return "[{,: \t-".includes(s[i - 1]);
+}
+/** `#` megjegyzés levágása: csak szóköz után vagy sor elején, idézőjelen és `${}`-on kívül. */
+function stripComment(s) {
+    let quote = "";
+    let depth = 0;
+    for (let i = 0; i < s.length; i++) {
+        const c = s[i];
+        if (quote) {
+            if (c === "\\" && quote === '"')
+                i++;
+            else if (c === quote) {
+                if (quote === "'" && s[i + 1] === "'")
+                    i++;
+                else
+                    quote = "";
+            }
+            continue;
+        }
+        if (opensQuote(s, i)) {
+            quote = c;
+            continue;
+        }
+        if (c === "$" && s[i + 1] === "{") {
+            depth++;
+            i++;
+            continue;
+        }
+        if (depth > 0) {
+            if (c === "{")
+                depth++;
+            else if (c === "}")
+                depth--;
+            continue;
+        }
+        if (c === "#" && (i === 0 || isSpace(s[i - 1])))
+            return s.slice(0, i);
+    }
+    return s;
+}
+/**
+ * A kulcs-érték elválasztó `:` helye (utána szóköz vagy sorvég), idézőjelen, `${}`-on kívül.
+ * -1: nem kulcs-érték sor.
+ */
+function findKeyColon(s) {
+    if (s[0] === "[" || s[0] === "{")
+        return -1;
+    let quote = "";
+    let depth = 0;
+    for (let i = 0; i < s.length; i++) {
+        const c = s[i];
+        if (quote) {
+            if (c === "\\" && quote === '"')
+                i++;
+            else if (c === quote) {
+                if (quote === "'" && s[i + 1] === "'")
+                    i++;
+                else
+                    quote = "";
+            }
+            continue;
+        }
+        if (opensQuote(s, i)) {
+            quote = c;
+            continue;
+        }
+        if (c === "$" && s[i + 1] === "{") {
+            depth++;
+            i++;
+            continue;
+        }
+        if (depth > 0) {
+            if (c === "{")
+                depth++;
+            else if (c === "}")
+                depth--;
+            continue;
+        }
+        if (c === ":" && (i === s.length - 1 || isSpace(s[i + 1])))
+            return i;
+    }
+    return -1;
+}
+function unescapeDouble(body, line) {
+    let out = "";
+    for (let i = 0; i < body.length; i++) {
+        const c = body[i];
+        if (c !== "\\") {
+            out += c;
+            continue;
+        }
+        const n = body[++i];
+        switch (n) {
+            case "n":
+                out += "\n";
+                break;
+            case "t":
+                out += "\t";
+                break;
+            case "r":
+                out += "\r";
+                break;
+            case "0":
+                out += "\0";
+                break;
+            case '"':
+                out += '"';
+                break;
+            case "\\":
+                out += "\\";
+                break;
+            case "/":
+                out += "/";
+                break;
+            case "u": {
+                const hex = body.slice(i + 1, i + 5);
+                if (!/^[0-9a-fA-F]{4}$/.test(hex))
+                    throw new YamlError("érvénytelen \\u escape", line);
+                out += String.fromCharCode(parseInt(hex, 16));
+                i += 4;
+                break;
+            }
+            default: throw new YamlError(`ismeretlen escape: \\${n ?? ""}`, line);
+        }
+    }
+    return out;
+}
+/** Idézett szöveg beolvasása az `s[i]` idézőjeltől; visszaadja a szöveget és a záró idézőjel utáni indexet. */
+function readQuoted(s, i, line) {
+    const q = s[i];
+    let j = i + 1;
+    let raw = "";
+    for (; j < s.length; j++) {
+        const c = s[j];
+        if (q === '"' && c === "\\") {
+            raw += c + (s[j + 1] ?? "");
+            j++;
+            continue;
+        }
+        if (c === q) {
+            if (q === "'" && s[j + 1] === "'") {
+                raw += "'";
+                j++;
+                continue;
+            }
+            return { value: q === '"' ? unescapeDouble(raw, line) : raw, end: j + 1 };
+        }
+        raw += c;
+    }
+    throw new YamlError("nincs lezárva az idézőjel", line);
+}
+/** Sima skalár típusának feloldása. */
+function resolvePlain(s, line) {
+    const t = s.trim();
+    if (t === "" || t === "~" || t === "null")
+        return null;
+    if (t === "true")
+        return true;
+    if (t === "false")
+        return false;
+    if (/^[&*][A-Za-z0-9_-]+(\s|$)/.test(t))
+        throw new YamlError(`horgony/alias nem támogatott: ${t}`, line);
+    if (/^!{1,2}[A-Za-z]/.test(t))
+        throw new YamlError(`címke nem támogatott: ${t}`, line);
+    if (/^[-+]?(0|[1-9]\d*)(\.\d+)?([eE][-+]?\d+)?$/.test(t))
+        return Number(t);
+    return t;
+}
+/** Flow-kollekció és idézett / sima skalárok értelmezése egyetlen szövegből. */
+class FlowParser {
+    constructor(s, line) {
+        this.s = s;
+        this.line = line;
+        this.i = 0;
+    }
+    parse() {
+        this.ws();
+        const v = this.value();
+        this.ws();
+        if (this.i < this.s.length)
+            throw new YamlError(`váratlan szöveg a flow értéke után: "${this.s.slice(this.i)}"`, this.line);
+        return v;
+    }
+    ws() {
+        while (this.i < this.s.length && /\s/.test(this.s[this.i]))
+            this.i++;
+    }
+    value() {
+        const c = this.s[this.i];
+        if (c === "[")
+            return this.seq();
+        if (c === "{")
+            return this.map();
+        if (c === "'" || c === '"') {
+            const { value, end } = readQuoted(this.s, this.i, this.line);
+            this.i = end;
+            return value;
+        }
+        return resolvePlain(this.plain(), this.line);
+    }
+    /** Sima skalár a következő `,` `]` `}` vagy `: ` határig (a `${...}` egyben marad). */
+    plain() {
+        const start = this.i;
+        let depth = 0;
+        while (this.i < this.s.length) {
+            const c = this.s[this.i];
+            if (c === "$" && this.s[this.i + 1] === "{") {
+                depth++;
+                this.i += 2;
+                continue;
+            }
+            if (depth > 0) {
+                if (c === "{")
+                    depth++;
+                else if (c === "}")
+                    depth--;
+                this.i++;
+                continue;
+            }
+            if (c === "," || c === "]" || c === "}")
+                break;
+            if (c === ":" && (isSpace(this.s[this.i + 1]) || this.i + 1 >= this.s.length))
+                break;
+            this.i++;
+        }
+        return this.s.slice(start, this.i).trim();
+    }
+    seq() {
+        this.i++; // [
+        const out = [];
+        for (;;) {
+            this.ws();
+            if (this.s[this.i] === "]") {
+                this.i++;
+                return out;
+            }
+            out.push(this.value());
+            this.ws();
+            if (this.s[this.i] === ",") {
+                this.i++;
+                continue;
+            }
+            if (this.s[this.i] === "]") {
+                this.i++;
+                return out;
+            }
+            throw new YamlError("a flow listában „,” vagy „]” hiányzik", this.line);
+        }
+    }
+    map() {
+        this.i++; // {
+        const out = {};
+        for (;;) {
+            this.ws();
+            if (this.s[this.i] === "}") {
+                this.i++;
+                return out;
+            }
+            let key;
+            if (this.s[this.i] === "'" || this.s[this.i] === '"') {
+                const q = readQuoted(this.s, this.i, this.line);
+                key = q.value;
+                this.i = q.end;
+            }
+            else {
+                key = this.plain();
+            }
+            this.ws();
+            let value = null;
+            if (this.s[this.i] === ":") {
+                this.i++;
+                this.ws();
+                if (this.s[this.i] !== "," && this.s[this.i] !== "}")
+                    value = this.value();
+            }
+            if (key in out)
+                throw new YamlError(`ismétlődő kulcs: ${key}`, this.line);
+            out[key] = value;
+            this.ws();
+            if (this.s[this.i] === ",") {
+                this.i++;
+                continue;
+            }
+            if (this.s[this.i] === "}") {
+                this.i++;
+                return out;
+            }
+            throw new YamlError("a flow térképben „,” vagy „}” hiányzik", this.line);
+        }
+    }
+}
+/** Nyitó/záró zárójelek egyensúlya egy flow-értékben (a `${}` és az idézőjelek nem számítanak). */
+function flowBalance(s) {
+    let bal = 0;
+    let quote = "";
+    let tpl = 0;
+    for (let i = 0; i < s.length; i++) {
+        const c = s[i];
+        if (quote) {
+            if (c === "\\" && quote === '"')
+                i++;
+            else if (c === quote)
+                quote = "";
+            continue;
+        }
+        if (opensQuote(s, i)) {
+            quote = c;
+            continue;
+        }
+        if (c === "$" && s[i + 1] === "{") {
+            tpl++;
+            i++;
+            continue;
+        }
+        if (tpl > 0) {
+            if (c === "{")
+                tpl++;
+            else if (c === "}")
+                tpl--;
+            continue;
+        }
+        if (c === "[" || c === "{")
+            bal++;
+        else if (c === "]" || c === "}")
+            bal--;
+    }
+    return bal;
+}
+class Parser {
+    constructor(src) {
+        this.lines = [];
+        this.pos = 0;
+        const raws = src.replace(/^﻿/, "").split(/\r?\n/);
+        raws.forEach((raw, idx) => {
+            const no = idx + 1;
+            const m = /^( *)/.exec(raw);
+            if (/^\t/.test(raw.slice(m[1].length)) && raw.trim() !== "") {
+                throw new YamlError("tabulátor behúzás nem megengedett (szóközt használj)", no);
+            }
+            this.lines.push({ indent: m[1].length, text: stripComment(raw.slice(m[1].length)).replace(/\s+$/, ""), raw, no });
+        });
+    }
+    parse() {
+        this.skipBlank();
+        if (this.pos < this.lines.length && /^---\s*$/.test(this.lines[this.pos].text)) {
+            this.pos++;
+            this.skipBlank();
+        }
+        if (this.pos >= this.lines.length)
+            return null;
+        const first = this.lines[this.pos];
+        if (/^\.\.\.\s*$/.test(first.text))
+            return null;
+        const value = this.block(first.indent);
+        this.skipBlank();
+        if (this.pos < this.lines.length) {
+            const l = this.lines[this.pos];
+            if (/^---\s*$/.test(l.text))
+                throw new YamlError("több dokumentum nem támogatott", l.no);
+            throw new YamlError(`váratlan behúzás vagy tartalom: "${l.text}"`, l.no, l.indent + 1);
+        }
+        return value;
+    }
+    skipBlank() {
+        while (this.pos < this.lines.length && this.lines[this.pos].text === "")
+            this.pos++;
+    }
+    peek() {
+        this.skipBlank();
+        return this.pos < this.lines.length ? this.lines[this.pos] : null;
+    }
+    block(indent) {
+        const line = this.peek();
+        if (line.indent !== indent)
+            throw new YamlError("hibás behúzás", line.no, line.indent + 1);
+        if (/^-(\s|$)/.test(line.text))
+            return this.seq(indent);
+        if (findKeyColon(line.text) >= 0)
+            return this.map(indent);
+        // egyetlen skalár
+        this.pos++;
+        return this.inline(line.text, line);
+    }
+    seq(indent) {
+        const out = [];
+        for (;;) {
+            const line = this.peek();
+            if (!line || line.indent !== indent || !/^-(\s|$)/.test(line.text)) {
+                if (line && line.indent > indent)
+                    throw new YamlError("váratlan behúzás a listában", line.no, line.indent + 1);
+                return out;
+            }
+            const rest = line.text.replace(/^-\s*/, "");
+            const contentIndent = indent + (line.text.length - rest.length);
+            if (rest === "") {
+                this.pos++;
+                const next = this.peek();
+                out.push(next && next.indent > indent ? this.block(next.indent) : null);
+                continue;
+            }
+            if (/^[|>][+-]?$/.test(rest)) {
+                this.pos++;
+                out.push(this.blockScalar(rest, indent, line));
+                continue;
+            }
+            if (/^-(\s|$)/.test(rest) || findKeyColon(rest) >= 0) {
+                // a lista eleme beágyazott lista vagy térkép: a sor a tartalom oszlopától folytatódik
+                this.lines[this.pos] = { ...line, indent: contentIndent, text: rest };
+                out.push(this.block(contentIndent));
+                continue;
+            }
+            this.pos++;
+            out.push(this.inline(rest, line));
+        }
+    }
+    map(indent) {
+        const out = {};
+        for (;;) {
+            const line = this.peek();
+            if (!line || line.indent < indent)
+                return out;
+            if (line.indent > indent)
+                throw new YamlError("váratlan behúzás", line.no, line.indent + 1);
+            if (/^-(\s|$)/.test(line.text))
+                return out; // a szülő listájának következő eleme
+            if (/^---\s*$/.test(line.text))
+                throw new YamlError("több dokumentum nem támogatott", line.no);
+            const colon = findKeyColon(line.text);
+            if (colon < 0)
+                throw new YamlError(`„kulcs: érték” formát vártam: "${line.text}"`, line.no, indent + 1);
+            let key = line.text.slice(0, colon).trim();
+            if (key[0] === "'" || key[0] === '"') {
+                const q = readQuoted(key, 0, line.no);
+                if (q.end !== key.length)
+                    throw new YamlError(`érvénytelen kulcs: ${key}`, line.no);
+                key = q.value;
+            }
+            else if (/^[&*!]/.test(key) && /^[&*][A-Za-z0-9_-]+$|^!{1,2}[A-Za-z]/.test(key)) {
+                throw new YamlError(`horgony/alias/címke nem támogatott: ${key}`, line.no);
+            }
+            if (key in out)
+                throw new YamlError(`ismétlődő kulcs: ${key}`, line.no);
+            const rest = line.text.slice(colon + 1).trim();
+            this.pos++;
+            if (rest === "") {
+                const next = this.peek();
+                if (next && next.indent > indent)
+                    out[key] = this.block(next.indent);
+                else if (next && next.indent === indent && /^-(\s|$)/.test(next.text))
+                    out[key] = this.seq(indent);
+                else
+                    out[key] = null;
+            }
+            else if (/^[|>][+-]?$/.test(rest)) {
+                out[key] = this.blockScalar(rest, indent, line);
+            }
+            else {
+                out[key] = this.inline(rest, line);
+            }
+        }
+    }
+    /** Egysoros érték: flow-kollekció (akár több sorra tördelve), idézett vagy sima skalár. */
+    inline(text, line) {
+        const c = text[0];
+        if (c === "[" || c === "{") {
+            let src = text;
+            while (flowBalance(src) > 0) {
+                const next = this.pos < this.lines.length ? this.lines[this.pos] : null;
+                if (!next)
+                    throw new YamlError("a flow érték nincs lezárva", line.no);
+                src += " " + next.text.trim();
+                this.pos++;
+            }
+            return new FlowParser(src, line.no).parse();
+        }
+        if (c === "'" || c === '"') {
+            const { value, end } = readQuoted(text, 0, line.no);
+            if (text.slice(end).trim() !== "")
+                throw new YamlError(`váratlan szöveg az idézett érték után: "${text.slice(end)}"`, line.no);
+            return value;
+        }
+        return resolvePlain(text, line.no);
+    }
+    /** `|` (sorok megtartása) és `>` (sorok összefűzése) blokk-skalár. */
+    blockScalar(header, parentIndent, line) {
+        const style = header[0];
+        const chomp = header[1] ?? "";
+        const body = [];
+        let blockIndent = -1;
+        while (this.pos < this.lines.length) {
+            const l = this.lines[this.pos];
+            if (l.raw.trim() === "") {
+                body.push("");
+                this.pos++;
+                continue;
+            }
+            if (l.indent <= parentIndent)
+                break;
+            if (blockIndent < 0)
+                blockIndent = l.indent;
+            if (l.indent < blockIndent)
+                break;
+            body.push(l.raw.slice(blockIndent));
+            this.pos++;
+        }
+        let trailing = 0;
+        while (body.length && body[body.length - 1] === "") {
+            body.pop();
+            trailing++;
+        }
+        let text;
+        if (style === "|")
+            text = body.join("\n");
+        else {
+            text = "";
+            body.forEach((ln, i) => {
+                if (i === 0)
+                    text = ln;
+                else if (ln === "")
+                    text += "\n";
+                else
+                    text += (text.endsWith("\n") || body[i - 1] === "" ? "" : " ") + ln;
+            });
+        }
+        if (chomp === "-")
+            return text;
+        if (chomp === "+")
+            return text + "\n".repeat(trailing + 1);
+        return body.length ? text + "\n" : "";
+    }
+}
+/** YAML (részhalmaz) szöveg → JavaScript érték. Hiba esetén `YamlError` sorszámmal. */
+function parseYaml(source) {
+    return new Parser(source).parse();
+}
+
+
+/***/ },
+
+/***/ "./src/spec/registry.ts"
+/*!******************************!*\
+  !*** ./src/spec/registry.ts ***!
+  \******************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SELECTOR_PARAMS: () => (/* binding */ SELECTOR_PARAMS),
+/* harmony export */   componentNames: () => (/* binding */ componentNames),
+/* harmony export */   getDef: () => (/* binding */ getDef)
+/* harmony export */ });
+/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../index */ "./src/index.ts");
+/* harmony import */ var _meta_generated__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./meta.generated */ "./src/spec/meta.generated.ts");
+/* harmony import */ var _overrides_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./overrides.json */ "./src/spec/overrides.json");
+
+
+
+/** A leíró szerkezeti szabályai (adat: a JSON Schema generálás is ezt használja). */
+const STATIC = _overrides_json__WEBPACK_IMPORTED_MODULE_2__;
+const SLOT = "spec-slot";
+const slotNode = { tag: "div", attrs: { class: SLOT }, style: { display: "contents" } };
+/** Szabálytalan szignatúrájú komponensek illesztői. */
+const ADAPTERS = {
+    Title: (p) => _index__WEBPACK_IMPORTED_MODULE_0__.createTitle(p, Number(p.level ?? 1)),
+    UnorderedList: (p) => _index__WEBPACK_IMPORTED_MODULE_0__.createUnorderedList((p.items ?? []).map(String), p),
+    OrderedList: (p) => _index__WEBPACK_IMPORTED_MODULE_0__.createOrderedList((p.items ?? []).map(String), p),
+    Table: (p) => _index__WEBPACK_IMPORTED_MODULE_0__.createTable(p.data ?? [], p),
+    Modal: (p) => _index__WEBPACK_IMPORTED_MODULE_0__.createModal({ modalTitle: p.title ?? p.modalTitle ?? "", body: slotNode }, { okAction: p.ok, cancelAction: p.cancel, closeAction: p.close }, p),
+};
+const SCALAR_TARGETS = ["text", "title", "message", "label", "labelText"];
+const cache = new Map();
+/** A komponens leírója; `undefined`, ha nincs ilyen komponens. */
+function getDef(name) {
+    if (cache.has(name))
+        return cache.get(name) ?? undefined;
+    const meta = _meta_generated__WEBPACK_IMPORTED_MODULE_1__.SPEC_PARAMS[name];
+    const fn = _index__WEBPACK_IMPORTED_MODULE_0__[`create${name}`];
+    if (!meta || typeof fn !== "function") {
+        cache.set(name, null);
+        return undefined;
+    }
+    const o = STATIC[name] ?? {};
+    const params = new Set([...meta.all, ...(o.extra ?? [])]);
+    params.delete("parent");
+    const def = {
+        name,
+        create: ADAPTERS[name] ?? ((p) => fn(p)),
+        params,
+        fns: new Set([...meta.fns, ...(o.extraFns ?? [])]),
+        required: meta.required.filter((r) => r !== "parent" && r !== "id" && !(o.optional ?? []).includes(r)),
+        text: o.text ?? SCALAR_TARGETS.find((t) => params.has(t)),
+        array: o.array,
+        slots: o.slots,
+        elements: o.elements,
+        items: o.items,
+        updaters: o.updaters,
+        bind: o.bind,
+        portal: o.portal,
+    };
+    cache.set(name, def);
+    return def;
+}
+/** Az ismert komponensnevek (hibaüzenethez, javaslathoz). */
+function componentNames() {
+    return Object.keys(_meta_generated__WEBPACK_IMPORTED_MODULE_1__.SPEC_PARAMS);
+}
+/** Az `id`-t és osztályt nem a leíró adja, hanem a szelektor-kulcs (`Card#id.a.b`). */
+const SELECTOR_PARAMS = new Set(["id", "class"]);
+
+
+/***/ },
+
+/***/ "./src/spec/store.ts"
+/*!***************************!*\
+  !*** ./src/spec/store.ts ***!
+  \***************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Store: () => (/* binding */ Store),
+/* harmony export */   normalizePath: () => (/* binding */ normalizePath),
+/* harmony export */   overlaps: () => (/* binding */ overlaps)
+/* harmony export */ });
+/**
+ * Kicsi, útvonal-alapú állapottár a deklaratív leíróhoz.
+ *
+ * Az útvonal pontokkal és indexekkel írható (`a.b`, `a[0].c` ≡ `a.0.c`). Egy `set` azokat az
+ * előfizetőket értesíti, amelyek útvonala az írt útvonallal egyezik, annak előtagja vagy kiterjesztése
+ * (`results` írásakor a `results.0.name`-re feliratkozó is megkapja). A tömbök és objektumok
+ * **változtathatatlanként** kezelendők: egy elem cseréje új értéket állít be (`set('list.1', x)`), a
+ * tár a köztes tárolókat másolja, így a változás azonosság alapján felismerhető.
+ */
+const FORBIDDEN = new Set(["__proto__", "constructor", "prototype"]);
+function normalizePath(path) {
+    return path.replace(/\[(\w+)\]/g, ".$1").replace(/^\./, "");
+}
+const split = (path) => (path === "" ? [] : normalizePath(path).split("."));
+function checkKeys(keys) {
+    for (const k of keys)
+        if (FORBIDDEN.has(k))
+            throw new Error(`Tiltott állapot-kulcs: ${k}`);
+}
+class Store {
+    constructor(initial = {}) {
+        this.subs = new Set();
+        this.batchDepth = 0;
+        this.pending = new Set();
+        this.data = JSON.parse(JSON.stringify(initial ?? {}));
+    }
+    /** Teljes állapot (másolat nélkül; ne módosítsd). */
+    get snapshot() {
+        return this.data;
+    }
+    get(path) {
+        let cur = this.data;
+        for (const k of split(path)) {
+            if (cur === null || cur === undefined)
+                return undefined;
+            cur = cur[k];
+        }
+        return cur;
+    }
+    /** Érték beállítása; a köztes objektumokat / tömböket másolja (változtathatatlan frissítés). */
+    set(path, value) {
+        const keys = split(path);
+        if (keys.length === 0)
+            throw new Error("Az állapot gyökere nem írható felül");
+        checkKeys(keys);
+        if (Object.is(this.get(path), value) && (value === null || typeof value !== "object"))
+            return;
+        const update = (node, i) => {
+            const k = keys[i];
+            const base = node !== null && typeof node === "object" ? node : /^\d+$/.test(k) ? [] : {};
+            const copy = Array.isArray(base) ? [...base] : { ...base };
+            copy[k] = i === keys.length - 1 ? value : update(base[k], i + 1);
+            return copy;
+        };
+        this.data = update(this.data, 0);
+        this.notify(normalizePath(path));
+    }
+    toggle(path) {
+        this.set(path, !this.get(path));
+    }
+    inc(path, by = 1) {
+        this.set(path, (Number(this.get(path)) || 0) + by);
+    }
+    push(path, value) {
+        const cur = this.get(path);
+        this.set(path, Array.isArray(cur) ? [...cur, value] : [value]);
+    }
+    /** Több írás egyetlen értesítéssel. */
+    batch(fn) {
+        this.batchDepth++;
+        try {
+            fn();
+        }
+        finally {
+            if (--this.batchDepth === 0)
+                this.flush();
+        }
+    }
+    /** Feliratkozás útvonalakra; a visszaadott függvény leiratkozik. */
+    subscribe(paths, cb) {
+        const sub = { paths: paths.map(normalizePath), cb };
+        this.subs.add(sub);
+        return () => {
+            this.subs.delete(sub);
+        };
+    }
+    notify(path) {
+        this.pending.add(path);
+        if (this.batchDepth === 0)
+            this.flush();
+    }
+    flush() {
+        const changed = [...this.pending];
+        this.pending.clear();
+        // az értesítés közben leiratkozók ne kapjanak már értesítést
+        for (const sub of [...this.subs]) {
+            if (!this.subs.has(sub))
+                continue;
+            const hit = changed.find((c) => sub.paths.some((w) => overlaps(w, c)));
+            if (hit !== undefined)
+                sub.cb(hit);
+        }
+    }
+}
+/** Két útvonal érinti-e egymást (egyezés, előtag vagy kiterjesztés). */
+function overlaps(watched, changed) {
+    return watched === changed || watched.startsWith(changed + ".") || changed.startsWith(watched + ".");
+}
+
+
+/***/ },
+
 /***/ "./src/utils.ts"
 /*!**********************!*\
   !*** ./src/utils.ts ***!
@@ -6615,6 +9081,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 function u(n){return n.split("-").map((e,t)=>t>0?e.charAt(0).toUpperCase()+e.slice(1):e).join("")}function d(n){return n==null?[]:Array.isArray(n)?n:[n]}function f(n,e=!1){let t={\u00E1:"a",\u00E9:"e",\u00ED:"i",\u00F3:"o",\u00F6:"o",\u0151:"o",\u00FA:"u",\u00FC:"u",\u0171:"u",\u00C1:"A",\u00C9:"E",\u00CD:"I",\u00D3:"O",\u00D6:"O",\u0150:"O",\u00DA:"U",\u00DC:"U",\u0170:"U",\u00E0:"a",\u00E8:"e",\u00EC:"i",\u00F2:"o",\u00F9:"u",\u00E2:"a",\u00EA:"e",\u00EE:"i",\u00F4:"o",\u00FB:"u",\u0103:"a",\u0115:"e",\u012D:"i",\u014F:"o",\u016D:"u",\u0101:"a",\u0113:"e",\u012B:"i",\u014D:"o",\u016B:"u",\u01CE:"a",\u011B:"e",\u01D0:"i",\u01D2:"o",\u01D4:"u",\u00E4:"a",\u00EB:"e",\u00EF:"i",\u00E5:"a",\u00F8:"o",\u00E3:"a",\u00F5:"o",\u00E6:"ae",\u00E7:"c",\u011F:"g",\u0142:"l",\u00F1:"n",\u0111:"d",\u00DF:"ss",\u010F:"d",\u0165:"t",\u0148:"n",\u0159:"r",\u0161:"s",\u017E:"z",\u0158:"R",\u0160:"S",\u017D:"Z",\u00C7:"C",\u015E:"S",\u011E:"G",\u0141:"L",\u00D1:"N",\u0110:"D",\u013E:"l",\u0155:"r",\u013A:"l"},r=n;for(let[i,o]of Object.entries(t))r=r.split(i).join(o);return e?r.toLowerCase():r}var v=["class","id"];function y(n){if(n instanceof HTMLElement)return n;let e=null;return n.charAt(0)==="#"||n.charAt(0)==="."?e=document.querySelector(n):e=document.querySelector(`#${n}`)||document.querySelector(`.${n}`)||document.querySelector(n),e||(console.warn(`[DOMElemJS] Parent element not found for selector: "${n}". Falling back to document.body.`),document.body)}function g(n,e,t){for(let r of d(e))for(let[i,o]of Object.entries(r))if(o!=null)if(i==="checked")n.checked=!!o;else if(i==="dataset"&&typeof o=="object"&&!Array.isArray(o))Object.assign(n.dataset,o);else{let a=(Array.isArray(o)?o:[o]).map(c=>t&&v.includes(i)?f(String(c)):String(c));n.setAttribute(i,a.join(" "))}}function b(n,e){d(e).map(r=>typeof r=="object"&&r!==null?Object.entries(r).map(([i,o])=>`${i}: ${o}`).join("; "):d(r).join("; ")).join("; ").split(";").filter(Boolean).forEach(r=>{let i=r.indexOf(":");if(i===-1)return;let o=r.slice(0,i).trim(),l=r.slice(i+1).trim();if(o){let a=u(o);n.style[a]=l}})}function M(n,e){for(let t of e)t instanceof HTMLElement?n.appendChild(t):n.appendChild(m(t))}function O(n,e){for(let t of d(e))t?.event&&t?.cb&&n.addEventListener(t.event,t.cb)}function m(n){let{tag:e,content:t,text:r,attrs:i,style:o,children:l,parent:a,handleEvent:c,append:h=!0,stripDiacritics:E=!0}=n;t&&r&&console.warn(`[DOMElemJS] Both "content" and "text" provided for <${e}>. "text" takes precedence \u2014 "content" will be ignored.`);let s=document.createElement(e);return r?s.textContent=r:t&&(s.innerHTML=t),i&&g(s,i,E),o&&b(s,o),l&&M(s,l),c&&O(s,c),h&&(a?y(a):document.body).appendChild(s),s}var p=class{constructor(e){this._listeners=new Map;if(this.options=e,this.elem=m(e),e.handleEvent){let t=Array.isArray(e.handleEvent)?e.handleEvent:[e.handleEvent];for(let r of t)this._trackListener(r.event,r.cb)}}addEventListener(e,t){return this.elem.addEventListener(e,t),this._trackListener(e,t),this}removeEventListener(e,t){return this.elem.removeEventListener(e,t),this._untrackListener(e,t),this}removeAllListeners(){for(let[e,t]of this._listeners)for(let r of t)this.elem.removeEventListener(e,r);this._listeners.clear()}_trackListener(e,t){this._listeners.has(e)||this._listeners.set(e,new Set),this._listeners.get(e).add(t)}_untrackListener(e,t){this._listeners.get(e)?.delete(t)}};var L=["a","abbr","address","area","article","aside","audio","b","base","bdi","bdo","blockquote","body","br","button","canvas","caption","cite","code","col","colgroup","data","datalist","dd","del","details","dfn","dialog","div","dl","dt","em","embed","fieldset","figcaption","figure","footer","form","h1","h2","h3","h4","h5","h6","head","header","hr","html","i","iframe","img","input","ins","kbd","label","legend","li","link","main","map","mark","meta","meter","nav","noscript","object","ol","optgroup","option","output","p","param","picture","pre","progress","q","rp","rt","ruby","s","samp","script","section","select","small","source","span","strong","style","sub","summary","sup","svg","table","tbody","td","template","textarea","tfoot","th","thead","time","title","tr","track","u","ul","video","wbr"];
 //# sourceMappingURL=index.js.map
+
+/***/ },
+
+/***/ "./src/spec/overrides.json"
+/*!*********************************!*\
+  !*** ./src/spec/overrides.json ***!
+  \*********************************/
+(module) {
+
+module.exports = /*#__PURE__*/JSON.parse('{"Title":{"text":"text","extra":["level"]},"UnorderedList":{"array":"items","extra":["items"]},"OrderedList":{"array":"items","extra":["items"]},"Table":{"array":"data","extra":["data"],"optional":["data"]},"Card":{"text":"title","array":"body","slots":{"body":".card-body","footer":".card-footer"}},"Container":{"slots":{"children":""}},"Grid":{"slots":{"children":""}},"Accordion":{"array":"items","items":{"items":"content"}},"Tabs":{"array":"tabs","items":{"tabs":"content"}},"Drawer":{"elements":["children"]},"Gantt":{"updaters":{"rows":"setRows","selectedMilestoneId":"selectMilestone"}},"Modal":{"text":"title","array":"body","extra":["title","body","ok","cancel","close"],"extraFns":["ok","cancel","close"],"slots":{"body":".modal-body > .spec-slot"},"portal":true},"Checkbox":{"bind":"checked"},"Radio":{"bind":"radio"},"TextInput":{"bind":"value"},"EmailInput":{"bind":"value"},"PasswordInput":{"bind":"value"},"UrlInput":{"bind":"value"},"TelInput":{"bind":"value"},"SearchInput":{"bind":"value"},"NumberInput":{"bind":"value"},"DateInput":{"bind":"value"},"DatetimeInput":{"bind":"value"},"TimeInput":{"bind":"value"},"MonthInput":{"bind":"value"},"WeekInput":{"bind":"value"},"ColorInput":{"bind":"value"},"RangeInput":{"bind":"value"},"Textarea":{"bind":"value"},"Select":{"bind":"value"},"HiddenInput":{"bind":"value"}}');
 
 /***/ }
 
@@ -6680,163 +9156,12 @@ function u(n){return n.split("-").map((e,t)=>t>0?e.charAt(0).toUpperCase()+e.sli
 /******/ 	})();
 /******/ 	
 /************************************************************************/
-var __webpack_exports__ = {};
-// This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
-(() => {
-/*!**********************!*\
-  !*** ./src/index.ts ***!
-  \**********************/
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   asyncImage: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.asyncImage),
-/* harmony export */   closeDrawer: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.closeDrawer),
-/* harmony export */   closeModal: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.closeModal),
-/* harmony export */   createAccordion: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createAccordion),
-/* harmony export */   createAlert: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createAlert),
-/* harmony export */   createAvatar: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createAvatar),
-/* harmony export */   createBadge: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createBadge),
-/* harmony export */   createBlockquote: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createBlockquote),
-/* harmony export */   createBreadcrumb: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createBreadcrumb),
-/* harmony export */   createButton: () => (/* reexport safe */ _buttons_createButton__WEBPACK_IMPORTED_MODULE_20__.createButton),
-/* harmony export */   createButtonInput: () => (/* reexport safe */ _buttons_createButtonInput__WEBPACK_IMPORTED_MODULE_21__.createButtonInput),
-/* harmony export */   createCard: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createCard),
-/* harmony export */   createCarousel: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createCarousel),
-/* harmony export */   createCheckbox: () => (/* reexport safe */ _inputs_createCheckbox__WEBPACK_IMPORTED_MODULE_15__.createCheckbox),
-/* harmony export */   createCodeBlock: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createCodeBlock),
-/* harmony export */   createColorInput: () => (/* reexport safe */ _inputs_createColorInput__WEBPACK_IMPORTED_MODULE_16__.createColorInput),
-/* harmony export */   createContainer: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createContainer),
-/* harmony export */   createCustomDatePicker: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createCustomDatePicker),
-/* harmony export */   createCustomDateRangePicker: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createCustomDateRangePicker),
-/* harmony export */   createCustomDateTimePicker: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createCustomDateTimePicker),
-/* harmony export */   createCustomMonthPicker: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createCustomMonthPicker),
-/* harmony export */   createCustomSelect: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createCustomSelect),
-/* harmony export */   createCustomWeekPicker: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createCustomWeekPicker),
-/* harmony export */   createDateInput: () => (/* reexport safe */ _inputs_createDateInput__WEBPACK_IMPORTED_MODULE_10__.createDateInput),
-/* harmony export */   createDatetimeInput: () => (/* reexport safe */ _inputs_createDatetimeInput__WEBPACK_IMPORTED_MODULE_11__.createDatetimeInput),
-/* harmony export */   createDivider: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createDivider),
-/* harmony export */   createDragAndDropFileInput: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createDragAndDropFileInput),
-/* harmony export */   createDrawer: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createDrawer),
-/* harmony export */   createEmailInput: () => (/* reexport safe */ _inputs_createEmailInput__WEBPACK_IMPORTED_MODULE_7__.createEmailInput),
-/* harmony export */   createFileInput: () => (/* reexport safe */ _inputs_createFileInput__WEBPACK_IMPORTED_MODULE_17__.createFileInput),
-/* harmony export */   createForm: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createForm),
-/* harmony export */   createGantt: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createGantt),
-/* harmony export */   createGrid: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createGrid),
-/* harmony export */   createHiddenInput: () => (/* reexport safe */ _inputs_createHiddenInput__WEBPACK_IMPORTED_MODULE_19__.createHiddenInput),
-/* harmony export */   createImage: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createImage),
-/* harmony export */   createLink: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createLink),
-/* harmony export */   createLocalizedElem: () => (/* reexport safe */ _dom__WEBPACK_IMPORTED_MODULE_2__.createDOMElem),
-/* harmony export */   createMenu: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createMenu),
-/* harmony export */   createModal: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createModal),
-/* harmony export */   createMonthInput: () => (/* reexport safe */ _inputs_createMonthInput__WEBPACK_IMPORTED_MODULE_13__.createMonthInput),
-/* harmony export */   createMusicPlayer: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createMusicPlayer),
-/* harmony export */   createNav: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createNav),
-/* harmony export */   createNumberInput: () => (/* reexport safe */ _inputs_createNumberInput__WEBPACK_IMPORTED_MODULE_9__.createNumberInput),
-/* harmony export */   createOrderedList: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createOrderedList),
-/* harmony export */   createParagraph: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createParagraph),
-/* harmony export */   createPasswordInput: () => (/* reexport safe */ _inputs_createPasswordInput__WEBPACK_IMPORTED_MODULE_8__.createPasswordInput),
-/* harmony export */   createProgressBar: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createProgressBar),
-/* harmony export */   createRadio: () => (/* reexport safe */ _selection_createRadio__WEBPACK_IMPORTED_MODULE_25__.createRadio),
-/* harmony export */   createRangeInput: () => (/* reexport safe */ _inputs_createRangeInput__WEBPACK_IMPORTED_MODULE_18__.createRangeInput),
-/* harmony export */   createResetInput: () => (/* reexport safe */ _buttons_createResetInput__WEBPACK_IMPORTED_MODULE_23__.createResetInput),
-/* harmony export */   createSearchInput: () => (/* reexport safe */ _inputs_createSearchInput__WEBPACK_IMPORTED_MODULE_6__.createSearchInput),
-/* harmony export */   createSelect: () => (/* reexport safe */ _selection_createSelect__WEBPACK_IMPORTED_MODULE_24__.createSelect),
-/* harmony export */   createSpinner: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createSpinner),
-/* harmony export */   createSubmitInput: () => (/* reexport safe */ _buttons_createSubmitInput__WEBPACK_IMPORTED_MODULE_22__.createSubmitInput),
-/* harmony export */   createTable: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createTable),
-/* harmony export */   createTabs: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createTabs),
-/* harmony export */   createTelInput: () => (/* reexport safe */ _inputs_createTelInput__WEBPACK_IMPORTED_MODULE_4__.createTelInput),
-/* harmony export */   createTextInput: () => (/* reexport safe */ _inputs_createTextInput__WEBPACK_IMPORTED_MODULE_3__.createTextInput),
-/* harmony export */   createTextarea: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createTextarea),
-/* harmony export */   createTimeInput: () => (/* reexport safe */ _inputs_createTimeInput__WEBPACK_IMPORTED_MODULE_12__.createTimeInput),
-/* harmony export */   createTimeline: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createTimeline),
-/* harmony export */   createTitle: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createTitle),
-/* harmony export */   createToast: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createToast),
-/* harmony export */   createTooltip: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createTooltip),
-/* harmony export */   createUnorderedList: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createUnorderedList),
-/* harmony export */   createUrlInput: () => (/* reexport safe */ _inputs_createUrlInput__WEBPACK_IMPORTED_MODULE_5__.createUrlInput),
-/* harmony export */   createVideo: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.createVideo),
-/* harmony export */   createWeekInput: () => (/* reexport safe */ _inputs_createWeekInput__WEBPACK_IMPORTED_MODULE_14__.createWeekInput),
-/* harmony export */   defineMessages: () => (/* reexport safe */ _i18n__WEBPACK_IMPORTED_MODULE_1__.defineMessages),
-/* harmony export */   enMessages: () => (/* reexport safe */ _locales__WEBPACK_IMPORTED_MODULE_0__.en),
-/* harmony export */   flattenMessages: () => (/* reexport safe */ _i18n__WEBPACK_IMPORTED_MODULE_1__.flattenMessages),
-/* harmony export */   getFallbackLocale: () => (/* reexport safe */ _i18n__WEBPACK_IMPORTED_MODULE_1__.getFallbackLocale),
-/* harmony export */   getLocale: () => (/* reexport safe */ _i18n__WEBPACK_IMPORTED_MODULE_1__.getLocale),
-/* harmony export */   getLocales: () => (/* reexport safe */ _i18n__WEBPACK_IMPORTED_MODULE_1__.getLocales),
-/* harmony export */   huMessages: () => (/* reexport safe */ _locales__WEBPACK_IMPORTED_MODULE_0__.hu),
-/* harmony export */   isReactiveText: () => (/* reexport safe */ _i18n__WEBPACK_IMPORTED_MODULE_1__.isReactiveText),
-/* harmony export */   loadMessages: () => (/* reexport safe */ _i18n__WEBPACK_IMPORTED_MODULE_1__.loadMessages),
-/* harmony export */   newLine: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.newLine),
-/* harmony export */   onLocaleChange: () => (/* reexport safe */ _i18n__WEBPACK_IMPORTED_MODULE_1__.onLocaleChange),
-/* harmony export */   openDrawer: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.openDrawer),
-/* harmony export */   openModal: () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_26__.openModal),
-/* harmony export */   registerMessages: () => (/* reexport safe */ _i18n__WEBPACK_IMPORTED_MODULE_1__.registerMessages),
-/* harmony export */   registerTranslations: () => (/* reexport safe */ _i18n__WEBPACK_IMPORTED_MODULE_1__.registerTranslations),
-/* harmony export */   resolveText: () => (/* reexport safe */ _i18n__WEBPACK_IMPORTED_MODULE_1__.resolveText),
-/* harmony export */   setFallbackLocale: () => (/* reexport safe */ _i18n__WEBPACK_IMPORTED_MODULE_1__.setFallbackLocale),
-/* harmony export */   setLocale: () => (/* reexport safe */ _i18n__WEBPACK_IMPORTED_MODULE_1__.setLocale),
-/* harmony export */   t: () => (/* reexport safe */ _i18n__WEBPACK_IMPORTED_MODULE_1__.t),
-/* harmony export */   tr: () => (/* reexport safe */ _i18n__WEBPACK_IMPORTED_MODULE_1__.tr),
-/* harmony export */   watchLocale: () => (/* reexport safe */ _i18n__WEBPACK_IMPORTED_MODULE_1__.watchLocale)
-/* harmony export */ });
-/* harmony import */ var _locales__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./locales */ "./src/locales.ts");
-/* harmony import */ var _i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./i18n */ "./src/i18n.ts");
-/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dom */ "./src/dom.ts");
-/* harmony import */ var _inputs_createTextInput__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./inputs/createTextInput */ "./src/inputs/createTextInput.ts");
-/* harmony import */ var _inputs_createTelInput__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./inputs/createTelInput */ "./src/inputs/createTelInput.ts");
-/* harmony import */ var _inputs_createUrlInput__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./inputs/createUrlInput */ "./src/inputs/createUrlInput.ts");
-/* harmony import */ var _inputs_createSearchInput__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./inputs/createSearchInput */ "./src/inputs/createSearchInput.ts");
-/* harmony import */ var _inputs_createEmailInput__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./inputs/createEmailInput */ "./src/inputs/createEmailInput.ts");
-/* harmony import */ var _inputs_createPasswordInput__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./inputs/createPasswordInput */ "./src/inputs/createPasswordInput.ts");
-/* harmony import */ var _inputs_createNumberInput__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./inputs/createNumberInput */ "./src/inputs/createNumberInput.ts");
-/* harmony import */ var _inputs_createDateInput__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./inputs/createDateInput */ "./src/inputs/createDateInput.ts");
-/* harmony import */ var _inputs_createDatetimeInput__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./inputs/createDatetimeInput */ "./src/inputs/createDatetimeInput.ts");
-/* harmony import */ var _inputs_createTimeInput__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./inputs/createTimeInput */ "./src/inputs/createTimeInput.ts");
-/* harmony import */ var _inputs_createMonthInput__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./inputs/createMonthInput */ "./src/inputs/createMonthInput.ts");
-/* harmony import */ var _inputs_createWeekInput__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./inputs/createWeekInput */ "./src/inputs/createWeekInput.ts");
-/* harmony import */ var _inputs_createCheckbox__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./inputs/createCheckbox */ "./src/inputs/createCheckbox.ts");
-/* harmony import */ var _inputs_createColorInput__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./inputs/createColorInput */ "./src/inputs/createColorInput.ts");
-/* harmony import */ var _inputs_createFileInput__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./inputs/createFileInput */ "./src/inputs/createFileInput.ts");
-/* harmony import */ var _inputs_createRangeInput__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./inputs/createRangeInput */ "./src/inputs/createRangeInput.ts");
-/* harmony import */ var _inputs_createHiddenInput__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./inputs/createHiddenInput */ "./src/inputs/createHiddenInput.ts");
-/* harmony import */ var _buttons_createButton__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./buttons/createButton */ "./src/buttons/createButton.ts");
-/* harmony import */ var _buttons_createButtonInput__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./buttons/createButtonInput */ "./src/buttons/createButtonInput.ts");
-/* harmony import */ var _buttons_createSubmitInput__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./buttons/createSubmitInput */ "./src/buttons/createSubmitInput.ts");
-/* harmony import */ var _buttons_createResetInput__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./buttons/createResetInput */ "./src/buttons/createResetInput.ts");
-/* harmony import */ var _selection_createSelect__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./selection/createSelect */ "./src/selection/createSelect.ts");
-/* harmony import */ var _selection_createRadio__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./selection/createRadio */ "./src/selection/createRadio.ts");
-/* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./components */ "./src/components/index.ts");
-// Nyelvesítés: a beépített feliratok (hu, en) regisztrálása, majd a nyilvános i18n API
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-})();
-
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module is referenced by other modules so it can't be inlined
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/index.ts");
+/******/ 	
 /******/ 	return __webpack_exports__;
 /******/ })()
 ;

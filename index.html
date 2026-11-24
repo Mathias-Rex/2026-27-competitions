@@ -45,8 +45,390 @@
     <link rel="stylesheet" href="css/theme.css">
 </head>
 <body class="cmp-page">
-    <!-- Az egész felület a createDOMBlocks komponenseiből épül (js/ui/) -->
     <div id="app"></div>
+
+    <!--
+      Az egész oldal szerkezete itt, egyetlen YAML leírásban van (createDOMBlocks buildUI).
+      - a ${...} kifejezések a state-ből olvasnak (js/derive.js számolja a származtatott adatokat),
+      - a "@név" eseménykezelők a js/app.js handlers térképében vannak,
+      - a $név hivatkozások a js/app.js data objektumára mutatnak.
+      Kisbetűs név = nyers HTML elem, nagybetűs = createDOMBlocks komponens.
+    -->
+    <script type="text/yaml" id="page">
+# yaml-language-server: $schema=vendor/createDOMBlocks.schema.json
+define:
+  # Az esemény részletei (az oldalsó panelben és a felugró ablakban is ez jelenik meg)
+  EventDetail:
+    params: [d]
+    body:
+      - if: "${d}"
+        then:
+          - div.cmp-detail:
+              style: "${d.vars}"
+              children:
+                - div:
+                    - Badge.cmp-tag.is-lg: "${d.shortName}"
+                    - Title(4).cmp-detail-title: "${d.title}"
+                - div.cmp-infobox:
+                    - div.cmp-infobox-row:
+                        - span: "Időpont:"
+                        - span:
+                            - span: "${d.date}"
+                            - if: "${d.hasTime}"
+                              then:
+                                - br: null
+                                - span: "${d.time}"
+                    - div.cmp-infobox-row:
+                        - span: "Helyszín / Forma:"
+                        - span: "${d.location}"
+                - if: "${d.endEstimated}"
+                  then:
+                    - Paragraph.cmp-note: "⏱ A befejezés időpontja nem ismert, a naptárban 1,5 órás becslés szerepel."
+                - if: "${d.discrepancy}"
+                  then:
+                    - span.badge.cmp-tag.is-warn:
+                        text: "⚠ Eltérés a korábbi információtól"
+                        title: "${d.discrepancyTitle}"
+                        tabindex: 0
+                        style: "width:fit-content"
+                - div:
+                    - Title(5).cmp-label: "Teendő és tudnivalók"
+                    - Paragraph.cmp-text: "${d.description}"
+                - if: "${d.hasLink}"
+                  then:
+                    - a.link.cmp-cta.is-solid:
+                        href: "${d.linkUrl}"
+                        target: _blank
+                        rel: "noopener noreferrer"
+                        text: "${d.linkLabel}"
+                        children:
+                          - span.cmp-ext: { html: $icons.external }
+                - if: "${d.canCalendar}"
+                  then:
+                    - button.btn.cmp-cta:
+                        text: "📅 Naptárba"
+                        data-id: "${d.id}"
+                        click: "@openCal"
+
+ui:
+  # ===== Fejléc =====
+  - header.cmp-header:
+      - div.cmp-header-inner:
+          - div.cmp-brand:
+              - span.cmp-brand-icon: { html: $icons.calendar }
+              - div:
+                  style: "min-width:0"
+                  children:
+                    - Title(1)#pageTitle.cmp-title: "Mátyás király utcai Általános Iskola versenycsapatok versenyei"
+                    - Paragraph.cmp-subtitle: "2026. november – 2027. április"
+          - button#menuToggleBtn.btn.cmp-menu-btn:
+              aria-controls: headerControls
+              aria-expanded: "${menuOpen ? 'true' : 'false'}"
+              aria-label: "${menuOpen ? 'Menü bezárása' : 'Menü megnyitása'}"
+              html: "${menuOpen ? icons.close : icons.menu}"
+              click: { toggle: menuOpen }
+          - div#headerControls.cmp-controls:
+              class: "${menuOpen ? 'is-open' : ''}"
+              children:
+                - Badge#headerTodayBadge.cmp-today-badge: "Mai nap: ${todayFull}"
+                - Button#themeToggleBtn.cmp-theme-btn:
+                    text: "${themeLabel}"
+                    click: "@toggleTheme"
+
+  - main.cmp-main:
+      # ===== Versenykapcsolók =====
+      - section#filterCardsContainer.cmp-filters:
+          aria-label: "Versenyek szűrése"
+          children:
+            - each: { in: "${comps}", as: c, key: c.id }
+              do:
+                - div:
+                    style: "${c.vars}"
+                    data-id: "${c.id}"
+                    click: "@cardClick"
+                    children:
+                      - Card#filter-${c.id}:
+                          class: "${c.cls}"
+                          title: "${c.name}"
+                          body:
+                            - Paragraph: "${c.targetGroup}"
+                            - Checkbox#switch-${c.id}:
+                                labelText: "${c.name} ki/bekapcsolása"
+                                checked: "${c.active}"
+                                onChange: "@switchComp"
+                          footer:
+                            - span.cmp-filter-org: { text: "${c.organizer}", title: "${c.organizer}" }
+                            - span.cmp-filter-count: "${c.count}"
+
+      # ===== Közös idővonal =====
+      - section.cmp-panel:
+          - div.cmp-panel-head:
+              - div:
+                  - Title(2).cmp-h2: "Közös időtengely és mérföldkövek"
+                  - Paragraph.cmp-hint: "Kattints bármelyik pontra a részletes teendők megtekintéséhez!"
+              - div.cmp-legend:
+                  - span.cmp-legend-item:
+                      - span.cmp-legend-dot: null
+                      - span: "Forduló / Határidő"
+                  - span.cmp-legend-item.is-final:
+                      - span.cmp-legend-diamond: null
+                      - span: "Döntő"
+                  - span.cmp-legend-item.is-today:
+                      hidden: "${!todayInRange}"
+                      children:
+                        - span.cmp-legend-line: null
+                        - span: "${todayLegend}"
+          - Gantt#timeline:
+              rows: "${ganttRows}"
+              from: "2026-11"
+              to: "2027-04"
+              axis: months
+              monthWidth: $ganttCfg.monthWidth
+              labelWidth: $ganttCfg.labelWidth
+              barStyle: thin
+              dimPast: true
+              selectable: false
+              dragScroll: true
+              today: $ganttCfg.today
+              todayLabel: $ganttCfg.todayLabel
+              labelHeader: "Verseny"
+              ariaLabel: "Versenyek közös idővonala"
+              emptyText: "Nincs kiválasztott verseny. Kapcsold be legalább az egyik versenyt a fenti kártyákon az idővonal megjelenítéséhez!"
+              selectedMilestoneId: "${selectedId}"
+              onMilestoneHover: "@hoverEvent"
+              onMilestoneClick: "@openEvent"
+
+      # ===== Kiválasztott esemény + időrendi lista =====
+      - div.cmp-split:
+          - aside.cmp-panel.cmp-aside:
+              - div.cmp-aside-head:
+                  - Title(3).cmp-aside-title: "Kiválasztott esemény"
+                  - Badge#detailStatusBadge:
+                      text: "${detail ? detail.status : 'Részletek'}"
+                      class: "${detail ? detail.statusCls : 'badge cmp-pill'}"
+              - div#eventDetailPanel:
+                  - if: "${detail}"
+                    then:
+                      - EventDetail: { d: "${detail}" }
+                    else:
+                      - Paragraph.cmp-hint: "Válassz ki egy eseményt az idővonalon vagy a listából!"
+          - section.cmp-panel.cmp-list-panel:
+              - div.cmp-list-head:
+                  - div:
+                      - Title(3).cmp-section-title: "Időrendi teendők és dátumok"
+                      - Paragraph.cmp-hint: "${listSubtitle}"
+                  - div.cmp-segment:
+                      role: group
+                      aria-label: "Időszűrő"
+                      children:
+                        - Button#timefilter-all:
+                            text: "Összes"
+                            class: "cmp-seg-btn ${timeFilter == 'all' ? 'is-active' : ''}"
+                            click: { set: { timeFilter: all } }
+                        - Button#timefilter-upcoming:
+                            text: "Csak hátralévő"
+                            class: "cmp-seg-btn ${timeFilter == 'upcoming' ? 'is-active' : ''}"
+                            click: { set: { timeFilter: upcoming } }
+              - div#chronologicalList.cmp-list:
+                  - if: "${noEvents}"
+                    then:
+                      - div.cmp-empty:
+                          - strong: "Nincs megjeleníthető esemény a jelenlegi szűréssel."
+                          - span: "Kapcsold be a versenyeket fent, vagy válts az „Összes” nézetre."
+                  - each: { in: "${events}", as: e, key: e.id }
+                    do:
+                      - div:
+                          class: "${e.cls}"
+                          style: "${e.vars}"
+                          click: { set: { selectedId: "${e.id}" } }
+                          children:
+                            - div.cmp-item-main:
+                                - div:
+                                    class: "${e.dateCls}"
+                                    children:
+                                      - span.d: "${e.date}"
+                                      - if: "${e.hasTime}"
+                                        then:
+                                          - span.t: "${e.time}"
+                                      - span.y: "${e.year}"
+                                - div:
+                                    - div.cmp-tags:
+                                        - span.badge.cmp-tag: "${e.shortName}"
+                                        - if: "${e.isFinal}"
+                                          then:
+                                            - span.badge.cmp-tag.is-final: "🏆 DÖNTŐ"
+                                        - if: "${e.discrepancy}"
+                                          then:
+                                            - span.badge.cmp-tag.is-warn: { text: "⚠ Eltérés a korábbi információtól", title: "${e.discrepancyTitle}" }
+                                    - Title(4).cmp-item-title: "${e.title}"
+                                    - Paragraph.cmp-item-desc: "${e.description}"
+                            - div.cmp-item-side:
+                                - span: { class: "${e.pillCls}", text: "${e.pill}" }
+                                - span.cmp-loc: "${e.location}"
+                                - if: "${e.hasLink}"
+                                  then:
+                                    - a.link.cmp-mini:
+                                        href: "${e.linkUrl}"
+                                        target: _blank
+                                        rel: "noopener noreferrer"
+                                        text: "${e.linkLabel}"
+                                        click: "@stop"
+                                - if: "${e.canCalendar}"
+                                  then:
+                                    - button.btn.cmp-mini:
+                                        text: "📅 Naptárba"
+                                        data-id: "${e.id}"
+                                        click: "@openCal"
+
+      # ===== Versenykiírások (összecsukható) =====
+      - section.cmp-panel:
+          aria-label: "Versenykiírások, Feltételek és Linkek"
+          children:
+            - div.cmp-panel-head:
+                - div:
+                    - Title(2).cmp-h2.cmp-h2-lg: "Versenykiírások, Feltételek és Linkek"
+                    - Paragraph.cmp-hint: "A bekapcsolt versenyek részletes kiírása, kategóriái, díjazása és hivatalos elérhetőségei"
+                - Button#toggleDetailsSectionBtn:
+                    text: "${detailsOpen ? 'Részletek elrejtése' : 'Részletek megjelenítése'}"
+                    class: "cmp-toggle-btn ${detailsOpen ? '' : 'is-closed'}"
+                    click: { toggle: detailsOpen }
+            - div#detailedInfoCardsContainer.cmp-info-grid:
+                hidden: "${!detailsOpen}"
+                children:
+                  - if: "${noInfo}"
+                    then:
+                      - div.cmp-empty:
+                          - strong: "Nincs megjeleníthető versenykiírás."
+                          - span: "Kapcsold be a versenyeket az oldal tetején a részletes kiírások megtekintéséhez!"
+                  - each: { in: "${infoCards}", as: i, key: i.id }
+                    do:
+                      - div:
+                          style: "${i.vars}"
+                          children:
+                            - Card.cmp-info:
+                                body:
+                                  - div.cmp-info-head:
+                                      - span.cmp-info-kicker: "${i.shortName}"
+                                      - Title(3): "${i.name}"
+                                      - Paragraph.cmp-info-meta: "${i.organizer}"
+                                      - Paragraph.cmp-info-meta: "${i.address}"
+                                  - div.cmp-info-content:
+                                      - div:
+                                          - Title(4).cmp-label: "Kiknek szól & feltételek"
+                                          - Paragraph.cmp-block-text: "${i.participants}"
+                                      - if: "${i.hasTeams}"
+                                        then:
+                                          - div.cmp-teams:
+                                              - Title(4).cmp-label: "${i.teamsTitle}"
+                                              - each: { in: "${i.teams}", as: t, key: t.name }
+                                                do:
+                                                  - div.cmp-team:
+                                                      - strong: "${t.name}"
+                                                      - span.badge.cmp-tag: "${t.size}"
+                                                      - span.badge.cmp-tag.is-neutral: "${t.grade}"
+                                      - if: "${i.hasCategories}"
+                                        then:
+                                          - div:
+                                              - Title(4).cmp-label: "6 versenykategória"
+                                              - UnorderedList: { items: "${i.categories}", class: "cmp-bullets is-plain" }
+                                      - if: "${i.hasTheme}"
+                                        then:
+                                          - div:
+                                              - Title(4).cmp-label: "Téma és feladatok"
+                                              - Paragraph.cmp-block-text: "${i.theme}"
+                                      - div:
+                                          - Title(4).cmp-label: "Fordulók és dátumok"
+                                          - UnorderedList: { items: "${i.rounds}", class: "cmp-bullets" }
+                                      - div:
+                                          - Title(4).cmp-label: "Díjazás"
+                                          - Paragraph.cmp-block-text: "${i.prizes}"
+                                footer:
+                                  - each: { in: "${i.links}", as: l, key: l.url }
+                                    do:
+                                      - a:
+                                          class: "link ${l.cls}"
+                                          href: "${l.url}"
+                                          target: _blank
+                                          rel: "noopener noreferrer"
+                                          text: "${l.icon} ${l.label}"
+                                          children:
+                                            - span.cmp-ext: { html: $icons.external }
+                                  - Paragraph.cmp-contacts: "${i.contacts}"
+
+      # ===== Letölthető dokumentumok =====
+      - section:
+          aria-label: "Letölthető dokumentumok"
+          children:
+            - Title(2).cmp-h2: "Letölthető dokumentumok"
+            - Paragraph.cmp-hint.cmp-mb-3: "A versenykiírások és szabályzatok eredeti PDF-jei versenyenként."
+            - div.cmp-dl-grid:
+                - each: { in: $downloads, as: g, key: g.id }
+                  do:
+                    - div:
+                        style: "${g.vars}"
+                        children:
+                          - Card.cmp-dl:
+                              title: "${g.name}"
+                              body:
+                                - each: { in: "${g.docs}", as: doc, key: doc.href }
+                                  do:
+                                    - div.cmp-doc:
+                                        - div:
+                                            style: "min-width:0"
+                                            children:
+                                              - span.cmp-doc-title: "${doc.title}"
+                                              - if: "${doc.desc}"
+                                                then:
+                                                  - span.cmp-doc-desc: "${doc.desc}"
+                                              - span.cmp-doc-size: "PDF, ${doc.size} KB"
+                                        - div.cmp-doc-actions:
+                                            - a.link.cmp-icon-btn:
+                                                href: "${doc.href}"
+                                                target: _blank
+                                                rel: "noopener noreferrer"
+                                                title: "Megnézés"
+                                                aria-label: "Megnézés: ${doc.title}"
+                                                html: $icons.eye
+                                            - a.link.cmp-icon-btn:
+                                                href: "${doc.href}"
+                                                download: ""
+                                                title: "Letöltés"
+                                                aria-label: "Letöltés: ${doc.title}"
+                                                html: $icons.download
+
+  - footer.cmp-footer: "Összesített verseny-idővonal • Radnóti HACK & CODE • Neumann János Informatikai Verseny • Árpád-kupa"
+
+  # ===== Felugró ablakok =====
+  - Modal#eventModal:
+      title: "Kiválasztott esemény"
+      width: 448
+      footer: false
+      closeOnBackdrop: true
+      closeOnEscape: true
+      body:
+        - EventDetail: { d: "${detail}" }
+
+  - Modal#whatsNew:
+      title: "Újdonságok az oldalon"
+      width: 512
+      footer: false
+      closeOnBackdrop: true
+      closeOnEscape: true
+      body:
+        - Paragraph.cmp-whatsnew-sub: "Ezek változtak legutóbbi látogatásod óta. Verzió ${whatsNew.version}"
+        - each: { in: "${whatsNew.entries}", as: en, key: en.version }
+          do:
+            - section.cmp-whatsnew-group:
+                - if: "${whatsNew.multi}"
+                  then:
+                    - h3.cmp-whatsnew-ver: "${en.version} · ${en.date}"
+                - UnorderedList: { items: "${en.items}", class: "cmp-whatsnew-list" }
+        - div.cmp-whatsnew-actions:
+            - Button#whatsNewOk:
+                text: "Rendben, értem"
+                class: cmp-primary
+                click: "@acceptWhatsNew"
+    </script>
 
     <script src="vendor/createDOMBlocks.js"></script>
     <script src="js/data.js"></script>
@@ -56,10 +438,7 @@
     <script src="js/calendar.js"></script>
     <script src="js/ui/kit.js"></script>
     <script src="js/ui/calendar-menu.js"></script>
-    <script src="js/ui/event-panels.js"></script>
-    <script src="js/ui/info-sections.js"></script>
-    <script src="js/ui/layout.js"></script>
-    <script src="js/ui/modals.js"></script>
+    <script src="js/derive.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>

@@ -1,106 +1,182 @@
-/* Fő frissítő logika, állapotmentés, téma és indítás. A felület komponensei: js/ui/. */
+/*
+ * Indítás és eseménykezelők. A felület szerkezetét az index.html YAML leírása adja (createDOMBlocks buildUI),
+ * a származtatott adatokat a derive.js számolja, ez a fájl a forrás-állapotot és a kezelőket köti össze.
+ */
 
-function updateAll() {
-    // Ha a kiválasztott esemény versenye ki lett kapcsolva, válasszunk egy aktívat
-    const current = findEventById(selectedEventId);
-    if (!current || !current.comp.active) {
-        selectedEventId = pickDefaultSelectedEvent();
-    }
-
-    renderTodayLegend();
-    renderFilterCards();
-    renderTimeline();
-    renderEventDetail();
-    renderChronologicalList();
-    renderDetailedInfoCards();
-    saveState();
-}
-
-// Kapcsolók állapotának mentése / betöltése (localStorage)
 const STATE_KEY = 'competitionsUiState';
-function saveState() {
-    try {
-        const state = {
-            active: Object.fromEntries(competitions.map(c => [c.id, c.active])),
-            timeFilter,
-            isDetailsSectionOpen
-        };
-        localStorage.setItem(STATE_KEY, JSON.stringify(state));
-    } catch (e) { /* localStorage nem elérhető */ }
-}
-function loadState() {
+
+// Mentett állapot (localStorage) a forrás-állapotba
+function loadSaved() {
+    const saved = { active: {}, timeFilter: 'all', detailsOpen: true };
     try {
         const raw = localStorage.getItem(STATE_KEY);
-        if (!raw) return;
-        const state = JSON.parse(raw);
-        if (state.active) {
-            competitions.forEach(c => {
-                if (typeof state.active[c.id] === 'boolean') c.active = state.active[c.id];
-            });
-        }
-        if (state.timeFilter === 'all' || state.timeFilter === 'upcoming') timeFilter = state.timeFilter;
-        if (typeof state.isDetailsSectionOpen === 'boolean') isDetailsSectionOpen = state.isDetailsSectionOpen;
+        if (!raw) return saved;
+        const s = JSON.parse(raw);
+        if (s.active) Object.keys(s.active).forEach(id => { if (typeof s.active[id] === 'boolean') saved.active[id] = s.active[id]; });
+        if (s.timeFilter === 'all' || s.timeFilter === 'upcoming') saved.timeFilter = s.timeFilter;
+        if (typeof s.detailsOpen === 'boolean') saved.detailsOpen = s.detailsOpen;
     } catch (e) { /* hibás vagy nem elérhető mentés: alapértelmezés */ }
+    return saved;
 }
 
-// Időszűrő gombok ("Összes" / "Csak hátralévő")
-function applyTimeFilterUI() {
-    document.querySelectorAll('[data-timefilter]').forEach(b => {
-        b.classList.toggle('is-active', b.dataset.timefilter === timeFilter);
-        b.setAttribute('aria-pressed', String(b.dataset.timefilter === timeFilter));
-    });
+function saveSource(state) {
+    try {
+        localStorage.setItem(STATE_KEY, JSON.stringify({
+            active: state.get('active'),
+            timeFilter: state.get('timeFilter'),
+            isDetailsSectionOpen: state.get('detailsOpen'),
+            detailsOpen: state.get('detailsOpen')
+        }));
+    } catch (e) { /* localStorage nem elérhető */ }
 }
 
-// Alsó versenykiírások szekció összecsukása/kinyitása
-function applyDetailsSectionUI() {
-    const btn = document.getElementById('toggleDetailsSectionBtn');
-    btn.setAttribute('aria-expanded', String(isDetailsSectionOpen));
-    btn.firstChild.textContent = isDetailsSectionOpen ? 'Részletek elrejtése' : 'Részletek megjelenítése';
-    document.getElementById('detailedInfoCardsContainer').hidden = !isDetailsSectionOpen;
-}
+const currentTheme = () => (isDark() ? 'dark' : 'light');
 
-// Téma: <html data-theme>, a gomb felirata és a versenyszínek újrarajzolása
-function updateThemeButton() {
-    const btn = document.getElementById('themeToggleBtn');
-    btn.textContent = isDark() ? '☀️ Világos mód' : '🌙 Sötét mód';
-}
 function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
     document.documentElement.style.colorScheme = theme;
-    updateThemeButton();
-    updateAll();
-    renderDownloads();
 }
+
 function hasSavedTheme() {
     try { const t = localStorage.getItem('theme'); return t === 'dark' || t === 'light'; } catch (e) { return false; }
 }
 
-// Kezdő kirajzolás. Csak egyszer futhat: egyes böngészőbővítmények a betöltés után újra elsütik a
-// DOMContentLoaded eseményt, ilyenkor a váz újraépítése az idővonalat levált konténerben hagyná.
-let appStarted = false;
-function startApp() {
-    if (appStarted) return;
-    appStarted = true;
-    loadState();
-    selectedEventId = pickDefaultSelectedEvent();
-    buildPage();
-    applyTimeFilterUI();
-    applyDetailsSectionUI();
-    updateThemeButton();
-    updateAll();
-    renderDownloads();
-    initWhatsNew();
+// A forrás-állapot kulcsai, amelyek változásakor a származtatott adatok újraszámolódnak
+const SOURCE_KEYS = ['active', 'timeFilter', 'selectedId', 'theme'];
 
-    // Ha nincs mentett választás, követjük a böngésző/rendszer beállítását
+function sourceOf(state) {
+    return {
+        active: state.get('active'),
+        timeFilter: state.get('timeFilter'),
+        selectedId: state.get('selectedId'),
+        theme: state.get('theme')
+    };
+}
+
+function syncActiveFlags(active) {
+    competitions.forEach(c => { c.active = !!active[c.id]; });
+}
+
+function startApp() {
+    const saved = loadSaved();
+    const active = {};
+    competitions.forEach(c => { active[c.id] = typeof saved.active[c.id] === 'boolean' ? saved.active[c.id] : c.active; });
+    syncActiveFlags(active);
+
+    const source = { active, timeFilter: saved.timeFilter, selectedId: pickDefaultSelectedEvent(), theme: currentTheme() };
+    const wide = window.innerWidth >= 1024;
+
+    // a hivatkozott adatok (a YAML-ben $név vagy ${név})
+    const data = {
+        icons: ICONS,
+        downloads: DOWNLOADS.map(g => ({ ...g, vars: `--c-color:${g.color}` })),
+        ganttCfg: {
+            monthWidth: wide ? 380 : 260,
+            labelWidth: wide ? 190 : 104,
+            today: TODAY_STR,
+            todayLabel: `Ma (${TODAY_INFO.shortHu})`
+        },
+        todayFull: TODAY_INFO.fullHu,
+        todayLegend: `Ma (${TODAY_INFO.shortHu})`
+    };
+
+    const handlers = {
+        // téma
+        toggleTheme({ state }) {
+            const next = currentTheme() === 'dark' ? 'light' : 'dark';
+            try { localStorage.setItem('theme', next); } catch (e) { /* nincs mentés */ }
+            applyTheme(next);
+            state.set('theme', next);
+        },
+        // versenykapcsoló kártya: bárhová kattintva vált, a kapcsolóra kattintást a checkbox maga kezeli
+        cardClick({ state, event, el }) {
+            if (event.target.closest('.checkbox-input')) return;
+            state.toggle('active.' + el.dataset.id);
+        },
+        switchComp({ state, event }) {
+            const id = event.target.closest('[data-id]').dataset.id;
+            state.set('active.' + id, event.target.checked);
+        },
+        // idővonal
+        hoverEvent({ state }, ms) { state.set('selectedId', ms.id); },
+        openEvent({ state }, ms) {
+            state.set('selectedId', ms.id);
+            B.openModal('eventModal');
+        },
+        // naptár menü és kattintás-megállítás
+        openCal({ event, el }) {
+            event.stopPropagation();
+            openCalMenu(el.dataset.id, el);
+        },
+        stop({ event }) { event.stopPropagation(); },
+        // Újdonságok ablak
+        acceptWhatsNew({ state }) {
+            try {
+                localStorage.setItem('whatsNewAccepted', JSON.stringify({ version: state.get('whatsNew.version'), acceptedAt: new Date().toISOString() }));
+            } catch (e) { /* nincs mentés */ }
+            B.closeModal('whatsNew');
+        }
+    };
+
+    const page = document.getElementById('page').textContent;
+    const ui = B.buildUI(page, {
+        parent: 'app',
+        handlers,
+        data,
+        state: {
+            menuOpen: false,
+            detailsOpen: saved.detailsOpen,
+            ...source,
+            ...derive(source),
+            whatsNew: whatsNewData()
+        }
+    });
+    window.ui = ui;
+
+    const state = ui.state;
+    let syncing = false;
+    state.subscribe(SOURCE_KEYS, () => {
+        if (syncing) return;
+        syncing = true;
+        try {
+            syncActiveFlags(state.get('active'));
+            // ha a kiválasztott esemény versenye kikapcsolt, választunk egy aktívat
+            const found = findEventById(state.get('selectedId'));
+            if (!found || !found.comp.active) state.set('selectedId', pickDefaultSelectedEvent());
+            const next = derive(sourceOf(state), state.snapshot);
+            state.batch(() => Object.entries(next).forEach(([k, v]) => state.set(k, v)));
+            saveSource(state);
+        } finally {
+            syncing = false;
+        }
+    });
+    state.subscribe(['detailsOpen'], () => saveSource(state));
+
     if (window.matchMedia) {
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-            if (!hasSavedTheme()) applyTheme(e.matches ? 'dark' : 'light');
+            if (hasSavedTheme()) return;
+            const next = e.matches ? 'dark' : 'light';
+            applyTheme(next);
+            state.set('theme', next);
         });
+    }
+
+    if (state.get('whatsNew.show')) {
+        B.openModal('whatsNew');
+        document.getElementById('whatsNewOk')?.focus();
     }
 }
 
-if (document.readyState === 'loading') {
-    window.addEventListener('DOMContentLoaded', startApp);
-} else {
+let appStarted = false;
+// Csak egyszer futhat: egyes böngészőbővítmények a betöltés után újra elsütik a DOMContentLoaded eseményt.
+function boot() {
+    if (appStarted) return;
+    appStarted = true;
     startApp();
+}
+
+if (document.readyState === 'loading') {
+    window.addEventListener('DOMContentLoaded', boot);
+} else {
+    boot();
 }

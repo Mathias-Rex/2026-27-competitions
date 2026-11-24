@@ -9,11 +9,6 @@ function compVars(comp) {
     return `--c-color:${cc(comp, 'color')};--c-bg:${cc(comp, 'bgLight')};--c-border:${cc(comp, 'borderColor')};--c-text:${cc(comp, 'textDark')}`;
 }
 
-// Állapot változók
-let selectedEventId = null;
-let timeFilter = 'all'; // 'all' vagy 'upcoming'
-let isDetailsSectionOpen = true;
-
 function parseDate(dateStr) {
     return new Date(dateStr + 'T12:00:00');
 }

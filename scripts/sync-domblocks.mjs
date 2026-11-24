@@ -31,6 +31,7 @@ if (args.includes("--build")) {
 const files = [
   ["dist/index.js", "vendor/createDOMBlocks.js"],
   ["dist/style.css", "vendor/createDOMBlocks.css"],
+  ["assets/createDOMBlocks.schema.json", "vendor/createDOMBlocks.schema.json"],
 ];
 mkdirSync(path.join(ROOT, "vendor"), { recursive: true });
 for (const [from, to] of files) {

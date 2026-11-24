@@ -4,22 +4,18 @@ Egyetlen oldalas, statikus weboldal (`index.html` + `css/` + `js/` + `vendor/`, 
 
 ## Felépítés
 
-- `index.html`: a fejléc (meta, téma-előbetöltő szkript, stíluslapok) és az üres `#app`. A téma-előbetöltő kis inline szkript szándékosan itt van, hogy ne villanjon fel a világos téma.
-- `vendor/createDOMBlocks.js` + `.css`: a createDOMBlocks **helyi buildje** (globális `CreateDOMBlocks`). Frissítés: `node scripts/sync-domblocks.mjs [--build] [--src <mappa>]` (alapból a `../createDOMBlocks`). A fájlokat verziókezelve tartjuk (GitHub Pages).
+- `index.html`: a fejléc (meta, téma-előbetöltő szkript, stíluslapok) és **az oldal teljes szerkezete egyetlen YAML leírásban** (`<script type="text/yaml" id="page">`, createDOMBlocks `buildUI`). Kisbetűs név = nyers HTML elem, nagybetűs = komponens; a `${...}` kifejezések az állapotból olvasnak, a `"@név"` kezelők a `js/app.js` `handlers` térképében vannak, a `$név` az ott átadott `data` objektumra mutat. A leírás új szerkezeti elemeit (szekció, kártya, lista) itt kell felvenni, nem JavaScriptben.
+- `vendor/createDOMBlocks.js` + `.css` + `.schema.json`: a createDOMBlocks **helyi buildje** (globális `CreateDOMBlocks`), a séma a YAML szerkesztői kiegészítéséhez (`# yaml-language-server: $schema=...`). Frissítés: `node scripts/sync-domblocks.mjs [--build] [--src <mappa>]` (alapból a `../createDOMBlocks`). A fájlokat verziókezelve tartjuk (GitHub Pages).
 - `css/theme.css`: az oldal témája a könyvtár CSS-változóira építve (slate paletta, Inter, kártyák, versenyszínek) és a sötét mód: `<html data-theme="light|dark">`. Új szín csak ide, a változók mellé kerüljön.
 - `js/`: klasszikus, sorrendfüggő szkriptek (az `index.html` ebben a sorrendben tölti be őket, globális változókkal):
   - `data.js`: a mai dátum, az időtengely határai és a `competitions` tömb (`details` + `events`), az összes adat,
   - `downloads.js`: a letölthető dokumentumok adata (`DOWNLOADS`), a pdf-intake skill generálja,
   - `changelog.js`: az újdonságok ablak szövegei (verziózva),
-  - `helpers.js`: témasegédek (`isDark`, `cc`, `compVars`), állapotváltozók, dátum- és eseménysegédek,
+  - `helpers.js`: témasegédek (`isDark`, `cc`, `compVars`), dátum- és eseménysegédek,
   - `calendar.js`: naptár-adatok (Google, Outlook, `.ics`) és az eltérés-tooltip szövege,
-  - `ui/kit.js`: közös segédek (`B` = komponensek, `E` = createLocalizedElem, `uid`, ikonok),
-  - `ui/calendar-menu.js`: „Naptárba” gomb és menü,
-  - `ui/event-panels.js`: esemény részletei, időrendi lista,
-  - `ui/info-sections.js`: versenykiírás-kártyák, letölthető dokumentumok,
-  - `ui/layout.js`: az oldal váza, fejléc, versenykapcsolók (createCard + createCheckbox), közös idővonal (createGantt),
-  - `ui/modals.js`: az esemény felugró ablak és az Újdonságok ablak (createModal),
-  - `app.js`: fő frissítő logika (`updateAll`), állapotmentés, téma, indítás.
+  - `derive.js`: a nézet számára származtatott adatok (`derive`): a forrás-állapotból (versenykapcsolók, időszűrő, kiválasztott esemény, téma) kész szövegek és listák; a listaelemek azonossága megmarad, ha a tartalom nem változott,
+  - `ui/kit.js`: ikonok és kis segédek, `ui/calendar-menu.js`: a „Naptárba” menü,
+  - `app.js`: a forrás-állapot (`ui.state`), az eseménykezelők, a mentés (localStorage) és az indítás (csak egyszer fut).
 - `inputs/`: új PDF-ek érkezési helye (feldolgozás után kiürül, nem verziókezelt).
 - `data/`: a PDF-ekből készült Markdownok.
 - `downloads/`: a feldolgozott PDF-ek, az oldalról letölthetők (publikus).
