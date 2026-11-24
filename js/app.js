@@ -128,6 +128,33 @@ window.addEventListener('DOMContentLoaded', () => {
     updateThemeButton();
     updateAll();
 
+    // Egérrel megfogható idővonal: húzásra oldalra görget (a buborékok és gombok kattinthatók maradnak)
+    (function enableTimelineDrag() {
+        const scroller = document.getElementById('timelineWrapper').parentElement;
+        let startX = 0, startLeft = 0, down = false, moved = false;
+        scroller.classList.add('timeline-grab');
+        scroller.addEventListener('mousedown', e => {
+            if (e.button !== 0 || e.target.closest('.timeline-event-trigger, button, a')) return;
+            down = true; moved = false;
+            startX = e.clientX; startLeft = scroller.scrollLeft;
+            e.preventDefault();
+        });
+        window.addEventListener('mousemove', e => {
+            if (!down) return;
+            const dx = e.clientX - startX;
+            if (!moved && Math.abs(dx) < 3) return;
+            moved = true;
+            scroller.classList.add('timeline-grabbing');
+            scroller.scrollLeft = startLeft - dx;
+        });
+        window.addEventListener('mouseup', () => {
+            if (!down) return;
+            down = false;
+            scroller.classList.remove('timeline-grabbing');
+        });
+        scroller.addEventListener('click', e => { if (moved) { e.stopPropagation(); moved = false; } }, true);
+    })();
+
     // Induláskor a mai napra görgetjük az (széles) idővonalat
     (function scrollTimelineToToday() {
         const wrap = document.getElementById('timelineWrapper');

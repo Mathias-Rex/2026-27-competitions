@@ -21,7 +21,7 @@ const CHANGELOG = [
             '„Naptárba” gomb minden eseménynél: Google Naptár, Outlook vagy letölthető naptárfájl (Apple Naptár is).',
             'Új „Letölthető dokumentumok” szekció: a versenykiírások és szabályzatok PDF-jei versenyenként, megnézés és letöltés gombbal.',
             'Pontosabb időpontok az eseményeknél (pl. Árpád-kupa döntő: 14:00), az idő a dátum alatt látszik.',
-            'Az idővonal asztali gépen is oldalra görgethető, és induláskor a mai napra ugrik.',
+            'Az idővonal asztali gépen is oldalra görgethető (egérrel megfogva, húzással is), és induláskor a mai napra ugrik.',
             'Javítva a nyolcadikos csapat neve: x0d15ea5ed (hexadecimális írásmóddal a „diseased” szó).'
         ]
     }
