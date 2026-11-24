@@ -343,12 +343,12 @@ def cmd_sync_html(a):
             title = v["title"] or re.sub(r"\s*\(\d+\)$", "", Path(v["name"]).stem).replace("_", " ").strip()
             items.append({
                 "title": title,
-                "desc": v["desc"] or "",
+                "description": v["desc"] or "",
                 "href": f'{a.downloads}/{v["download"]}',
-                "size": max(1, round(f.stat().st_size / 1024)),
+                "sizeKb": max(1, round(f.stat().st_size / 1024)),
             })
             total += 1
-        out.append({"id": cid, "name": cname, "color": color, "docs": items})
+        out.append({"id": cid, "name": cname, "color": color, "documents": items})
     data = json.dumps(out, ensure_ascii=False, indent=2)
     block = START + "\nconst DOWNLOADS = " + data + ";\n" + END
     new = re.sub(re.escape(START) + r".*?" + re.escape(END), lambda _: block, src, flags=re.S)

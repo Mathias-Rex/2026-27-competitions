@@ -3,182 +3,190 @@
  *
  * A forrás-állapot kicsi: active (versenykapcsolók), timeFilter, selectedId, detailsOpen, menuOpen, theme.
  * Ebből számoljuk a kész szövegeket és listákat, amelyeket a YAML `${...}` kifejezésekkel jelenít meg.
+ *
+ * Az itt használt mezőnevek (pl. `event.colorStyle`, `competition.cssClass`) a YAML-ben ugyanígy szerepelnek,
+ * ezért a nevek szándékosan teljesek és beszédesek.
  */
 
 // A megjelenített listák elemeinek azonossága megmarad, ha a tartalom nem változott
 // (így az each csak a ténylegesen módosult elemeket építi újra). Az előző érték az állapottárból jön.
-function stable(prev, next) {
-    const old = new Map((Array.isArray(prev) ? prev : []).map(i => [i.id, i]));
-    return next.map(item => {
-        const o = old.get(item.id);
-        return o && JSON.stringify(o) === JSON.stringify(item) ? o : item;
+function stable(previousList, nextList) {
+    const previousById = new Map((Array.isArray(previousList) ? previousList : []).map(item => [item.id, item]));
+    return nextList.map(item => {
+        const previous = previousById.get(item.id);
+        return previous && JSON.stringify(previous) === JSON.stringify(item) ? previous : item;
     });
 }
 
-const activeComps = () => competitions.filter(c => c.active);
+const activeCompetitions = () => competitions.filter(competition => competition.active);
 
-function compSummary(comp) {
-    const upcoming = comp.events.filter(e => !isPast(e.date)).length;
+/** Egy versenykapcsoló kártya adatai. */
+function competitionSummary(competition) {
+    const upcomingCount = competition.events.filter(event => !isPast(event.date)).length;
     return {
-        id: comp.id,
-        name: comp.name,
-        targetGroup: comp.targetGroup,
-        organizer: '📍 ' + comp.organizer,
-        active: !!comp.active,
-        cls: 'cmp-filter' + (comp.active ? '' : ' is-off'),
-        count: `${upcoming} hátralévő esemény`,
-        vars: compVars(comp)
+        id: competition.id,
+        name: competition.name,
+        targetGroup: competition.targetGroup,
+        organizer: '📍 ' + competition.organizer,
+        active: !!competition.active,
+        cssClass: 'cmp-filter' + (competition.active ? '' : ' is-off'),
+        upcomingText: `${upcomingCount} hátralévő esemény`,
+        colorStyle: compVars(competition)
     };
 }
 
-function ganttRows() {
-    return activeComps().map(comp => {
-        const first = comp.events[0];
-        const last = comp.events[comp.events.length - 1];
+/** Az idővonal sorai: versenyenként egy sáv, az eseményekből mérföldkövekkel. */
+function timelineRows() {
+    return activeCompetitions().map(competition => {
+        const first = competition.events[0];
+        const last = competition.events[competition.events.length - 1];
         return {
-            id: comp.id,
-            label: comp.shortName,
+            id: competition.id,
+            label: competition.shortName,
             sublabel: `${first.displayDate} – ${last.displayDate}`,
             periodLabel: '',
-            color: cc(comp, 'color'),
+            color: cc(competition, 'color'),
             start: first.date,
             end: last.endDate || last.date,
-            milestones: comp.events.map(ev => ({
-                id: ev.id,
-                date: ev.date,
-                label: ev.shortLabel,
-                caption: shortDate(ev.displayDate),
-                meta: ev.displayTime || undefined,
-                placement: ev.laneOffset === -1 ? 'above' : 'below',
-                shape: ev.isFinal ? 'diamond' : 'dot',
-                flag: ev.discrepancy ? { text: '!', title: prevInfoText(ev) } : undefined
+            milestones: competition.events.map(event => ({
+                id: event.id,
+                date: event.date,
+                label: event.shortLabel,
+                caption: shortDate(event.displayDate),
+                meta: event.displayTime || undefined,
+                placement: event.laneOffset === -1 ? 'above' : 'below',
+                shape: event.isFinal ? 'diamond' : 'dot',
+                flag: event.discrepancy ? { text: '!', title: prevInfoText(event) } : undefined
             }))
         };
     });
 }
 
-function eventItem(comp, ev, selectedId) {
-    const past = isPast(ev.date);
+/** Egy elem az időrendi listában. */
+function eventListItem(competition, event, selectedId) {
+    const isOver = isPast(event.date);
     return {
-        id: ev.id,
-        vars: compVars(comp),
-        cls: 'cmp-item' + (past ? ' is-past' : '') + (ev.id === selectedId ? ' is-selected' : ''),
-        dateCls: 'cmp-datebox' + (ev.isFinal ? ' is-final' : ''),
-        date: shortDate(ev.displayDate),
-        hasTime: !!ev.displayTime,
-        time: ev.displayTime || '',
-        year: ev.date.slice(0, 4),
-        isFinal: !!ev.isFinal,
-        shortName: comp.shortName,
-        discrepancy: !!ev.discrepancy,
-        discrepancyTitle: ev.discrepancy ? prevInfoText(ev) : '',
-        title: ev.title,
-        description: ev.description,
-        pill: past ? 'Lejárt' : formatRelativeDays(ev.date),
-        pillCls: 'badge cmp-pill' + (past ? '' : ' is-ok'),
-        location: '📍 ' + ev.location,
-        hasLink: !!ev.linkUrl,
-        linkUrl: ev.linkUrl || '',
-        linkLabel: '🔗 ' + (ev.linkLabel || 'Megnyitás'),
-        canCalendar: !past
+        id: event.id,
+        colorStyle: compVars(competition),
+        cssClass: 'cmp-item' + (isOver ? ' is-past' : '') + (event.id === selectedId ? ' is-selected' : ''),
+        dateBoxClass: 'cmp-datebox' + (event.isFinal ? ' is-final' : ''),
+        date: shortDate(event.displayDate),
+        hasTime: !!event.displayTime,
+        time: event.displayTime || '',
+        year: event.date.slice(0, 4),
+        isFinal: !!event.isFinal,
+        competitionName: competition.shortName,
+        hasDiscrepancy: !!event.discrepancy,
+        discrepancyNote: event.discrepancy ? prevInfoText(event) : '',
+        title: event.title,
+        description: event.description,
+        statusText: isOver ? 'Lejárt' : formatRelativeDays(event.date),
+        statusClass: 'badge cmp-pill' + (isOver ? '' : ' is-ok'),
+        location: '📍 ' + event.location,
+        hasLink: !!event.linkUrl,
+        linkUrl: event.linkUrl || '',
+        linkLabel: '🔗 ' + (event.linkLabel || 'Megnyitás'),
+        canAddToCalendar: !isOver
     };
 }
 
-function eventDetail(selectedId) {
+/** A kiválasztott esemény részletei (az oldalsó panelben és a felugró ablakban). */
+function selectedEventDetails(selectedId) {
     const found = findEventById(selectedId);
     if (!found) return null;
-    const { comp, ev } = found;
-    const past = isPast(ev.date);
+    const { comp: competition, ev: event } = found;
+    const isOver = isPast(event.date);
     return {
-        id: ev.id,
-        vars: compVars(comp),
-        shortName: comp.shortName,
-        title: (ev.isFinal ? '🏆 ' : '') + ev.title,
-        date: ev.displayDate,
-        hasTime: !!ev.displayTime,
-        time: ev.displayTime || '',
-        location: ev.location,
-        endEstimated: !!ev.endEstimated,
-        discrepancy: !!ev.discrepancy,
-        discrepancyTitle: ev.discrepancy ? prevInfoText(ev) : '',
-        description: ev.description,
-        hasLink: !!ev.linkUrl,
-        linkUrl: ev.linkUrl || '',
-        linkLabel: '🔗 ' + (ev.linkLabel || 'Hivatkozás megnyitása'),
-        canCalendar: !past,
-        status: past ? 'Már elmúlt' : formatRelativeDays(ev.date),
-        statusCls: 'badge cmp-pill' + (past ? '' : ' is-ok')
+        id: event.id,
+        colorStyle: compVars(competition),
+        competitionName: competition.shortName,
+        title: (event.isFinal ? '🏆 ' : '') + event.title,
+        date: event.displayDate,
+        hasTime: !!event.displayTime,
+        time: event.displayTime || '',
+        location: event.location,
+        isEndEstimated: !!event.endEstimated,
+        hasDiscrepancy: !!event.discrepancy,
+        discrepancyNote: event.discrepancy ? prevInfoText(event) : '',
+        description: event.description,
+        hasLink: !!event.linkUrl,
+        linkUrl: event.linkUrl || '',
+        linkLabel: '🔗 ' + (event.linkLabel || 'Hivatkozás megnyitása'),
+        canAddToCalendar: !isOver,
+        statusText: isOver ? 'Már elmúlt' : formatRelativeDays(event.date),
+        statusClass: 'badge cmp-pill' + (isOver ? '' : ' is-ok')
     };
 }
 
-function infoCard(comp) {
-    const d = comp.details;
+/** Egy versenykiírás-kártya (kiknek szól, csapatok, fordulók, díjazás, linkek). */
+function competitionInfo(competition) {
+    const details = competition.details;
     return {
-        id: comp.id,
-        vars: compVars(comp),
-        shortName: comp.shortName,
-        name: comp.name,
-        organizer: '🏛️ ' + comp.organizer,
-        address: '📍 ' + comp.address,
-        participants: d.participants,
-        hasTeams: !!d.ourTeams,
-        teamsTitle: d.ourTeams ? `Csapataink (${d.ourTeams.length} csapat)` : '',
-        teams: d.ourTeams || [],
-        hasCategories: !!d.categories,
-        categories: d.categories || [],
-        hasTheme: !d.categories && !!d.theme,
-        theme: d.theme || '',
-        rounds: d.roundsSummary,
-        prizes: d.prizes,
-        links: d.links.map(l => ({
-            label: l.label,
-            icon: l.primary ? '🔗' : '🌐',
-            cls: 'cmp-cta ' + (l.primary ? 'is-solid' : 'is-quiet')
-        })).map((l, i) => ({ ...l, url: d.links[i].url })),
-        contacts: '✉️ ' + d.contacts
+        id: competition.id,
+        colorStyle: compVars(competition),
+        competitionName: competition.shortName,
+        name: competition.name,
+        organizer: '🏛️ ' + competition.organizer,
+        address: '📍 ' + competition.address,
+        participants: details.participants,
+        hasTeams: !!details.ourTeams,
+        teamsTitle: details.ourTeams ? `Csapataink (${details.ourTeams.length} csapat)` : '',
+        teams: details.ourTeams || [],
+        hasCategories: !!details.categories,
+        categories: details.categories || [],
+        hasTopic: !details.categories && !!details.theme,
+        topic: details.theme || '',
+        rounds: details.roundsSummary,
+        prizes: details.prizes,
+        links: details.links.map(link => ({
+            label: link.label,
+            icon: link.primary ? '🔗' : '🌐',
+            cssClass: 'cmp-cta ' + (link.primary ? 'is-solid' : 'is-quiet'),
+            url: link.url
+        })),
+        contacts: '✉️ ' + details.contacts
     };
 }
 
-/** A forrás-állapotból számolt, megjelenítésre kész adatok. */
-function derive(src, prev = {}) {
-    const active = activeComps();
-    let events = [];
-    active.forEach(comp => comp.events.forEach(ev => events.push({ comp, ev })));
-    if (src.timeFilter === 'upcoming') events = events.filter(i => !isPast(i.ev.date));
-    events.sort((a, b) => a.ev.date.localeCompare(b.ev.date));
+/** A forrás-állapotból számolt, megjelenítésre kész adatok (a YAML ezeket olvassa). */
+function derive(source, previous = {}) {
+    const visibleEvents = [];
+    activeCompetitions().forEach(competition => competition.events.forEach(event => visibleEvents.push({ competition, event })));
+    const filtered = source.timeFilter === 'upcoming' ? visibleEvents.filter(item => !isPast(item.event.date)) : visibleEvents;
+    filtered.sort((a, b) => a.event.date.localeCompare(b.event.date));
 
     return {
-        themeLabel: src.theme === 'dark' ? '☀️ Világos mód' : '🌙 Sötét mód',
+        themeLabel: source.theme === 'dark' ? '☀️ Világos mód' : '🌙 Sötét mód',
         todayInRange: isTodayWithinTimeline(),
-        comps: stable(prev.comps, competitions.map(compSummary)),
-        ganttRows: ganttRows(),
-        events: stable(prev.events, events.map(i => eventItem(i.comp, i.ev, src.selectedId))),
-        listSubtitle: `${events.length} megjelenített esemény időrendi sorrendben`,
-        detail: eventDetail(src.selectedId),
-        infoCards: stable(prev.infoCards, active.map(infoCard)),
-        noEvents: events.length === 0,
-        noInfo: active.length === 0
+        competitions: stable(previous.competitions, competitions.map(competitionSummary)),
+        timelineRows: timelineRows(),
+        events: stable(previous.events, filtered.map(item => eventListItem(item.competition, item.event, source.selectedId))),
+        listSubtitle: `${filtered.length} megjelenített esemény időrendi sorrendben`,
+        selectedEvent: selectedEventDetails(source.selectedId),
+        competitionInfos: stable(previous.competitionInfos, activeCompetitions().map(competitionInfo)),
+        noEvents: filtered.length === 0,
+        noCompetitionInfo: activeCompetitions().length === 0
     };
 }
 
 /** Az "Újdonságok" ablak adatai: a látogató által még nem látott bejegyzések. */
 function whatsNewData() {
-    const out = { show: false, version: '', multi: false, entries: [] };
-    if (typeof CHANGELOG === 'undefined' || !CHANGELOG.length) return out;
-    const cmp = (a, b) => {
-        const pa = String(a).split('.').map(Number), pb = String(b).split('.').map(Number);
-        for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
-            const d = (pa[i] || 0) - (pb[i] || 0);
-            if (d !== 0) return d;
+    const empty = { show: false, version: '', hasMultipleEntries: false, entries: [] };
+    if (typeof CHANGELOG === 'undefined' || !CHANGELOG.length) return empty;
+    const compareVersions = (a, b) => {
+        const left = String(a).split('.').map(Number), right = String(b).split('.').map(Number);
+        for (let i = 0; i < Math.max(left.length, right.length); i++) {
+            const diff = (left[i] || 0) - (right[i] || 0);
+            if (diff !== 0) return diff;
         }
         return 0;
     };
-    const entries = CHANGELOG.slice().sort((x, y) => cmp(y.version, x.version));
-    let accepted = null;
+    const entries = CHANGELOG.slice().sort((x, y) => compareVersions(y.version, x.version));
+    let acceptedVersion = null;
     try {
         const saved = JSON.parse(localStorage.getItem('whatsNewAccepted'));
-        if (saved && typeof saved.version === 'string') accepted = saved.version;
+        if (saved && typeof saved.version === 'string') acceptedVersion = saved.version;
     } catch (e) { /* localStorage nem elérhető vagy sérült: minden betöltéskor megjelenik */ }
-    const unseen = accepted === null ? entries : entries.filter(c => cmp(c.version, accepted) > 0);
-    return { show: unseen.length > 0, version: entries[0].version, multi: unseen.length > 1, entries: unseen };
+    const unseen = acceptedVersion === null ? entries : entries.filter(entry => compareVersions(entry.version, acceptedVersion) > 0);
+    return { show: unseen.length > 0, version: entries[0].version, hasMultipleEntries: unseen.length > 1, entries: unseen };
 }

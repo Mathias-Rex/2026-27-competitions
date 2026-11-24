@@ -69,8 +69,8 @@ function startApp() {
     // a hivatkozott adatok (a YAML-ben $név vagy ${név})
     const data = {
         icons: ICONS,
-        downloads: DOWNLOADS.map(g => ({ ...g, vars: `--c-color:${g.color}` })),
-        ganttCfg: {
+        downloads: DOWNLOADS.map(group => ({ ...group, colorStyle: `--c-color:${group.color}` })),
+        timelineSettings: {
             monthWidth: wide ? 380 : 260,
             labelWidth: wide ? 190 : 104,
             today: TODAY_STR,
@@ -89,32 +89,32 @@ function startApp() {
             state.set('theme', next);
         },
         // versenykapcsoló kártya: bárhová kattintva vált, a kapcsolóra kattintást a checkbox maga kezeli
-        cardClick({ state, event, el }) {
+        competitionCardClick({ state, event, el }) {
             if (event.target.closest('.checkbox-input')) return;
-            state.toggle('active.' + el.dataset.id);
+            state.toggle('active.' + el.dataset.competitionId);
         },
-        switchComp({ state, event }) {
-            const id = event.target.closest('[data-id]').dataset.id;
+        competitionSwitchChanged({ state, event }) {
+            const id = event.target.closest('[data-competition-id]').dataset.competitionId;
             state.set('active.' + id, event.target.checked);
         },
         // idővonal
-        hoverEvent({ state }, ms) { state.set('selectedId', ms.id); },
-        openEvent({ state }, ms) {
-            state.set('selectedId', ms.id);
-            B.openModal('eventModal');
+        hoverEvent({ state }, milestone) { state.set('selectedId', milestone.id); },
+        openEvent({ state }, milestone) {
+            state.set('selectedId', milestone.id);
+            B.openModal('event-modal');
         },
         // naptár menü és kattintás-megállítás
-        openCal({ event, el }) {
+        openCalendarMenu({ event, el }) {
             event.stopPropagation();
-            openCalMenu(el.dataset.id, el);
+            openCalMenu(el.dataset.eventId, el);
         },
-        stop({ event }) { event.stopPropagation(); },
+        stopPropagation({ event }) { event.stopPropagation(); },
         // Újdonságok ablak
         acceptWhatsNew({ state }) {
             try {
                 localStorage.setItem('whatsNewAccepted', JSON.stringify({ version: state.get('whatsNew.version'), acceptedAt: new Date().toISOString() }));
             } catch (e) { /* nincs mentés */ }
-            B.closeModal('whatsNew');
+            B.closeModal('whats-new-modal');
         }
     };
 
@@ -162,8 +162,8 @@ function startApp() {
     }
 
     if (state.get('whatsNew.show')) {
-        B.openModal('whatsNew');
-        document.getElementById('whatsNewOk')?.focus();
+        B.openModal('whats-new-modal');
+        document.getElementById('whats-new-ok-button')?.focus();
     }
 }
 
