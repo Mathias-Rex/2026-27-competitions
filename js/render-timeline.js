@@ -106,7 +106,7 @@ function renderTimeline() {
     let gridHeaderHtml = `
         ${todayVisible ? `<div style="height: ${bubbleZonePx}px;"></div>` : ''}
         <div class="grid grid-cols-[104px_1fr] lg:grid-cols-[190px_1fr] items-end border-b border-slate-200">
-            <div class="text-xs font-bold uppercase tracking-wider text-slate-400 pb-2 pr-3 lg:-mb-px lg:border-b lg:border-slate-200 lg:sticky lg:left-0 lg:z-[60] lg:bg-slate-50 lg:shadow-[8px_0_8px_-8px_rgba(15,23,42,0.18)] lg:-ml-5 lg:pl-5 lg:self-stretch lg:flex lg:items-end" style="margin-top: -${bubbleZonePx + 20}px; padding-top: ${bubbleZonePx + 20}px;">Verseny</div>
+            <div class="text-xs font-bold uppercase tracking-wider text-slate-400 pb-2 pr-3 lg:mt-[calc(var(--ext)*-1)] lg:pt-[var(--ext)] lg:-mb-px lg:border-b lg:border-slate-200 lg:sticky lg:left-0 lg:z-[60] lg:bg-slate-50 lg:shadow-[8px_0_8px_-8px_rgba(15,23,42,0.18)] lg:-ml-5 lg:pl-5 lg:self-stretch lg:flex lg:items-end" style="--ext: ${bubbleZonePx + 20}px;">Verseny</div>
             <div class="relative z-10 h-6 mb-2">
     `;
 
@@ -169,7 +169,7 @@ function renderTimeline() {
         rowsHtml += `
             <div class="grid grid-cols-[104px_1fr] lg:grid-cols-[190px_1fr] items-center min-h-[128px]">
                 <!-- Bal oldali verseny név -->
-                <div class="py-4 pr-4 ${compIdx > 0 ? 'lg:-mt-px lg:border-t lg:border-slate-100' : ''} lg:sticky lg:left-0 lg:z-[60] lg:bg-slate-50 lg:shadow-[8px_0_8px_-8px_rgba(15,23,42,0.18)] lg:-ml-5 lg:pl-5 lg:self-stretch lg:flex lg:flex-col lg:justify-center"${compIdx === activeComps.length - 1 ? ' style="margin-bottom: -20px; padding-bottom: 36px;"' : ''}>
+                <div class="py-4 pr-4 ${compIdx === activeComps.length - 1 ? 'lg:-mb-5 lg:pb-9' : ''} ${compIdx > 0 ? 'lg:-mt-px lg:border-t lg:border-slate-100' : ''} lg:sticky lg:left-0 lg:z-[60] lg:bg-slate-50 lg:shadow-[8px_0_8px_-8px_rgba(15,23,42,0.18)] lg:-ml-5 lg:pl-5 lg:self-stretch lg:flex lg:flex-col lg:justify-center">
                     <div class="flex items-center gap-2">
                         <span class="w-3 h-3 rounded-full shrink-0" style="background-color: ${cc(comp, 'color')};"></span>
                         <span class="font-bold text-sm text-slate-800 leading-tight">${comp.shortName}</span>

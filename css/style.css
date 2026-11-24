@@ -42,7 +42,7 @@ html.dark .timeline-scroll::-webkit-scrollbar-track { background: #1e293b; }
 html.dark .timeline-scroll::-webkit-scrollbar-thumb { background: #475569; }
 html.dark .bg-white { background-color: #111827; }
 html.dark .bg-white\/80 { background-color: rgba(30, 41, 59, 0.8); }
-html.dark .lg\:bg-slate-50 { background-color: #1a2336; }
+@media (min-width: 1024px) { html.dark .lg\:bg-slate-50 { background-color: #1a2336; } }
 html.dark .bg-slate-50, html.dark .bg-slate-50\/60, html.dark .bg-slate-50\/80, html.dark .bg-slate-50\/50 { background-color: #1a2336; }
 html.dark .bg-slate-100, html.dark .bg-slate-100\/70 { background-color: #1e293b; }
 html.dark .hover\:bg-slate-100:hover { background-color: #263349; }
