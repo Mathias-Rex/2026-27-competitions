@@ -40,7 +40,7 @@ Mappák:
    - A `discrepancy` mezőt csak akkor törölheted, ha a user jóváhagyta, hogy az eltérés tisztázódott.
    - Az összegzésben sorold fel, mely meglévő események kaptak időpontot, becsült végidőt vagy eltérés-badge-et.
 
-4. **Oldal frissítése** (a meglévő adatmodell és stílus szerint). Az események és a verseny részletei a `js/data.js` `competitions` tömbjében vannak, a megjelenítés a `js/ui/*.js` fájlokban (createDOMBlocks komponensek), a letöltési dokumentumok adata a `js/downloads.js`-ben.
+4. **Oldal frissítése** (a meglévő adatmodell és stílus szerint). Az események és a verseny részletei a `js/data.js` `competitions` tömbjében vannak, a megjelenítés az `index.html` YAML leírásában (createDOMBlocks) és a `js/derive.js`-ben, a letöltési dokumentumok adata a `js/downloads.js`-ben.
    - Új határidők, fordulók: a megfelelő verseny `events` tömbjébe (`id`, `date`, `displayDate`, `shortLabel`, `title`, `description`, `location`, `laneOffset` váltakozva -1/1, időrendben), és a `details.roundsSummary` listába, ha hivatalos forduló.
    - Általános infók (résztvevők, téma, díjak, kapcsolat, linkek): a verseny `details` objektumába.
    - Új verseny csak akkor kerül be, ha a PDF tényleg új versenyről szól; ilyenkor kérdezz rá a színre és a csapatokra.
