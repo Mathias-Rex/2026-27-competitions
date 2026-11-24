@@ -13,7 +13,7 @@ Egyetlen oldalas, statikus weboldal (`index.html`, Tailwind CDN + vanília JS, b
 ## Szabályok
 
 - A nyelv magyar, a meglévő hangnemben. **Címekben ne legyen gondolatjel** (a user nem szereti), pl. „Pályamunka workshop (7-es csapat)”.
-- Az események pontos időpontját mindig rögzítsd (kezdés, órával megadott határidő, éjfél/24:00). Ha a forrás nem ad időpontot, vagy későbbi tájékoztatást ígér, azt is írd az esemény `description` mezőjébe. Kezdet és vég ismeretében add meg a `startTime` és `endTime` (`'HH:MM'`) mezőt, ettől lesz a naptár gomb időponttal mentve. Végidőt ne találj ki.
+- Az események pontos időpontját mindig rögzítsd (kezdés, órával megadott határidő, éjfél/24:00). A `displayDate` csak a dátum, az időpont a `displayTime` mezőbe kerül, **zárójel nélkül**, intervallumnál is (`'9:00–16:00'`); az oldal a dátum alatt, külön sorban mutatja. A címekbe se írj zárójeles időpontot. Ha a forrás nem ad időpontot, vagy későbbi tájékoztatást ígér, azt is írd az esemény `description` mezőjébe. Kezdet és vég ismeretében add meg a `startTime` és `endTime` (`'HH:MM'`) mezőt, ettől lesz a naptár gomb időponttal mentve. Végidőt ne találj ki.
 - Esemény felvétele: `id`, `date` (ISO), `displayDate`, `shortLabel`, `title`, `description`, `location`, `laneOffset` (-1/1 váltakozva, hogy az idővonali feliratok ne érjenek össze), időrendben. Hivatalos fordulónál a `details.roundsSummary`-ba is.
 - Ütköző forrásadatot ne válassz csendben, jelezd a usernek (jelenleg nyitott: a Neumann-döntő szállása felhívás szerint max. 2, szabályzat szerint max. 3 fő).
 - A weboldal naptár menüje (Google, Outlook, `.ics`) az események adatából dolgozik, ahol nincs `startTime`/`endTime`, ott egész napos esemény lesz.

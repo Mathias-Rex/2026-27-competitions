@@ -398,7 +398,8 @@
                     {
                         id: 'radnoti-ws1',
                         date: '2026-11-28',
-                        displayDate: '2026. nov. 28. (9:00–16:00)',
+                        displayDate: '2026. nov. 28.',
+                        displayTime: '9:00–16:00',
                         startTime: '09:00',
                         endTime: '16:00',
                         shortLabel: 'Workshop (7-esek)',
@@ -411,7 +412,8 @@
                     {
                         id: 'radnoti-ws2',
                         date: '2026-12-05',
-                        displayDate: '2026. dec. 5. (9:00–16:00)',
+                        displayDate: '2026. dec. 5.',
+                        displayTime: '9:00–16:00',
                         startTime: '09:00',
                         endTime: '16:00',
                         shortLabel: 'Workshop (8-asok)',
@@ -505,7 +507,7 @@
                         '6. Számítógéppel támogatott tervezés (CAD programokkal szerkesztett tárgyak, objektumok)'
                     ],
                     roundsSummary: [
-                        '2027. febr. 14. (24:00): Online nevezési határidő regisztráció után (kötelező max. 10 perces bemutató videó mellékelése)',
+                        '2027. febr. 14. 24:00: Online nevezési határidő regisztráció után (kötelező max. 10 perces bemutató videó mellékelése)',
                         '2027. febr. 22.: Előzsűri értesítése a döntőbe jutóknak (max. 80 fő jut a döntőbe)',
                         '2027. márc. 18–19.: Döntő Szekszárdon (max. 10 perces személyes bemutató; pontozás: újszerűség 30%, kidolgozottság 30%, összetettség 20%, előadás 20%)'
                     ],
@@ -533,9 +535,10 @@
                     {
                         id: 'neumann-2',
                         date: '2027-02-14',
-                        displayDate: '2027. febr. 14. (24:00)',
+                        displayDate: '2027. febr. 14.',
+                        displayTime: '24:00',
                         shortLabel: 'Nevezés (+videó)',
-                        title: 'Online nevezési határidő (24:00)',
+                        title: 'Online nevezési határidő',
                         description: 'Online nevezési határidő regisztráció után a neumannverseny.hu felületén, kötelező max. 10 perces bemutató videó mellékelésével.',
                         location: 'Online (neumannverseny.hu)',
                         linkUrl: 'https://neumannverseny.hu',
@@ -588,7 +591,7 @@
                     participants: '7–8. évfolyamos tanulókból álló 2 fős csapatok (vegyesen 7. és 8. osztályos tagok is alkothatnak csapatot; a megye általános és középiskoláiból).',
                     theme: 'Témakörök és eszközök: Matematikai, logikai feladatok, grafika, szövegszerkesztés, prezentáció, táblázatkezelés, micro:bit programozása (használható programok: Microsoft Office programcsomag, képszerkesztő program).',
                     roundsSummary: [
-                        '2026. nov. 20. (éjfél): Regisztrációs határidő',
+                        '2026. nov. 20. éjfél: Regisztrációs határidő',
                         '2026. dec. 19.: 1. forduló – online tesztmegoldás',
                         '2027. febr. 19.: 1. forduló – online beadandó feladat beküldése',
                         '2027. ápr. 6. 14:00: 2. forduló – Döntő Pécsen (az online fordulók után az 5 legjobban teljesítő csapat kap meghívást e-mailben; micro:bit-tel megoldandó szabadulószoba)'
@@ -605,9 +608,10 @@
                     {
                         id: 'arpad-1',
                         date: '2026-11-20',
-                        displayDate: '2026. nov. 20. (éjfél)',
+                        displayDate: '2026. nov. 20.',
+                        displayTime: 'éjfél',
                         shortLabel: 'Regisztráció',
-                        title: 'Regisztrációs határidő (éjfél)',
+                        title: 'Regisztrációs határidő',
                         description: '2 fős csapatok (7–8. évfolyam, vegyesen is) jelentkezése az online regisztrációs űrlap beküldésével.',
                         location: 'Online (Microsoft Forms)',
                         linkUrl: 'https://forms.office.com/e/cxF0cqnv8M?origin=lprLink',
@@ -644,7 +648,8 @@
                     {
                         id: 'arpad-4',
                         date: '2027-04-06',
-                        displayDate: '2027. ápr. 6. 14:00',
+                        displayDate: '2027. ápr. 6.',
+                        displayTime: '14:00',
                         shortLabel: '2. ford. DÖNTŐ',
                         title: '2. forduló – Döntő Pécsen',
                         description: 'A döntő 14:00-kor kezdődik. Az online fordulók után az 5 legjobban teljesítő csapat kap meghívást e-mailben: micro:bit-tel megoldandó szabadulószoba.',
@@ -912,7 +917,7 @@
                                 <span class="font-bold text-sm text-slate-800 leading-tight">${comp.shortName}</span>
                             </div>
                             <span class="text-[11px] text-slate-400 block mt-1 pl-5">
-                                ${comp.events[0].displayDate.replace(' (éjfél)', '')} – ${lastEvent.displayDate.replace(' 14:00', '')}
+                                ${comp.events[0].displayDate} – ${lastEvent.displayDate}
                             </span>
                         </div>
 
@@ -950,9 +955,7 @@
 
                     const compactDate = ev.displayDate
                         .replace('2026. ', '')
-                        .replace('2027. ', '')
-                        .replace(' (éjfél)', '')
-                        .replace(' (24:00)', '');
+                        .replace('2027. ', '');
 
                     rowsHtml += `
                         <!-- Függőleges összekötő -->
@@ -965,6 +968,7 @@
                             class="timeline-event-trigger absolute ${labelPosClass} -translate-x-1/2 px-2 py-1 rounded-lg border text-[11px] leading-tight text-center whitespace-nowrap cursor-pointer transition ${activeRing}"
                             style="left: ${pct}%; ${badgeStyle}">
                             <span class="font-bold block">${compactDate}</span>
+                            ${ev.displayTime ? `<span class="block font-semibold opacity-80">${ev.displayTime}</span>` : ''}
                             <span class="font-medium ${ev.isFinal ? 'font-extrabold' : ''}">${ev.shortLabel}</span>
                         </button>
 
@@ -1222,7 +1226,7 @@
                     <div class="bg-slate-50 rounded-xl p-3 border border-slate-200/80 space-y-2 text-xs">
                         <div class="flex items-center justify-between gap-2">
                             <span class="text-slate-500 font-medium">Időpont:</span>
-                            <span class="font-bold text-slate-900 text-right">${ev.displayDate}</span>
+                            <span class="font-bold text-slate-900 text-right">${ev.displayDate}${ev.displayTime ? `<br>${ev.displayTime}` : ''}</span>
                         </div>
                         <div class="flex items-center justify-between gap-2">
                             <span class="text-slate-500 font-medium">Helyszín / Forma:</span>
@@ -1306,9 +1310,7 @@
 
                 const shortDisplayDate = ev.displayDate
                     .replace('2026. ', '')
-                    .replace('2027. ', '')
-                    .replace(' (éjfél)', '')
-                    .replace(' (24:00)', '');
+                    .replace('2027. ', '');
 
                 item.innerHTML = `
                     <div class="flex items-start gap-3.5">
@@ -1318,6 +1320,7 @@
                             <span class="block text-xs font-extrabold ${ev.isFinal ? 'text-amber-900' : (past ? 'text-slate-500' : 'text-slate-900')}">
                                 ${shortDisplayDate}
                             </span>
+                            ${ev.displayTime ? `<span class="block text-[11px] font-bold mt-0.5 ${past ? 'text-slate-400' : 'text-slate-700'}">${ev.displayTime}</span>` : ''}
                             <span class="block text-[10px] font-semibold mt-0.5 ${past ? 'text-slate-400' : 'text-slate-600'}">
                                 ${ev.date.slice(0, 4)}
                             </span>

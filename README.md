@@ -53,7 +53,8 @@ Az `index.html` `competitions` tömbjének `events` listájába:
 {
     id: 'radnoti-ws1',
     date: '2026-11-28',
-    displayDate: '2026. nov. 28. (9:00–16:00)',
+    displayDate: '2026. nov. 28.',
+    displayTime: '9:00–16:00', // opcionális, a dátum alatt jelenik meg
     startTime: '09:00',      // opcionális, a naptár gombhoz
     endTime: '16:00',        // opcionális
     shortLabel: 'Workshop (7-esek)',
