@@ -105,9 +105,9 @@ function renderTimeline() {
     // Rács fejléc (hónapok) – a piros vonal fölött jelenik meg (z-10)
     let gridHeaderHtml = `
         ${todayVisible ? `<div style="height: ${bubbleZonePx}px;"></div>` : ''}
-        <div class="grid grid-cols-[104px_1fr] lg:grid-cols-[190px_1fr] items-end pb-2 border-b border-slate-200 relative z-10">
-            <div class="text-xs font-bold uppercase tracking-wider text-slate-400 pr-3">Verseny</div>
-            <div class="relative h-6">
+        <div class="grid grid-cols-[104px_1fr] lg:grid-cols-[190px_1fr] items-end border-b border-slate-200">
+            <div class="text-xs font-bold uppercase tracking-wider text-slate-400 pb-2 pr-3 lg:-mb-px lg:border-b lg:border-slate-200 lg:sticky lg:left-0 lg:z-[60] lg:bg-slate-50 lg:shadow-[8px_0_8px_-8px_rgba(15,23,42,0.18)] lg:-ml-5 lg:pl-5 lg:self-stretch lg:flex lg:items-end">Verseny</div>
+            <div class="relative z-10 h-6 mb-2">
     `;
 
     months.forEach(m => {
@@ -157,7 +157,7 @@ function renderTimeline() {
     // Versenysávok (Sávonként egy sor)
     let rowsHtml = `<div class="divide-y divide-slate-100 relative z-10">`;
 
-    activeComps.forEach(comp => {
+    activeComps.forEach((comp, compIdx) => {
         const firstDate = comp.events[0].date;
         const lastEvent = comp.events[comp.events.length - 1];
         const lastDate = lastEvent.endDate || lastEvent.date;
@@ -167,9 +167,9 @@ function renderTimeline() {
         const barWidth = Math.max(2, endPct - startPct);
 
         rowsHtml += `
-            <div class="grid grid-cols-[104px_1fr] lg:grid-cols-[190px_1fr] items-center py-4 min-h-[128px]">
+            <div class="grid grid-cols-[104px_1fr] lg:grid-cols-[190px_1fr] items-center min-h-[128px]">
                 <!-- Bal oldali verseny név -->
-                <div class="pr-4">
+                <div class="py-4 pr-4 ${compIdx > 0 ? 'lg:-mt-px lg:border-t lg:border-slate-100' : ''} lg:sticky lg:left-0 lg:z-[60] lg:bg-slate-50 lg:shadow-[8px_0_8px_-8px_rgba(15,23,42,0.18)] lg:-ml-5 lg:pl-5 lg:self-stretch lg:flex lg:flex-col lg:justify-center">
                     <div class="flex items-center gap-2">
                         <span class="w-3 h-3 rounded-full shrink-0" style="background-color: ${cc(comp, 'color')};"></span>
                         <span class="font-bold text-sm text-slate-800 leading-tight">${comp.shortName}</span>
@@ -180,7 +180,7 @@ function renderTimeline() {
                 </div>
 
                 <!-- Jobb oldali idővonal sáv -->
-                <div class="relative h-24 flex items-center">
+                <div class="relative h-24 my-4 flex items-center">
                     <!-- Háttér sáv (teljes időtartam) -->
                     <div class="absolute h-3.5 rounded-full transition-all"
                         style="left: ${startPct}%; width: ${barWidth}%; background-color: ${cc(comp, 'bgBar')}; border: 1px solid ${cc(comp, 'borderColor')};">
