@@ -120,7 +120,7 @@ body {
 .cmp-section-title { font-size: 1rem; font-weight: 700; color: var(--text); }
 
 /* ===== Állapot-jelvények ===== */
-.cmp-pill { display: inline-block; padding: 0.125rem 0.625rem; border-radius: 9999px; background: var(--soft); color: var(--text-light); font-size: 0.75rem; font-weight: 600; line-height: 1.4; }
+.cmp-pill { display: inline-block; text-align: center; padding: 0.125rem 0.625rem; border-radius: 9999px; background: var(--soft); color: var(--text-light); font-size: 0.75rem; font-weight: 600; line-height: 1.4; }
 .cmp-pill.is-ok { background: var(--ok-bg); color: var(--ok-text); border: 1px solid var(--ok-border); }
 .cmp-tag { display: inline-flex; padding: 0.125rem 0.5rem; border-radius: 0.375rem; font-size: 11px; font-weight: 700; line-height: 1.4; background: var(--c-bg, var(--soft)); color: var(--c-text, var(--text)); }
 .cmp-tag:hover { background: var(--c-bg, var(--soft)); color: var(--c-text, var(--text)); }
@@ -143,7 +143,7 @@ body {
 .cmp-filter .card-body { padding: 0.125rem 0 0 1.75rem; font-size: 0.75rem; color: var(--text-light); }
 .cmp-filter .card-footer { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin-top: 0.75rem; padding: 0.625rem 0 0; border-top: 1px solid var(--border); background: none; font-size: 0.75rem; }
 .cmp-filter-org { color: var(--text-light); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 62%; }
-.cmp-filter-count { font-weight: 600; padding: 0.125rem 0.5rem; border-radius: 0.375rem; background: var(--c-bg); color: var(--c-text); }
+.cmp-filter-count { text-align: center; font-weight: 600; padding: 0.125rem 0.5rem; border-radius: 0.375rem; background: var(--c-bg); color: var(--c-text); }
 .cmp-filter.is-off .cmp-filter-count { background: var(--soft-hover); color: var(--text-light); }
 /* kapcsoló (switch) a checkboxból */
 .cmp-filter div.checkbox-input { position: absolute; top: 1rem; right: 1rem; margin: 0; }
