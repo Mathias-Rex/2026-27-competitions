@@ -378,7 +378,7 @@ function renderDetailedInfoCards() {
                                     ${t.logo ? `<img src="${t.logo}" alt="${t.name} csapat logója" width="40" height="40" class="w-10 h-10 rounded-full shrink-0">` : ''}
                                     <span class="text-sm font-extrabold text-slate-900">${t.name}</span>
                                     <span class="text-[11px] font-semibold px-2 py-0.5 rounded-md" style="background-color: ${cc(comp, 'bgLight')}; color: ${cc(comp, 'textDark')};">${t.size}</span>
-                                    <span class="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-slate-100 text-slate-700">${t.grade}</span>
+                                    <div class="basis-full ${t.logo ? 'pl-12' : ''}"><span class="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-slate-100 text-slate-700">${t.grade}</span></div>
                                 </li>`).join('')}
                         </ul>
                     </div>` : ''}
