@@ -245,8 +245,8 @@ function renderChronologicalList() {
             </div>
 
             <!-- Jobb oldali státusz és link -->
-            <div class="sm:text-right shrink-0 flex sm:flex-col items-center sm:items-end justify-between border-t sm:border-t-0 pt-2 sm:pt-0 border-slate-100 gap-1">
-                <span class="w-28 text-center text-xs font-semibold px-2 py-1 rounded-lg ${
+            <div class="sm:text-right shrink-0 flex flex-wrap sm:flex-nowrap sm:flex-col items-center sm:items-end justify-between border-t sm:border-t-0 pt-2 sm:pt-0 border-slate-100 gap-1">
+                <span class="w-28 shrink-0 text-center text-xs font-semibold px-2 py-1 rounded-lg ${
                     past
                         ? 'bg-slate-100 text-slate-500'
                         : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
