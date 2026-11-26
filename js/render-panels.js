@@ -60,9 +60,13 @@ function renderWorkshopProjects() {
 // Az esemény részletező HTML-je (az oldalsó panel és a felugró ablak közös tartalma)
 function eventDetailHtml(comp, ev, where) {
     const past = isPast(ev.date);
+    // az eseményhez tartozó csapatok logói (ev.teams: a verseny ourTeams neve)
+    const teamLogos = (ev.teams || []).map(n => (comp.details.ourTeams || []).find(t => t.name === n)).filter(t => t && t.logo)
+        .map(t => `<img src="${t.logo}" alt="${t.name} csapat logója" title="${t.name}" width="56" height="56" class="w-14 h-14 rounded-full shrink-0">`).join('');
     return `
         <div class="space-y-4">
-            <div>
+            <div class="flex items-start justify-between gap-3">
+              <div class="min-w-0">
                 <span class="inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-lg mb-2"
                     style="background-color: ${cc(comp, 'bgLight')}; color: ${cc(comp, 'textDark')};">
                     <span class="w-2 h-2 rounded-full" style="background-color: ${cc(comp, 'color')};"></span>
@@ -71,6 +75,8 @@ function eventDetailHtml(comp, ev, where) {
                 <h4 class="text-lg font-extrabold text-slate-900 leading-snug">
                     ${ev.isFinal ? '🏆 ' : ''}${ev.title}
                 </h4>
+              </div>
+              ${teamLogos ? `<div class="flex gap-1.5 shrink-0">${teamLogos}</div>` : ''}
             </div>
 
             <div class="bg-slate-50 rounded-xl p-3 border border-slate-200/80 space-y-2 text-xs">
