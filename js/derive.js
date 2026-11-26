@@ -163,6 +163,7 @@ function workshopProjectCards() {
         colorStyle: compVars(competition),
         title: project.title,
         team: project.team,
+        logo: project.logo,
         teamInfo: project.teamInfo,
         summary: project.summary,
         eventId: project.eventId,

@@ -313,3 +313,5 @@ body {
 .cmp-project-team { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.5rem; }
 .cmp-page .btn.cmp-textlink { padding: 0; border: 0; background: none; font-size: inherit; font-weight: 600; color: inherit; text-decoration: underline dotted; cursor: pointer; }
 .cmp-page .btn.cmp-textlink:hover { color: var(--text); }
+.cmp-logo { width: 3.5rem; height: 3.5rem; border-radius: 50%; flex-shrink: 0; object-fit: cover; }
+.cmp-logo.is-sm { width: 2.5rem; height: 2.5rem; }

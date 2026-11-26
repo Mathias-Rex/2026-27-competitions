@@ -16,6 +16,7 @@ Egyetlen oldalas, statikus weboldal (`index.html` + `css/` + `js/` + `vendor/`, 
   - `derive.js`: a nézet számára származtatott adatok (`derive`): a forrás-állapotból (versenykapcsolók, időszűrő, kiválasztott esemény, téma) kész szövegek és listák; a listaelemek azonossága megmarad, ha a tartalom nem változott,
   - `icons.js`: az SVG ikonok, `calendar-menu.js`: a „Naptárba” menü,
   - `app.js`: a forrás-állapot (`ui.state`), az eseménykezelők, a mentés (localStorage) és az indítás (csak egyszer fut).
+- `img/`: a csapatok logói (a `js/data.js` `ourTeams[].logo` és `WORKSHOP_PROJECTS[].logo` mezője hivatkozza).
 - `inputs/`: új PDF-ek érkezési helye (feldolgozás után kiürül, nem verziókezelt).
 - `data/`: a PDF-ekből készült Markdownok.
 - `downloads/`: a feldolgozott PDF-ek, az oldalról letölthetők (publikus).

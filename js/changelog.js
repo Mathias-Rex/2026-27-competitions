@@ -13,6 +13,13 @@
  */
 const CHANGELOG = [
     {
+        version: '1.2.1',
+        date: '2026. nov. 26.',
+        items: [
+            'A csapatok logója megjelent a „Csapataink” listában (Radnóti HACK & CODE) és a „Workshop projektek” kártyákon.'
+        ]
+    },
+    {
         version: '1.2.0',
         date: '2026. nov. 26.',
         items: [

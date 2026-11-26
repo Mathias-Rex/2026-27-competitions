@@ -449,6 +449,13 @@ ui:
                                                   key: team.name
                                                 do:
                                                   - div.cmp-team:
+                                                      - if: "${team.logo}"
+                                                        then:
+                                                          - img.cmp-logo.is-sm:
+                                                              src: "${team.logo}"
+                                                              alt: "${team.name} csapat logója"
+                                                              width: 40
+                                                              height: 40
                                                       - strong: "${team.name}"
                                                       - span.badge.cmp-tag: "${team.size}"
                                                       - span.badge.cmp-tag.is-neutral: "${team.grade}"
@@ -561,6 +568,11 @@ ui:
                               title: "${project.title}"
                               body:
                                 - div.cmp-project-team:
+                                    - img.cmp-logo:
+                                        src: "${project.logo}"
+                                        alt: "${project.team} csapat logója"
+                                        width: 56
+                                        height: 56
                                     - Badge.cmp-tag.is-lg: "${project.team}"
                                     - span.cmp-hint: "${project.teamInfo}"
                                 - Paragraph.cmp-text: "${project.summary}"
