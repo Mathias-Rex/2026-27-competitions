@@ -256,12 +256,12 @@ function renderChronologicalList() {
                 <span class="text-[11px] text-slate-400">📍 ${ev.location}</span>
                 ${ev.linkUrl ? `
                     <a href="${ev.linkUrl}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();"
-                       class="text-[11px] font-bold underline hover:opacity-80 mt-0.5"
+                       class="basis-full sm:basis-auto text-left sm:text-right text-[11px] font-bold underline hover:opacity-80 mt-0.5"
                        style="color: ${cc(comp, 'color')};">
                         🔗 ${ev.linkLabel || 'Megnyitás'}
                     </a>
                 ` : ''}
-                ${past ? '' : calButtonHtml(ev.id, 'list', 'text-[11px] font-bold underline hover:opacity-80 mt-0.5 text-slate-700')}
+                ${past ? '' : calButtonHtml(ev.id, 'list', 'basis-full sm:basis-auto text-left sm:text-right text-[11px] font-bold underline hover:opacity-80 mt-0.5 text-slate-700')}
             </div>
         `;
 
