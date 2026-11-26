@@ -1,5 +1,32 @@
 /* Részletező panel, időrendi lista és versenykártyák. */
 
+// Az eseményhez tartozó letölthető dokumentumok (megnézés új lapon + letöltés)
+function eventDocumentsHtml(docs) {
+    const btn = 'inline-flex items-center justify-center w-9 h-9 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition';
+    const eye = '<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
+    const down = '<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v12"/><path d="m6 11 6 6 6-6"/><path d="M5 20h14"/></svg>';
+    return `
+        <div>
+            <h5 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">Dokumentumok</h5>
+            <ul class="space-y-2.5 bg-slate-50 rounded-xl p-3 border border-slate-200/80">
+                ${docs.map(d => `
+                    <li class="flex items-start justify-between gap-3">
+                        <div class="min-w-0">
+                            <span class="block text-sm font-semibold text-slate-800 leading-snug">${d.title}</span>
+                            <span class="block text-xs text-slate-500 leading-snug mt-0.5">${d.desc}</span>
+                            <span class="block text-[11px] text-slate-400 mt-0.5">PDF, ${d.size}</span>
+                        </div>
+                        <div class="flex items-center gap-1.5 shrink-0">
+                            <a href="${d.file}" target="_blank" rel="noopener noreferrer" class="${btn}" title="Megnézés" aria-label="Megnézés: ${d.title}">${eye}</a>
+                            <a href="${d.file}" download class="${btn}" title="Letöltés" aria-label="Letöltés: ${d.title}">${down}</a>
+                        </div>
+                    </li>
+                `).join('')}
+            </ul>
+        </div>
+    `;
+}
+
 // Az esemény részletező HTML-je (az oldalsó panel és a felugró ablak közös tartalma)
 function eventDetailHtml(comp, ev, where) {
     const past = isPast(ev.date);
@@ -40,6 +67,8 @@ function eventDetailHtml(comp, ev, where) {
                     ${ev.description}
                 </p>
             </div>
+
+            ${ev.documents && ev.documents.length ? eventDocumentsHtml(ev.documents) : ''}
 
             ${ev.linkUrl ? `
                 <div class="pt-1">

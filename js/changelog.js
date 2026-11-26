@@ -13,6 +13,16 @@
  */
 const CHANGELOG = [
     {
+        version: '1.1.0',
+        date: '2026. nov. 26.',
+        items: [
+            'A workshopok eseményeinél (az idővonalon rákattintva és a részletező dobozban) letölthető dokumentumok: megnézés és letöltés gombbal.',
+            'A 7-es csapat (nov. 28.): Ocean Cat workshop kézikönyv. A 8-asok (dec. 5.): Recycling Centre Tycoon kézikönyv.',
+            'Mindkét csapatnak: otthoni felkészülési útmutató (telepítés, kb. 45 perc, érdemes a workshop előtt elvégezni) és szülői nyilatkozat (kitöltve, aláírva kell hozni).',
+            'A négy dokumentum a „Letölthető dokumentumok” szekcióban is megtalálható.'
+        ]
+    },
+    {
         version: '1.0.0',
         date: '2026. nov. 24.',
         items: [
