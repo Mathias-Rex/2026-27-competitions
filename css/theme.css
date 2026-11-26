@@ -355,3 +355,5 @@ body {
 .cmp-emoji { display: none; }
 @media (min-width: 640px) { .cmp-emoji { display: inline; } }
 @media (min-width: 640px) { .cmp-item-side-right, .cmp-item-links { display: contents; } }
+.cmp-item-body { flex: 1 1 0; min-width: 0; }
+.cmp-item-title { overflow-wrap: anywhere; hyphens: auto; }
