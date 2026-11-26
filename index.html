@@ -580,17 +580,21 @@ ui:
                     - div:
                         style: "${project.colorStyle}"
                         children:
-                          - Card.cmp-dl:
-                              title: "${project.title}"
+                          - Card.cmp-dl.cmp-project:
                               body:
-                                - div.cmp-project-team:
+                                - div.cmp-project-head:
                                     - img.cmp-logo:
                                         src: "${project.logo}"
                                         alt: "${project.team} csapat logója"
                                         width: 56
                                         height: 56
-                                    - Badge.cmp-tag.is-lg: "${project.team}"
-                                    - span.cmp-hint: "${project.teamInfo}"
+                                    - div:
+                                        style: "min-width:0"
+                                        children:
+                                          - Title(3).cmp-project-title: "${project.title}"
+                                          - div.cmp-project-team:
+                                              - Badge.cmp-tag.is-lg: "${project.team}"
+                                              - span.cmp-hint: "${project.teamInfo}"
                                 - Paragraph.cmp-text: "${project.summary}"
                                 - p.cmp-hint:
                                     - span: "Workshop: "

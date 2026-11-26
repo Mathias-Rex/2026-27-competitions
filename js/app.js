@@ -72,8 +72,8 @@ function startApp() {
         downloads: DOWNLOADS.map(group => ({ ...group, colorStyle: `--c-color:${group.color}` })),
         workshopProjects: workshopProjectCards(),
         timelineSettings: {
-            monthWidth: wide ? 380 : 260,
-            labelWidth: wide ? 190 : 104,
+            monthWidth: wide ? 353 : 260,
+            labelWidth: wide ? 210 : 104,
             today: TODAY_STR,
             todayLabel: `Ma (${TODAY_INFO.shortHu})`
         },
@@ -167,10 +167,40 @@ function startApp() {
         });
     }
 
+    setupTimelineLook();
+
     if (state.get('whatsNew.show')) {
         B.openModal('whats-new-modal');
         document.getElementById('whats-new-ok-button')?.focus();
     }
+}
+
+/**
+ * Az idővonal kinézete a main ággal egyező: a hónapfeliratok „2026. dec.” alakúak és a hónap kezdetén állnak,
+ * és az idővonal induláskor a mai napra görget.
+ */
+function setupTimelineLook() {
+    const gantt = document.getElementById('timeline');
+    if (!gantt) return;
+    const fixTicks = () => {
+        const years = [...gantt.querySelectorAll('.gantt-year')].map(el => ({ left: parseFloat(el.style.left), text: el.textContent.trim() }));
+        gantt.querySelectorAll('.gantt-tick').forEach(tick => {
+            if (tick.dataset.full) return;
+            const left = parseFloat(tick.style.left);
+            const year = years.filter(y => y.left <= left + 0.01).pop();
+            tick.dataset.full = '1';
+            tick.textContent = (year ? year.text + '. ' : '') + tick.textContent.trim();
+        });
+    };
+    fixTicks();
+    new MutationObserver(fixTicks).observe(gantt, { childList: true, subtree: true });
+    setTimeout(() => {
+        const scroller = gantt.querySelector('.gantt-scroll');
+        const today = gantt.querySelector('.gantt-today');
+        if (!scroller || !today || scroller.scrollWidth <= scroller.clientWidth) return;
+        const todayX = today.getBoundingClientRect().left - scroller.getBoundingClientRect().left + scroller.scrollLeft;
+        scroller.scrollLeft = Math.max(0, todayX - scroller.clientWidth / 3);
+    }, 60);
 }
 
 let appStarted = false;

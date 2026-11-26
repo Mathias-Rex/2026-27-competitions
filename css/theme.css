@@ -318,3 +318,28 @@ body {
 .cmp-detail-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.75rem; }
 .cmp-detail-logos { display: flex; gap: 0.375rem; flex-shrink: 0; }
 .cmp-team > .cmp-team-grade { flex-basis: 100%; padding-left: 3rem; }
+
+/* ===== Idővonal: a main ág kinézete ===== */
+.cmp-page .gantt { --gantt-head-h: 56px; }
+.cmp-page .gantt .gantt-years { display: none; }
+.cmp-page .gantt .gantt-sub { height: 100%; }
+.cmp-page .gantt .gantt-tick { width: 0 !important; overflow: visible; justify-content: center; border-top: 0; font-weight: 600; color: var(--text); padding: 0; }
+.cmp-page .gantt .gantt-corner, .cmp-page .gantt .gantt-label { background: var(--bg-alt); border-right: 0; box-shadow: 4px 0 8px -6px rgba(15, 23, 42, 0.25); }
+.cmp-page .gantt .gantt-row.is-alt { background: transparent; }
+.cmp-page .gantt .gantt-row.is-alt .gantt-label, .cmp-page .gantt .gantt-row:hover .gantt-label { background: var(--bg-alt); }
+.cmp-page .gantt .gantt-label-title { white-space: normal; overflow: visible; text-overflow: clip; font-weight: 800; }
+.cmp-page .gantt .gantt-label-title::before { content: ""; display: inline-block; width: 0.625rem; height: 0.625rem; margin-right: 0.5rem; border-radius: 50%; background: var(--gantt-color); }
+.cmp-page .gantt .gantt-label-sub { white-space: normal; padding-left: 1.125rem; }
+.cmp-page .gantt .gantt-card { display: flex; flex-direction: column; align-items: center; }
+.cmp-page .gantt .gantt-card-caption { order: 0; }
+.cmp-page .gantt .gantt-card-meta { order: 1; }
+.cmp-page .gantt .gantt-card-label { order: 2; }
+.cmp-project-head { display: flex; align-items: center; gap: 0.75rem; }
+.cmp-project-title { font-size: 1rem; font-weight: 800; line-height: 1.35; }
+.cmp-dl.cmp-project .card-body { padding-top: 1rem; }
+.cmp-page .gantt .gantt-label-title { font-weight: 700; }
+.cmp-legend-dot { width: 0.5rem; height: 0.5rem; border: 0; box-shadow: none; background: #475569; }
+@media (max-width: 1023px) {
+  /* mobilon a versenynevek az idővonallal együtt görögnek (mint a main ágon), nem tapadnak a bal szélre */
+  .cmp-page .gantt .gantt-corner, .cmp-page .gantt .gantt-label { position: static; box-shadow: none; }
+}
