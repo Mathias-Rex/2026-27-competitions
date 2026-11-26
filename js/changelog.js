@@ -13,6 +13,13 @@
  */
 const CHANGELOG = [
     {
+        version: '1.1.1',
+        date: '2026. nov. 26.',
+        items: [
+            'Javítva a nyolcadikos csapat neve: 0xd15ea5ed (a hexadecimális szám előtagja 0x, nem x0).'
+        ]
+    },
+    {
         version: '1.1.0',
         date: '2026. nov. 26.',
         items: [
@@ -32,7 +39,7 @@ const CHANGELOG = [
             'Új „Letölthető dokumentumok” szekció: a versenykiírások és szabályzatok PDF-jei versenyenként, megnézés és letöltés gombbal.',
             'Pontosabb időpontok az eseményeknél (pl. Árpád-kupa döntő: 14:00), az idő a dátum alatt látszik.',
             'Az idővonal asztali gépen is oldalra görgethető (egérrel megfogva, húzással is), és induláskor a mai napra ugrik.',
-            'Javítva a nyolcadikos csapat neve: x0d15ea5ed (hexadecimális írásmóddal a „diseased” szó).'
+            'Javítva a nyolcadikos csapat neve: 0xd15ea5ed (hexadecimális írásmóddal a „diseased” szó).'
         ]
     }
 ];

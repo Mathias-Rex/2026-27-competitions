@@ -63,7 +63,7 @@ const competitions = [
             ],
             ourTeams: [
                 { name: 'Code Trio', size: '3 fős', grade: 'csak hetedikesek' },
-                { name: 'x0d15ea5ed', size: '4 fős', grade: 'csak nyolcadikosok' }
+                { name: '0xd15ea5ed', size: '4 fős', grade: 'csak nyolcadikosok' }
             ],
             prizes: 'Oklevél minden döntősnek, értékes vásárlási utalványok az 1–3. helyezett csapatoknak, a felkészítő pedagógusok külön jutalmazása, valamint az I. helyezett csapat tagjainak felvételi lehetőség az iskolába.',
             contacts: 'Verseny e-mail: pecsiradnoti.verseny@gmail.com | Titkárság: titkar@radnoti-pecs.hu | Tel: 72/257-859',
