@@ -464,17 +464,20 @@ ui:
                                                   key: team.name
                                                 do:
                                                   - div.cmp-team:
+                                                      - div.cmp-team-text:
+                                                          - div.cmp-team-line:
+                                                              - strong: "${team.name}"
+                                                              - span.badge.cmp-tag: "${team.size}"
+                                                          - div:
+                                                              - span.badge.cmp-tag.is-neutral: "${team.grade}"
                                                       - if: "${team.logo}"
                                                         then:
-                                                          - img.cmp-logo.is-sm:
-                                                              src: "${team.logo}"
-                                                              alt: "${team.name} csapat logója"
-                                                              width: 40
-                                                              height: 40
-                                                      - strong: "${team.name}"
-                                                      - span.badge.cmp-tag: "${team.size}"
-                                                      - div.cmp-team-grade:
-                                                          - span.badge.cmp-tag.is-neutral: "${team.grade}"
+                                                          - div.cmp-team-logo:
+                                                              - img.cmp-logo.is-sm:
+                                                                  src: "${team.logo}"
+                                                                  alt: "${team.name} csapat logója"
+                                                                  width: 40
+                                                                  height: 40"
 
                                       - if: "${info.hasCategories}"
                                         then:
