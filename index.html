@@ -391,21 +391,27 @@ ui:
                                 - span:
                                     class: "${event.statusClass}"
                                     text: "${event.statusText}"
-                                - span.cmp-loc: "${event.location}"
-                                - if: "${event.hasLink}"
-                                  then:
-                                    - a.link.cmp-mini:
-                                        href: "${event.linkUrl}"
-                                        target: _blank
-                                        rel: "noopener noreferrer"
-                                        text: "${event.linkLabel}"
-                                        click: "@stopPropagation"
-                                - if: "${event.canAddToCalendar}"
-                                  then:
-                                    - button.btn.cmp-mini:
-                                        text: "📅 Naptárba"
-                                        data-event-id: "${event.id}"
-                                        click: "@openCalendarMenu"
+                                - div.cmp-item-side-right:
+                                    - span.cmp-loc: "${event.location}"
+                                    - div.cmp-item-links:
+                                        - if: "${event.hasLink}"
+                                          then:
+                                            - a.link.cmp-mini:
+                                                href: "${event.linkUrl}"
+                                                target: _blank
+                                                rel: "noopener noreferrer"
+                                                click: "@stopPropagation"
+                                                children:
+                                                  - span.cmp-emoji: "🔗 "
+                                                  - span: "${event.linkLabel}"
+                                        - if: "${event.canAddToCalendar}"
+                                          then:
+                                            - button.btn.cmp-mini:
+                                                data-event-id: "${event.id}"
+                                                click: "@openCalendarMenu"
+                                                children:
+                                                  - span.cmp-emoji: "📅 "
+                                                  - span: "Naptárba"
 
       # ===== 4. Versenykiírások (összecsukható) =====
       - section.cmp-panel:

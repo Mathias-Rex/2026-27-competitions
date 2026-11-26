@@ -90,7 +90,7 @@ function eventListItem(competition, event, selectedId) {
         location: '📍 ' + event.location,
         hasLink: !!event.linkUrl,
         linkUrl: event.linkUrl || '',
-        linkLabel: '🔗 ' + (event.linkLabel || 'Megnyitás'),
+        linkLabel: event.linkLabel || 'Megnyitás',
         canAddToCalendar: !isOver
     };
 }
