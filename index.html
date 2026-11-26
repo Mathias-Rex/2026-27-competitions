@@ -473,7 +473,8 @@ ui:
                                                               height: 40
                                                       - strong: "${team.name}"
                                                       - span.badge.cmp-tag: "${team.size}"
-                                                      - span.badge.cmp-tag.is-neutral: "${team.grade}"
+                                                      - div.cmp-team-grade:
+                                                          - span.badge.cmp-tag.is-neutral: "${team.grade}"
 
                                       - if: "${info.hasCategories}"
                                         then:

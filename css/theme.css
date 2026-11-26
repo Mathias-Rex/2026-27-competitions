@@ -317,3 +317,4 @@ body {
 .cmp-logo.is-sm { width: 2.5rem; height: 2.5rem; }
 .cmp-detail-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.75rem; }
 .cmp-detail-logos { display: flex; gap: 0.375rem; flex-shrink: 0; }
+.cmp-team > .cmp-team-grade { flex-basis: 100%; padding-left: 3rem; }
