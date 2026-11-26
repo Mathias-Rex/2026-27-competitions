@@ -134,7 +134,7 @@ function renderEventDetail() {
 
     if (!found) {
         panel.innerHTML = `<p class="text-sm text-slate-500">Válassz ki egy eseményt az idővonalon vagy a listából!</p>`;
-        badge.className = 'text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600';
+        badge.className = 'text-center text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600';
         badge.textContent = 'Részletek';
         return;
     }
@@ -144,10 +144,10 @@ function renderEventDetail() {
     const relText = formatRelativeDays(ev.date);
 
     if (past) {
-        badge.className = 'text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-500';
+        badge.className = 'text-center text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-500';
         badge.textContent = 'Már elmúlt';
     } else {
-        badge.className = 'text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200';
+        badge.className = 'text-center text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200';
         badge.textContent = relText;
     }
 
