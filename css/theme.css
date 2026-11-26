@@ -346,3 +346,4 @@ body {
   /* mobilon a versenynevek az idővonallal együtt görögnek (mint a main ágon), nem tapadnak a bal szélre */
   .cmp-page .gantt .gantt-corner, .cmp-page .gantt .gantt-label { position: static; box-shadow: none; }
 }
+.cmp-pill.is-fixed { width: 7rem; padding: 0.25rem 0.5rem; border-radius: 0.5rem; text-align: center; }

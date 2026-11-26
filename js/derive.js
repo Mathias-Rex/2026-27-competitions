@@ -86,7 +86,7 @@ function eventListItem(competition, event, selectedId) {
         title: event.title,
         description: event.description,
         statusText: isOver ? 'Lejárt' : formatRelativeDays(event.date),
-        statusClass: 'badge cmp-pill' + (isOver ? '' : ' is-ok'),
+        statusClass: 'badge cmp-pill is-fixed' + (isOver ? '' : ' is-ok'),
         location: '📍 ' + event.location,
         hasLink: !!event.linkUrl,
         linkUrl: event.linkUrl || '',
