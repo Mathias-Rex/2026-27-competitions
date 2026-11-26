@@ -15,6 +15,7 @@ Egyetlen oldalas, statikus weboldal (`index.html` + `css/` + `js/`, Tailwind CDN
   - `app.js`: fő frissítő logika, állapotmentés, téma- és menükapcsolók, indítás,
   - `changelog.js`: az újdonságok ablak szövegei (verziózva),
   - `whats-new.js`: az újdonságok ablak működése.
+- `img/`: a csapatok logói (a `js/data.js` `ourTeams[].logo` és `WORKSHOP_PROJECTS[].logo` mezője hivatkozza).
 - `inputs/`: új PDF-ek érkezési helye (feldolgozás után kiürül, nem verziókezelt).
 - `data/`: a PDF-ekből készült Markdownok.
 - `downloads/`: a feldolgozott PDF-ek, az oldalról letölthetők (publikus).

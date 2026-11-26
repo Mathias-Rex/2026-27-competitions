@@ -40,6 +40,7 @@ const WORKSHOP_PROJECTS = [
         id: 'ocean-cat',
         title: 'Ocean Cat',
         team: 'Code Trio',
+        logo: 'img/code-trio.jpg',
         teamInfo: '7. osztály, 3 fős csapat',
         eventId: 'radnoti-ws1',
         date: '2026. nov. 28., 9:00–16:00',
@@ -50,6 +51,7 @@ const WORKSHOP_PROJECTS = [
         id: 'recycling-centre-tycoon',
         title: 'Recycling Centre Tycoon',
         team: '0xd15ea5ed',
+        logo: 'img/0xd15ea5ed.png',
         teamInfo: '8. osztály, 4 fős csapat',
         eventId: 'radnoti-ws2',
         date: '2026. dec. 5., 9:00–16:00',
@@ -86,8 +88,8 @@ const competitions = [
                 '2027. febr. 5.: III. forduló – Döntő (komplex projekt prezentálása szakmai zsűri előtt)'
             ],
             ourTeams: [
-                { name: 'Code Trio', size: '3 fős', grade: 'csak hetedikesek' },
-                { name: '0xd15ea5ed', size: '4 fős', grade: 'csak nyolcadikosok' }
+                { name: 'Code Trio', size: '3 fős', grade: 'csak hetedikesek', logo: 'img/code-trio.jpg' },
+                { name: '0xd15ea5ed', size: '4 fős', grade: 'csak nyolcadikosok', logo: 'img/0xd15ea5ed.png' }
             ],
             prizes: 'Oklevél minden döntősnek, értékes vásárlási utalványok az 1–3. helyezett csapatoknak, a felkészítő pedagógusok külön jutalmazása, valamint az I. helyezett csapat tagjainak felvételi lehetőség az iskolába.',
             contacts: 'Verseny e-mail: pecsiradnoti.verseny@gmail.com | Titkárság: titkar@radnoti-pecs.hu | Tel: 72/257-859',

@@ -37,12 +37,15 @@ function renderWorkshopProjects() {
     const comp = competitions.find(c => c.id === 'radnoti');
     box.innerHTML = WORKSHOP_PROJECTS.map(p => `
         <article class="rounded-xl border border-slate-200 bg-white p-4 border-l-4 flex flex-col gap-3" style="border-left-color: ${cc(comp, 'color')};">
-            <div>
+            <div class="flex items-center gap-3">
+                <img src="${p.logo}" alt="${p.team} csapat logója" width="56" height="56" class="w-14 h-14 rounded-full shrink-0">
+                <div class="min-w-0">
                 <h3 class="text-base font-extrabold text-slate-900 leading-snug">${p.title}</h3>
                 <p class="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs">
                     <span class="inline-flex items-center gap-1.5 font-bold px-2 py-0.5 rounded-lg" style="background-color: ${cc(comp, 'bgLight')}; color: ${cc(comp, 'textDark')};">${p.team}</span>
                     <span class="text-slate-500">${p.teamInfo}</span>
                 </p>
+                </div>
             </div>
             <p class="text-sm text-slate-700 leading-relaxed">${p.summary}</p>
             <p class="text-xs text-slate-500">Workshop: <button type="button" class="font-semibold underline decoration-dotted hover:text-slate-900" onclick="openEventModal('${p.eventId}')">${p.date}</button></p>
@@ -366,6 +369,7 @@ function renderDetailedInfoCards() {
                         <ul class="space-y-1.5">
                             ${d.ourTeams.map(t => `
                                 <li class="flex flex-wrap items-center gap-x-2 gap-y-1 bg-white/80 rounded-lg px-2.5 py-1.5 border border-white">
+                                    ${t.logo ? `<img src="${t.logo}" alt="${t.name} csapat logója" width="40" height="40" class="w-10 h-10 rounded-full shrink-0">` : ''}
                                     <span class="text-sm font-extrabold text-slate-900">${t.name}</span>
                                     <span class="text-[11px] font-semibold px-2 py-0.5 rounded-md" style="background-color: ${cc(comp, 'bgLight')}; color: ${cc(comp, 'textDark')};">${t.size}</span>
                                     <span class="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-slate-100 text-slate-700">${t.grade}</span>
