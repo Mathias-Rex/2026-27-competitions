@@ -34,6 +34,30 @@ const WORKSHOP_DOCS = {
     consent: { title: 'Szülői nyilatkozat', desc: 'Hozzájáruló nyilatkozat a workshopon való részvételhez és az online fiókokhoz, adatkezelési tájékoztató.', file: 'downloads/szuloi-nyilatkozat.pdf', size: '116 KB' }
 };
 
+// A workshopokon készülő játékprojektek (az oldal alján, a dokumentumok szekció után jelennek meg)
+const WORKSHOP_PROJECTS = [
+    {
+        id: 'ocean-cat',
+        title: 'Ocean Cat',
+        team: 'Code Trio',
+        teamInfo: '7. osztály, 3 fős csapat',
+        eventId: 'radnoti-ws1',
+        date: '2026. nov. 28., 9:00–16:00',
+        summary: 'Egy úszó macska a tengeri műanyag szemetet tolja egy gyűjtőhelyre, miközben az óra ketyeg. A gyerekek megtervezik és ellenőrzik a játékot, az AI építi meg.',
+        docs: [WORKSHOP_DOCS.oceanCat, WORKSHOP_DOCS.home, WORKSHOP_DOCS.consent]
+    },
+    {
+        id: 'recycling-centre-tycoon',
+        title: 'Recycling Centre Tycoon',
+        team: '0xd15ea5ed',
+        teamInfo: '8. osztály, 4 fős csapat',
+        eventId: 'radnoti-ws2',
+        date: '2026. dec. 5., 9:00–16:00',
+        summary: 'Egy újrahasznosító központ vezetése: a szalagon érkező hulladékot a négy konténerbe kell sorolni, a bevételből fejleszteni lehet. A gyerekek megtervezik és ellenőrzik a játékot, az AI építi meg.',
+        docs: [WORKSHOP_DOCS.recycling, WORKSHOP_DOCS.home, WORKSHOP_DOCS.consent]
+    }
+];
+
 const competitions = [
     {
         id: 'radnoti',

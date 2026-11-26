@@ -16,6 +16,7 @@ function updateAll() {
     renderEventDetail();
     renderChronologicalList();
     renderDetailedInfoCards();
+    renderWorkshopProjects();
     saveState();
 }
 

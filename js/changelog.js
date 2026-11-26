@@ -13,6 +13,13 @@
  */
 const CHANGELOG = [
     {
+        version: '1.2.0',
+        date: '2026. nov. 26.',
+        items: [
+            'Új „Workshop projektek” doboz az oldal alján: az Ocean Cat (7-es csapat, Code Trio) és a Recycling Centre Tycoon (8-asok, 0xd15ea5ed) rövid ismertetője, a workshop időpontja és a hozzájuk tartozó letölthető dokumentumok.'
+        ]
+    },
+    {
         version: '1.1.1',
         date: '2026. nov. 26.',
         items: [

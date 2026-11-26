@@ -2,29 +2,56 @@
 
 // Az eseményhez tartozó letölthető dokumentumok (megnézés új lapon + letöltés)
 function eventDocumentsHtml(docs) {
-    const btn = 'inline-flex items-center justify-center w-9 h-9 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition';
-    const eye = '<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
-    const down = '<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v12"/><path d="m6 11 6 6 6-6"/><path d="M5 20h14"/></svg>';
     return `
         <div>
             <h5 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">Dokumentumok</h5>
-            <ul class="space-y-2.5 bg-slate-50 rounded-xl p-3 border border-slate-200/80">
-                ${docs.map(d => `
-                    <li class="flex items-start justify-between gap-3">
-                        <div class="min-w-0">
-                            <span class="block text-sm font-semibold text-slate-800 leading-snug">${d.title}</span>
-                            <span class="block text-xs text-slate-500 leading-snug mt-0.5">${d.desc}</span>
-                            <span class="block text-[11px] text-slate-400 mt-0.5">PDF, ${d.size}</span>
-                        </div>
-                        <div class="flex items-center gap-1.5 shrink-0">
-                            <a href="${d.file}" target="_blank" rel="noopener noreferrer" class="${btn}" title="Megnézés" aria-label="Megnézés: ${d.title}">${eye}</a>
-                            <a href="${d.file}" download class="${btn}" title="Letöltés" aria-label="Letöltés: ${d.title}">${down}</a>
-                        </div>
-                    </li>
-                `).join('')}
-            </ul>
+            <ul class="space-y-2.5 bg-slate-50 rounded-xl p-3 border border-slate-200/80">${docRowsHtml(docs)}</ul>
         </div>
     `;
+}
+
+// A dokumentumlista közös elemei (eseményablak és projektkártya)
+function docRowsHtml(docs) {
+    const btn = 'inline-flex items-center justify-center w-9 h-9 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition';
+    const eye = '<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
+    const down = '<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v12"/><path d="m6 11 6 6 6-6"/><path d="M5 20h14"/></svg>';
+    return docs.map(d => `
+        <li class="flex items-start justify-between gap-3">
+            <div class="min-w-0">
+                <span class="block text-sm font-semibold text-slate-800 leading-snug">${d.title}</span>
+                <span class="block text-xs text-slate-500 leading-snug mt-0.5">${d.desc}</span>
+                <span class="block text-[11px] text-slate-400 mt-0.5">PDF, ${d.size}</span>
+            </div>
+            <div class="flex items-center gap-1.5 shrink-0">
+                <a href="${d.file}" target="_blank" rel="noopener noreferrer" class="${btn}" title="Megnézés" aria-label="Megnézés: ${d.title}">${eye}</a>
+                <a href="${d.file}" download class="${btn}" title="Letöltés" aria-label="Letöltés: ${d.title}">${down}</a>
+            </div>
+        </li>
+    `).join('');
+}
+
+// Workshop projektek doboz (az oldal alján)
+function renderWorkshopProjects() {
+    const box = document.getElementById('workshopProjects');
+    if (!box) return;
+    const comp = competitions.find(c => c.id === 'radnoti');
+    box.innerHTML = WORKSHOP_PROJECTS.map(p => `
+        <article class="rounded-xl border border-slate-200 bg-white p-4 border-l-4 flex flex-col gap-3" style="border-left-color: ${cc(comp, 'color')};">
+            <div>
+                <h3 class="text-base font-extrabold text-slate-900 leading-snug">${p.title}</h3>
+                <p class="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs">
+                    <span class="inline-flex items-center gap-1.5 font-bold px-2 py-0.5 rounded-lg" style="background-color: ${cc(comp, 'bgLight')}; color: ${cc(comp, 'textDark')};">${p.team}</span>
+                    <span class="text-slate-500">${p.teamInfo}</span>
+                </p>
+            </div>
+            <p class="text-sm text-slate-700 leading-relaxed">${p.summary}</p>
+            <p class="text-xs text-slate-500">Workshop: <button type="button" class="font-semibold underline decoration-dotted hover:text-slate-900" onclick="openEventModal('${p.eventId}')">${p.date}</button></p>
+            <div>
+                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">Letölthető dokumentumok</h4>
+                <ul class="space-y-2.5 bg-slate-50 rounded-xl p-3 border border-slate-200/80">${docRowsHtml(p.docs)}</ul>
+            </div>
+        </article>
+    `).join('');
 }
 
 // Az esemény részletező HTML-je (az oldalsó panel és a felugró ablak közös tartalma)
