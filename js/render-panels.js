@@ -193,7 +193,7 @@ function renderChronologicalList() {
         const relText = formatRelativeDays(ev.date);
 
         const item = document.createElement('div');
-        item.className = `p-4 rounded-xl border transition cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
+        item.className = `p-3 sm:p-4 rounded-xl border transition cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
             isSelected
                 ? 'bg-slate-50 border-slate-900 ring-1 ring-slate-900'
                 : past
@@ -245,7 +245,7 @@ function renderChronologicalList() {
             </div>
 
             <!-- Jobb oldali státusz és link -->
-            <div class="sm:text-right shrink-0 flex flex-wrap sm:flex-nowrap sm:flex-col items-center sm:items-end justify-between border-t sm:border-t-0 pt-2 sm:pt-0 border-slate-100 gap-1">
+            <div class="sm:text-right shrink-0 flex sm:flex-col items-start sm:items-end justify-between border-t sm:border-t-0 pt-2 sm:pt-0 border-slate-100 gap-2 sm:gap-1">
                 <span class="w-28 shrink-0 text-center text-xs font-semibold px-2 py-1 rounded-lg ${
                     past
                         ? 'bg-slate-100 text-slate-500'
@@ -253,15 +253,19 @@ function renderChronologicalList() {
                 }">
                     ${past ? 'Lejárt' : relText}
                 </span>
+                <div class="min-w-0 flex flex-col items-end gap-1 text-right sm:contents">
                 <span class="text-[11px] text-slate-400">📍 ${ev.location}</span>
+                <div class="flex flex-wrap justify-end gap-x-2 gap-y-0.5 sm:contents">
                 ${ev.linkUrl ? `
                     <a href="${ev.linkUrl}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();"
-                       class="basis-full sm:basis-auto text-left sm:text-right text-[11px] font-bold underline hover:opacity-80 mt-0.5"
+                       class="text-[11px] font-bold underline hover:opacity-80 mt-0.5"
                        style="color: ${cc(comp, 'color')};">
-                        🔗 ${ev.linkLabel || 'Megnyitás'}
+                        <span class="hidden sm:inline">🔗 </span>${(ev.linkLabel || 'Megnyitás')}
                     </a>
                 ` : ''}
-                ${past ? '' : calButtonHtml(ev.id, 'list', 'basis-full sm:basis-auto text-left sm:text-right text-[11px] font-bold underline hover:opacity-80 mt-0.5 text-slate-700')}
+                ${past ? '' : calButtonHtml(ev.id, 'list', 'text-[11px] font-bold underline hover:opacity-80 mt-0.5 text-slate-700').replace('📅 ', '<span class="hidden sm:inline">📅 </span>')}
+                </div>
+                </div>
             </div>
         `;
 
