@@ -119,10 +119,25 @@ define:
               style: "${event.colorStyle}"
               children:
 
-                # Fejléc: a verseny neve és az esemény címe
-                - div:
-                    - Badge.cmp-tag.is-lg: "${event.competitionName}"
-                    - Title(4).cmp-detail-title: "${event.title}"
+                # Fejléc: a verseny neve és az esemény címe, mellette az érintett csapat(ok) logója
+                - div.cmp-detail-head:
+                    - div:
+                        style: "min-width:0"
+                        children:
+                          - Badge.cmp-tag.is-lg: "${event.competitionName}"
+                          - Title(4).cmp-detail-title: "${event.title}"
+                    - div.cmp-detail-logos:
+                        - each:
+                            in: "${event.teamLogos}"
+                            as: team
+                            key: team.name
+                          do:
+                            - img.cmp-logo:
+                                src: "${team.logo}"
+                                alt: "${team.alt}"
+                                title: "${team.name}"
+                                width: 56
+                                height: 56
 
                 # Időpont és helyszín
                 - div.cmp-infobox:

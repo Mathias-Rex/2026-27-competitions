@@ -315,3 +315,5 @@ body {
 .cmp-page .btn.cmp-textlink:hover { color: var(--text); }
 .cmp-logo { width: 3.5rem; height: 3.5rem; border-radius: 50%; flex-shrink: 0; object-fit: cover; }
 .cmp-logo.is-sm { width: 2.5rem; height: 2.5rem; }
+.cmp-detail-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.75rem; }
+.cmp-detail-logos { display: flex; gap: 0.375rem; flex-shrink: 0; }

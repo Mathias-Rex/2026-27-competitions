@@ -136,6 +136,7 @@ const competitions = [
                 title: 'Pályamunka workshop (7-es csapat)',
                 description: 'Tervezett workshop a pályamunka elkészítéséhez, 9:00–16:00. Mindenki hozzon notebookot és okostelefont (ha nincs, jelezzétek, és kikérjük az iskolától), valamint rágcsát, üdítőt és készpénzt az ebédre. Ebédszünet: 12:00–12:30; ha valaki elviszi a gyermeket ebédszünetre, megvárjuk. Előtte otthon érdemes elvégezni a telepítést (kb. 45 perc, lásd az otthoni felkészülési útmutatót), a kitöltött útmutatót és az aláírt szülői nyilatkozatot hozzátok magatokkal.',
                 location: 'NanoworX Kft. tárgyaló, Vadász utca 79.',
+                teams: ['Code Trio'],
                 documents: [WORKSHOP_DOCS.oceanCat, WORKSHOP_DOCS.home, WORKSHOP_DOCS.consent],
                 isFinal: false,
                 laneOffset: -1
@@ -151,6 +152,7 @@ const competitions = [
                 title: 'Pályamunka workshop (8-asok)',
                 description: 'Tervezett workshop a pályamunka elkészítéséhez, 9:00–16:00. Mindenki hozzon notebookot és okostelefont (ha nincs, jelezzétek, és kikérjük az iskolától), valamint rágcsát, üdítőt és készpénzt az ebédre. Ebédszünet: 12:00–12:30; ha valaki elviszi a gyermeket ebédszünetre, megvárjuk. Előtte otthon érdemes elvégezni a telepítést (kb. 45 perc, lásd az otthoni felkészülési útmutatót), a kitöltött útmutatót és az aláírt szülői nyilatkozatot hozzátok magatokkal.',
                 location: 'NanoworX Kft. tárgyaló, Vadász utca 79.',
+                teams: ['0xd15ea5ed'],
                 documents: [WORKSHOP_DOCS.recycling, WORKSHOP_DOCS.home, WORKSHOP_DOCS.consent],
                 isFinal: false,
                 laneOffset: 1

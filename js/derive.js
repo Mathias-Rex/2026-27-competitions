@@ -105,6 +105,10 @@ function selectedEventDetails(selectedId) {
         id: event.id,
         colorStyle: compVars(competition),
         competitionName: competition.shortName,
+        teamLogos: (event.teams || [])
+            .map(name => (competition.details.ourTeams || []).find(team => team.name === name))
+            .filter(team => team && team.logo)
+            .map(team => ({ name: team.name, logo: team.logo, alt: team.name + ' csapat logója' })),
         title: (event.isFinal ? '🏆 ' : '') + event.title,
         date: event.displayDate,
         hasTime: !!event.displayTime,

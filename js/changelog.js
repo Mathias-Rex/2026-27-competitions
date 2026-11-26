@@ -17,7 +17,7 @@ const CHANGELOG = [
         date: '2026. nov. 26.',
         items: [
             'Új „Workshop projektek” doboz az oldal alján: az Ocean Cat (7-es csapat, Code Trio) és a Recycling Centre Tycoon (8-asok, 0xd15ea5ed) rövid ismertetője, a workshop időpontja és a hozzájuk tartozó letölthető dokumentumok.',
-            'A csapatok logója megjelent a „Csapataink” listában és a projektkártyákon.',
+            'A csapatok logója megjelent a „Csapataink” listában, a projektkártyákon és a workshop események ablakában, illetve részletező dobozában.',
             'Javítva a nyolcadikos csapat neve: 0xd15ea5ed (a hexadecimális szám előtagja 0x, nem x0).'
         ]
     },
