@@ -70,6 +70,7 @@ function startApp() {
     const data = {
         icons: ICONS,
         downloads: DOWNLOADS.map(group => ({ ...group, colorStyle: `--c-color:${group.color}` })),
+        workshopProjects: workshopProjectCards(),
         timelineSettings: {
             monthWidth: wide ? 380 : 260,
             labelWidth: wide ? 190 : 104,
@@ -101,6 +102,11 @@ function startApp() {
         hoverEvent({ state }, milestone) { state.set('selectedId', milestone.id); },
         openEvent({ state }, milestone) {
             state.set('selectedId', milestone.id);
+            B.openModal('event-modal');
+        },
+        // Workshop projekt kártya: a workshop eseményének megnyitása
+        openProjectEvent({ state, el }) {
+            state.set('selectedId', el.dataset.eventId);
             B.openModal('event-modal');
         },
         // naptár menü és kattintás-megállítás

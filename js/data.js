@@ -26,6 +26,38 @@ const TIMELINE_END   = new Date('2027-04-18T23:59:59');
 // =========================================================================
 // 2. VERSENYEK TELJES ADATMODELLJE
 // =========================================================================
+// Workshop-dokumentumok (downloads/ mappa), az esemény ablakában és a részletező panelen jelennek meg
+const WORKSHOP_DOCS = {
+    oceanCat: { title: 'Ocean Cat workshop kézikönyv', desc: 'A 7-es csapat (Code Trio) napja: menetrend, feladatok, munkamódszer.', file: 'downloads/ocean-cat-workshop-kezikonyv.pdf', size: '1,2 MB' },
+    recycling: { title: 'Recycling Centre Tycoon kézikönyv', desc: 'A 8-as csapat napja: menetrend, feladatok, munkamódszer.', file: 'downloads/recycling-centre-tycoon-kezikonyv.pdf', size: '1,2 MB' },
+    home: { title: 'Otthoni felkészülés', desc: 'Telepítés otthon (kb. 45 perc): programok, GitHub- és Trello-fiók, AI-eszközök, próba.', file: 'downloads/otthoni-telepitesi-utmutato.pdf', size: '339 KB' },
+    consent: { title: 'Szülői nyilatkozat', desc: 'Hozzájáruló nyilatkozat a workshopon való részvételhez és az online fiókokhoz, adatkezelési tájékoztató.', file: 'downloads/szuloi-nyilatkozat.pdf', size: '116 KB' }
+};
+
+// A workshopokon készülő játékprojektek (az oldal alján, a dokumentumok szekció után jelennek meg)
+const WORKSHOP_PROJECTS = [
+    {
+        id: 'ocean-cat',
+        title: 'Ocean Cat',
+        team: 'Code Trio',
+        teamInfo: '7. osztály, 3 fős csapat',
+        eventId: 'radnoti-ws1',
+        date: '2026. nov. 28., 9:00–16:00',
+        summary: 'Egy úszó macska a tengeri műanyag szemetet tolja egy gyűjtőhelyre, miközben az óra ketyeg. A gyerekek megtervezik és ellenőrzik a játékot, az AI építi meg.',
+        docs: [WORKSHOP_DOCS.oceanCat, WORKSHOP_DOCS.home, WORKSHOP_DOCS.consent]
+    },
+    {
+        id: 'recycling-centre-tycoon',
+        title: 'Recycling Centre Tycoon',
+        team: '0xd15ea5ed',
+        teamInfo: '8. osztály, 4 fős csapat',
+        eventId: 'radnoti-ws2',
+        date: '2026. dec. 5., 9:00–16:00',
+        summary: 'Egy újrahasznosító központ vezetése: a szalagon érkező hulladékot a négy konténerbe kell sorolni, a bevételből fejleszteni lehet. A gyerekek megtervezik és ellenőrzik a játékot, az AI építi meg.',
+        docs: [WORKSHOP_DOCS.recycling, WORKSHOP_DOCS.home, WORKSHOP_DOCS.consent]
+    }
+];
+
 const competitions = [
     {
         id: 'radnoti',
@@ -55,7 +87,7 @@ const competitions = [
             ],
             ourTeams: [
                 { name: 'Code Trio', size: '3 fős', grade: 'csak hetedikesek' },
-                { name: 'x0d15ea5ed', size: '4 fős', grade: 'csak nyolcadikosok' }
+                { name: '0xd15ea5ed', size: '4 fős', grade: 'csak nyolcadikosok' }
             ],
             prizes: 'Oklevél minden döntősnek, értékes vásárlási utalványok az 1–3. helyezett csapatoknak, a felkészítő pedagógusok külön jutalmazása, valamint az I. helyezett csapat tagjainak felvételi lehetőség az iskolába.',
             contacts: 'Verseny e-mail: pecsiradnoti.verseny@gmail.com | Titkárság: titkar@radnoti-pecs.hu | Tel: 72/257-859',
@@ -100,8 +132,9 @@ const competitions = [
                 endTime: '16:00',
                 shortLabel: 'Workshop (7-esek)',
                 title: 'Pályamunka workshop (7-es csapat)',
-                description: 'Tervezett workshop a pályamunka elkészítéséhez, 9:00–16:00. Mindenki hozzon notebookot és okostelefont (ha nincs, jelezzétek, és kikérjük az iskolától), valamint rágcsát, üdítőt és készpénzt az ebédre. Ebédszünet: 12:00–12:30; ha valaki elviszi a gyermeket ebédszünetre, megvárjuk.',
+                description: 'Tervezett workshop a pályamunka elkészítéséhez, 9:00–16:00. Mindenki hozzon notebookot és okostelefont (ha nincs, jelezzétek, és kikérjük az iskolától), valamint rágcsát, üdítőt és készpénzt az ebédre. Ebédszünet: 12:00–12:30; ha valaki elviszi a gyermeket ebédszünetre, megvárjuk. Előtte otthon érdemes elvégezni a telepítést (kb. 45 perc, lásd az otthoni felkészülési útmutatót), a kitöltött útmutatót és az aláírt szülői nyilatkozatot hozzátok magatokkal.',
                 location: 'NanoworX Kft. tárgyaló, Vadász utca 79.',
+                documents: [WORKSHOP_DOCS.oceanCat, WORKSHOP_DOCS.home, WORKSHOP_DOCS.consent],
                 isFinal: false,
                 laneOffset: -1
             },
@@ -114,8 +147,9 @@ const competitions = [
                 endTime: '16:00',
                 shortLabel: 'Workshop (8-asok)',
                 title: 'Pályamunka workshop (8-asok)',
-                description: 'Tervezett workshop a pályamunka elkészítéséhez, 9:00–16:00. Mindenki hozzon notebookot és okostelefont (ha nincs, jelezzétek, és kikérjük az iskolától), valamint rágcsát, üdítőt és készpénzt az ebédre. Ebédszünet: 12:00–12:30; ha valaki elviszi a gyermeket ebédszünetre, megvárjuk.',
+                description: 'Tervezett workshop a pályamunka elkészítéséhez, 9:00–16:00. Mindenki hozzon notebookot és okostelefont (ha nincs, jelezzétek, és kikérjük az iskolától), valamint rágcsát, üdítőt és készpénzt az ebédre. Ebédszünet: 12:00–12:30; ha valaki elviszi a gyermeket ebédszünetre, megvárjuk. Előtte otthon érdemes elvégezni a telepítést (kb. 45 perc, lásd az otthoni felkészülési útmutatót), a kitöltött útmutatót és az aláírt szülői nyilatkozatot hozzátok magatokkal.',
                 location: 'NanoworX Kft. tárgyaló, Vadász utca 79.',
+                documents: [WORKSHOP_DOCS.recycling, WORKSHOP_DOCS.home, WORKSHOP_DOCS.consent],
                 isFinal: false,
                 laneOffset: 1
             },

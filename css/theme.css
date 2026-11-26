@@ -302,3 +302,14 @@ body {
 
 /* A rács- és flex-elemek zsugorodhatnak (a hosszú szöveg és a széles idővonal nem tolja szét az oldalt) */
 .cmp-main > *, .cmp-filters > *, .cmp-info-grid > *, .cmp-dl-grid > *, .cmp-split > * { min-width: 0; }
+
+/* ===== Workshop dokumentumok és projektek ===== */
+.cmp-doclist { display: flex; flex-direction: column; gap: 0.625rem; padding: 0.75rem; background: var(--bg-alt); border: 1px solid var(--border); border-radius: 0.75rem; }
+.cmp-project-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+@media (min-width: 1024px) { .cmp-project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.cmp-project-grid > div { display: flex; flex-direction: column; min-width: 0; }
+.cmp-project-grid > div > .card { flex: 1; }
+.cmp-project-grid .card-header h3 { font-size: 1rem; font-weight: 800; }
+.cmp-project-team { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.5rem; }
+.cmp-page .btn.cmp-textlink { padding: 0; border: 0; background: none; font-size: inherit; font-weight: 600; color: inherit; text-decoration: underline dotted; cursor: pointer; }
+.cmp-page .btn.cmp-textlink:hover { color: var(--text); }

@@ -13,6 +13,29 @@
  */
 const CHANGELOG = [
     {
+        version: '1.2.0',
+        date: '2026. nov. 26.',
+        items: [
+            'Új „Workshop projektek” doboz az oldal alján: az Ocean Cat (7-es csapat, Code Trio) és a Recycling Centre Tycoon (8-asok, 0xd15ea5ed) rövid ismertetője, a workshop időpontja és a hozzájuk tartozó letölthető dokumentumok.'
+        ]
+    },
+    {
+        version: '1.1.1',
+        date: '2026. nov. 26.',
+        items: [
+            'Javítva a nyolcadikos csapat neve: 0xd15ea5ed (a hexadecimális szám előtagja 0x, nem x0).'
+        ]
+    },
+    {
+        version: '1.1.0',
+        date: '2026. nov. 26.',
+        items: [
+            'A workshopok eseményeinél (az idővonalon rákattintva és a részletező dobozban) letölthető dokumentumok: megnézés és letöltés gombbal.',
+            'A 7-es csapat (nov. 28.): Ocean Cat workshop kézikönyv. A 8-asok (dec. 5.): Recycling Centre Tycoon kézikönyv.',
+            'Mindkét csapatnak: otthoni felkészülési útmutató (telepítés, kb. 45 perc, érdemes a workshop előtt elvégezni) és szülői nyilatkozat (kitöltve, aláírva kell hozni).'
+        ]
+    },
+    {
         version: '1.0.0',
         date: '2026. nov. 24.',
         items: [
@@ -22,7 +45,7 @@ const CHANGELOG = [
             'Új „Letölthető dokumentumok” szekció: a versenykiírások és szabályzatok PDF-jei versenyenként, megnézés és letöltés gombbal.',
             'Pontosabb időpontok az eseményeknél (pl. Árpád-kupa döntő: 14:00), az idő a dátum alatt látszik.',
             'Az idővonal asztali gépen is oldalra görgethető (egérrel megfogva, húzással is), és induláskor a mai napra ugrik.',
-            'Javítva a nyolcadikos csapat neve: x0d15ea5ed (hexadecimális írásmóddal a „diseased” szó).'
+            'Javítva a nyolcadikos csapat neve: 0xd15ea5ed (hexadecimális írásmóddal a „diseased” szó).'
         ]
     }
 ];

@@ -35,6 +35,7 @@ END = "/* PDF-DOWNLOADS:END */"
 MEMORY_NAME = "pdf-intake-fingerprints"
 HEADER_COLS = "| sha256 | eredeti fájlnév | PDF (downloads/) | Markdown (data/) | verseny | cím | ismertető | feldolgozva |"
 DUP_DIR = "_duplicates"
+HIDDEN = "workshop"  # nyilvántartott, de a letöltési kártyákon nem szereplő PDF-ek (az eseményeknél és a projektkártyán jelennek meg)
 GENERAL = "altalanos"
 
 
@@ -108,7 +109,7 @@ def html_competitions(page: Path) -> list:
 
 
 def check_comp(a, comp: str) -> str:
-    ids = [c["id"] for c in html_competitions(Path(a.root) / a.data_js)] + [GENERAL]
+    ids = [c["id"] for c in html_competitions(Path(a.root) / a.data_js)] + [GENERAL, HIDDEN]
     if comp not in ids:
         sys.exit(f"Ismeretlen verseny: {comp!r}. Választható: {', '.join(ids)}")
     return comp
@@ -333,7 +334,8 @@ def cmd_sync_html(a):
     out, total = [], 0
     for cid, cname, color in groups:
         docs = [v for v in man.values()
-                if (v["comp"] if v["comp"] in known else GENERAL) == cid
+                if v["comp"] != HIDDEN
+                and (v["comp"] if v["comp"] in known else GENERAL) == cid
                 and (root / a.downloads / v["download"]).exists()]
         if not docs:
             continue

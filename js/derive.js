@@ -18,6 +18,11 @@ function stable(previousList, nextList) {
     });
 }
 
+/** Egy letölthető dokumentum sora (workshop dokumentumok, js/data.js WORKSHOP_DOCS). */
+function documentRow(doc) {
+    return { title: doc.title, description: doc.desc, href: doc.file, sizeText: 'PDF, ' + doc.size };
+}
+
 const activeCompetitions = () => competitions.filter(competition => competition.active);
 
 /** Egy versenykapcsoló kártya adatai. */
@@ -109,6 +114,8 @@ function selectedEventDetails(selectedId) {
         hasDiscrepancy: !!event.discrepancy,
         discrepancyNote: event.discrepancy ? prevInfoText(event) : '',
         description: event.description,
+        hasDocuments: !!(event.documents && event.documents.length),
+        documents: (event.documents || []).map(documentRow),
         hasLink: !!event.linkUrl,
         linkUrl: event.linkUrl || '',
         linkLabel: '🔗 ' + (event.linkLabel || 'Hivatkozás megnyitása'),
@@ -146,6 +153,22 @@ function competitionInfo(competition) {
         })),
         contacts: '✉️ ' + details.contacts
     };
+}
+
+/** A „Workshop projektek” kártyák adatai (js/data.js WORKSHOP_PROJECTS), a Radnóti versenyszínével. */
+function workshopProjectCards() {
+    const competition = competitions.find(c => c.id === 'radnoti');
+    return WORKSHOP_PROJECTS.map(project => ({
+        id: project.id,
+        colorStyle: compVars(competition),
+        title: project.title,
+        team: project.team,
+        teamInfo: project.teamInfo,
+        summary: project.summary,
+        eventId: project.eventId,
+        dateText: project.date,
+        documents: project.docs.map(documentRow)
+    }));
 }
 
 /** A forrás-állapotból számolt, megjelenítésre kész adatok (a YAML ezeket olvassa). */

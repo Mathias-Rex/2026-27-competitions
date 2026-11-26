@@ -77,6 +77,38 @@
 # ---------------------------------------------------------------------------
 define:
 
+  # Letölthető dokumentumok listája (workshop dokumentumok): cím, leírás, méret, megnézés és letöltés gomb
+  DocumentList:
+    params: [documents]
+    body:
+      - div.cmp-doclist:
+          - each:
+              in: "${documents}"
+              as: file
+              key: file.href
+            do:
+              - div.cmp-doc:
+                  - div:
+                      style: "min-width:0"
+                      children:
+                        - span.cmp-doc-title: "${file.title}"
+                        - span.cmp-doc-desc: "${file.description}"
+                        - span.cmp-doc-size: "${file.sizeText}"
+                  - div.cmp-doc-actions:
+                      - a.link.cmp-icon-btn:
+                          href: "${file.href}"
+                          target: _blank
+                          rel: "noopener noreferrer"
+                          title: "Megnézés"
+                          aria-label: "Megnézés: ${file.title}"
+                          html: $icons.eye
+                      - a.link.cmp-icon-btn:
+                          href: "${file.href}"
+                          download: ""
+                          title: "Letöltés"
+                          aria-label: "Letöltés: ${file.title}"
+                          html: $icons.download
+
   # Egy esemény részletei: az oldalsó panelben és a felugró ablakban is ez jelenik meg.
   EventDetails:
     params: [event]
@@ -122,6 +154,14 @@ define:
                 - div:
                     - Title(5).cmp-label: "Teendő és tudnivalók"
                     - Paragraph.cmp-text: "${event.description}"
+
+                # Letölthető dokumentumok (pl. workshop kézikönyv, otthoni felkészülés, szülői nyilatkozat)
+                - if: "${event.hasDocuments}"
+                  then:
+                    - div:
+                        - Title(5).cmp-label: "Dokumentumok"
+                        - DocumentList:
+                            documents: "${event.documents}"
 
                 # Gombok: hivatkozás és naptár
                 - if: "${event.hasLink}"
@@ -501,6 +541,39 @@ ui:
                                                 title: "Letöltés"
                                                 aria-label: "Letöltés: ${file.title}"
                                                 html: $icons.download
+
+      # ===== 6. Workshop projektek (js/data.js WORKSHOP_PROJECTS) =====
+      - section:
+          aria-label: "Workshop projektek"
+          children:
+            - Title(2).cmp-h2: "Workshop projektek"
+            - Paragraph.cmp-hint.cmp-mb-3: "Mit készítenek a csapatok a pályamunka workshopon, és melyik dokumentumok tartoznak hozzá."
+            - div.cmp-project-grid:
+                - each:
+                    in: $workshopProjects
+                    as: project
+                    key: project.id
+                  do:
+                    - div:
+                        style: "${project.colorStyle}"
+                        children:
+                          - Card.cmp-dl:
+                              title: "${project.title}"
+                              body:
+                                - div.cmp-project-team:
+                                    - Badge.cmp-tag.is-lg: "${project.team}"
+                                    - span.cmp-hint: "${project.teamInfo}"
+                                - Paragraph.cmp-text: "${project.summary}"
+                                - p.cmp-hint:
+                                    - span: "Workshop: "
+                                    - button.btn.cmp-textlink:
+                                        text: "${project.dateText}"
+                                        data-event-id: "${project.eventId}"
+                                        click: "@openProjectEvent"
+                                - div:
+                                    - Title(5).cmp-label: "Letölthető dokumentumok"
+                                    - DocumentList:
+                                        documents: "${project.documents}"
 
   # ===== Lábléc =====
   - footer.cmp-footer: "Összesített verseny-idővonal • Radnóti HACK & CODE • Neumann János Informatikai Verseny • Árpád-kupa"
