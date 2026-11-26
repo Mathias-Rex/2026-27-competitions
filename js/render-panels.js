@@ -219,8 +219,8 @@ function renderChronologicalList() {
                     </span>
                 </div>
 
-                <!-- Tartalom -->
-                <div>
+                <!-- Tartalom: a dátumjelvény mellett, annak alá nem törik -->
+                <div class="min-w-0 flex-1">
                     <div class="flex flex-wrap items-center gap-2">
                         <span class="text-[11px] font-bold px-2 py-0.5 rounded-md"
                             style="background-color: ${cc(comp, 'bgLight')}; color: ${cc(comp, 'textDark')};">
@@ -237,7 +237,7 @@ function renderChronologicalList() {
                             </span>
                         ` : ''}
                     </div>
-                    <h4 class="font-bold text-sm text-slate-900 mt-1 ${past ? 'line-through decoration-slate-400' : ''}">
+                    <h4 style="hyphens: auto" class="font-bold text-sm text-slate-900 mt-1 break-words ${past ? 'line-through decoration-slate-400' : ''}">
                         ${ev.title}
                     </h4>
                     <p class="text-xs text-slate-600 mt-0.5 line-clamp-2">${ev.description}</p>
