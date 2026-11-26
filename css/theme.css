@@ -347,3 +347,6 @@ body {
   .cmp-page .gantt .gantt-corner, .cmp-page .gantt .gantt-label { position: static; box-shadow: none; }
 }
 .cmp-pill.is-fixed { width: 7rem; flex-shrink: 0; box-sizing: border-box; padding: 0.25rem 0.5rem; border-radius: 0.5rem; text-align: center; }
+/* mobilon a hivatkozás és a Naptárba gomb külön sorba kerül, asztali nézetben az oldalsó oszlopban marad */
+.cmp-item-side .cmp-mini { flex-basis: 100%; text-align: left; justify-content: flex-start; }
+@media (min-width: 640px) { .cmp-item-side .cmp-mini { flex-basis: auto; text-align: right; justify-content: flex-end; } }
