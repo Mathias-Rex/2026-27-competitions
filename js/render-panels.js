@@ -65,7 +65,8 @@ function eventDetailHtml(comp, ev, where) {
         .map(t => `<img src="${t.logo}" alt="${t.name} csapat logója" title="${t.name}" width="56" height="56" class="w-14 h-14 rounded-full shrink-0">`).join('');
     return `
         <div class="space-y-4">
-            <div class="flex items-start justify-between gap-3">
+            <div class="flex items-start gap-3">
+              ${teamLogos ? `<div class="flex gap-1.5 shrink-0">${teamLogos}</div>` : ''}
               <div class="min-w-0">
                 <span class="inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-lg mb-2"
                     style="background-color: ${cc(comp, 'bgLight')}; color: ${cc(comp, 'textDark')};">
@@ -76,7 +77,6 @@ function eventDetailHtml(comp, ev, where) {
                     ${ev.isFinal ? '🏆 ' : ''}${ev.title}
                 </h4>
               </div>
-              ${teamLogos ? `<div class="flex gap-1.5 shrink-0">${teamLogos}</div>` : ''}
             </div>
 
             <div class="bg-slate-50 rounded-xl p-3 border border-slate-200/80 space-y-2 text-xs">
@@ -378,7 +378,8 @@ function renderDetailedInfoCards() {
                         <h4 class="text-xs font-bold uppercase tracking-wider mb-2" style="color: ${cc(comp, 'textDark')};">Csapataink (${d.ourTeams.length} csapat)</h4>
                         <ul class="space-y-1.5">
                             ${d.ourTeams.map(t => `
-                                <li class="flex items-center justify-between gap-3 bg-white/80 rounded-lg px-2.5 py-1.5 border border-white">
+                                <li class="flex items-center gap-3 bg-white/80 rounded-lg px-2.5 py-1.5 border border-white">
+                                    ${t.logo ? `<div class="shrink-0"><img src="${t.logo}" alt="${t.name} csapat logója" width="40" height="40" class="w-10 h-10 rounded-full"></div>` : ''}
                                     <div class="min-w-0 space-y-1">
                                         <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
                                             <span class="text-sm font-extrabold text-slate-900">${t.name}</span>
@@ -386,7 +387,6 @@ function renderDetailedInfoCards() {
                                         </div>
                                         <div><span class="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-slate-100 text-slate-700">${t.grade}</span></div>
                                     </div>
-                                    ${t.logo ? `<div class="shrink-0"><img src="${t.logo}" alt="${t.name} csapat logója" width="40" height="40" class="w-10 h-10 rounded-full"></div>` : ''}
                                 </li>`).join('')}
                         </ul>
                     </div>` : ''}
