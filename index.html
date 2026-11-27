@@ -119,13 +119,8 @@ define:
               style: "${event.colorStyle}"
               children:
 
-                # Fejléc: a verseny neve és az esemény címe, mellette az érintett csapat(ok) logója
+                # Fejléc: balra az érintett csapat(ok) logója, mellette a verseny neve és az esemény címe
                 - div.cmp-detail-head:
-                    - div:
-                        style: "min-width:0"
-                        children:
-                          - Badge.cmp-tag.is-lg: "${event.competitionName}"
-                          - Title(4).cmp-detail-title: "${event.title}"
                     - div.cmp-detail-logos:
                         - each:
                             in: "${event.teamLogos}"
@@ -138,6 +133,11 @@ define:
                                 title: "${team.name}"
                                 width: 56
                                 height: 56
+                    - div:
+                        style: "min-width:0"
+                        children:
+                          - Badge.cmp-tag.is-lg: "${event.competitionName}"
+                          - Title(4).cmp-detail-title: "${event.title}"
 
                 # Időpont és helyszín
                 - div.cmp-infobox:
@@ -470,12 +470,6 @@ ui:
                                                   key: team.name
                                                 do:
                                                   - div.cmp-team:
-                                                      - div.cmp-team-text:
-                                                          - div.cmp-team-line:
-                                                              - strong: "${team.name}"
-                                                              - span.badge.cmp-tag: "${team.size}"
-                                                          - div:
-                                                              - span.badge.cmp-tag.is-neutral: "${team.grade}"
                                                       - if: "${team.logo}"
                                                         then:
                                                           - div.cmp-team-logo:
@@ -483,7 +477,13 @@ ui:
                                                                   src: "${team.logo}"
                                                                   alt: "${team.name} csapat logója"
                                                                   width: 40
-                                                                  height: 40"
+                                                                  height: 40
+                                                      - div.cmp-team-text:
+                                                          - div.cmp-team-line:
+                                                              - strong: "${team.name}"
+                                                              - span.badge.cmp-tag: "${team.size}"
+                                                          - div:
+                                                              - span.badge.cmp-tag.is-neutral: "${team.grade}"
 
                                       - if: "${info.hasCategories}"
                                         then:
