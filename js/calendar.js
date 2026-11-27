@@ -1,12 +1,11 @@
-/* Naptárba mentés (Google, Outlook, .ics) és az eltérés-badge tooltipje. */
+/* Naptárba mentés: Google, Outlook és .ics adatok (a menü felülete: js/ui/calendar-menu.js). */
 
-// Eltérés jelzés: a badge hoverére a korábbi információ jelenik meg tooltipben
-function prevInfoTitle(ev) {
-    return 'Korábbi információ: ' + String(ev.discrepancy)
-        .replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+// Eltérés jelzés: a badge tooltipje a korábbi információt mutatja (egyszerű szöveg)
+function prevInfoText(ev) {
+    return 'Korábbi információ: ' + String(ev.discrepancy);
 }
 
-// 4.2b Naptárba mentés (Google, Outlook, .ics letöltés Apple/Outlook asztali számára)
+// Naptárba mentés (Google, Outlook, .ics letöltés Apple/Outlook asztali számára)
 const CAL_TZ = 'Europe/Budapest';
 
 function calData(ev) {
@@ -136,51 +135,4 @@ function downloadIcs(evId) {
     a.click();
     a.remove();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
-}
-
-function closeCalMenu() {
-    const m = document.getElementById('calMenu');
-    if (m) m.remove();
-}
-
-function openCalMenu(evId, anchor) {
-    const found = findEventById(evId);
-    if (!found) return;
-    const reopen = document.getElementById('calMenu') && document.getElementById('calMenu').dataset.ev === evId + '|' + (anchor.dataset.calAnchor || '');
-    closeCalMenu();
-    if (reopen) return;
-    const ev = found.ev;
-    const menu = document.createElement('div');
-    menu.id = 'calMenu';
-    menu.dataset.ev = evId + '|' + (anchor.dataset.calAnchor || '');
-    menu.className = 'fixed z-[70] w-60 rounded-xl border border-slate-200 bg-white shadow-xl p-1.5 text-xs';
-    const itemCls = 'flex items-center gap-2 w-full text-left px-3 py-2 rounded-lg font-semibold text-slate-800 hover:bg-slate-100';
-    menu.innerHTML = `
-        <a class="${itemCls}" target="_blank" rel="noopener noreferrer" href="${googleCalUrl(ev)}">📅 Google Naptár</a>
-        <a class="${itemCls}" target="_blank" rel="noopener noreferrer" href="${outlookCalUrl(ev, 'https://outlook.live.com')}">📧 Outlook.com</a>
-        <a class="${itemCls}" target="_blank" rel="noopener noreferrer" href="${outlookCalUrl(ev, 'https://outlook.office.com')}">🏢 Outlook (Microsoft 365)</a>
-        <button type="button" class="${itemCls}" data-ics="1">🍎 Apple Naptár / Outlook asztali (.ics)</button>
-    `;
-    menu.addEventListener('click', e => {
-        e.stopPropagation();
-        if (e.target.closest('[data-ics]')) downloadIcs(evId);
-        if (e.target.closest('a, button')) closeCalMenu();
-    });
-    document.body.appendChild(menu);
-    const r = anchor.getBoundingClientRect();
-    const w = menu.offsetWidth, h = menu.offsetHeight;
-    let left = Math.min(Math.max(8, r.right - w), window.innerWidth - w - 8);
-    let top = r.bottom + 6;
-    if (top + h > window.innerHeight - 8) top = Math.max(8, r.top - h - 6);
-    menu.style.left = left + 'px';
-    menu.style.top = top + 'px';
-}
-
-document.addEventListener('click', closeCalMenu);
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCalMenu(); });
-window.addEventListener('scroll', closeCalMenu, true);
-window.addEventListener('resize', closeCalMenu);
-
-function calButtonHtml(evId, where, cls) {
-    return `<button type="button" data-cal-anchor="${where}" onclick="event.stopPropagation(); openCalMenu('${evId}', this);" class="${cls}">📅 Naptárba</button>`;
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="hu" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,7 +24,6 @@
     <meta name="twitter:description" content="Közös idővonal és teendők a Radnóti HACK &amp; CODE, a Neumann János Informatikai Verseny és az Árpád-kupa 2026/2027-es fordulóihoz.">
     <meta name="twitter:image" content="https://mathias-rex.github.io/2026-27-competitions/og-image.png">
     <title>Mátyás Király Utcai Általános Iskola versenycsapatok versenyei</title>
-    <!-- Tailwind CSS betöltése -->
     <script>
         // Téma inicializálás renderelés előtt: localStorage → böngésző beállítás
         (function () {
@@ -33,249 +32,666 @@
             if (theme !== 'dark' && theme !== 'light') {
                 theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
             }
-            document.documentElement.classList.toggle('dark', theme === 'dark');
+            document.documentElement.setAttribute('data-theme', theme);
             document.documentElement.style.colorScheme = theme;
         })();
     </script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>tailwind.config = { darkMode: 'class' };</script>
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <!-- createDOMBlocks (helyi build: vendor/, frissítés: node scripts/sync-domblocks.mjs) és az oldal témája -->
+    <link rel="stylesheet" href="vendor/createDOMBlocks.css">
+    <link rel="stylesheet" href="css/theme.css">
 </head>
-<body class="min-h-screen flex flex-col">
+<body class="cmp-page">
+    <div id="app"></div>
 
-    <!-- Fejléc -->
-    <header class="bg-white border-b border-slate-200 sticky top-0 z-40">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
-            <!-- Márka: ikon + cím + egysoros alcím -->
-            <div class="flex items-center gap-2.5 min-w-0 flex-1">
-                <span class="inline-flex shrink-0 items-center justify-center w-8 h-8 rounded-lg bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                </span>
-                <div class="min-w-0">
-                    <h1 class="text-sm sm:text-base lg:text-lg font-extrabold tracking-tight text-slate-900 leading-tight">
-                        Mátyás Király Utcai Általános Iskola versenycsapatok versenyei
-                    </h1>
-                    <p class="hidden sm:block text-[11px] text-slate-500 leading-tight">
-                        2026. november – 2027. április
-                    </p>
-                </div>
-            </div>
+    <!--
+      AZ OLDAL SZERKEZETE (createDOMBlocks YAML leíró)
 
-            <!-- Hamburger gomb (csak mobilon) -->
-            <button id="menuToggleBtn" type="button" aria-expanded="false" aria-controls="headerControls" aria-label="Menü megnyitása"
-                class="md:hidden inline-flex items-center justify-center w-9 h-9 rounded-lg bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-700 border border-slate-300 transition cursor-pointer">
-                <svg id="menuIconOpen" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-                <svg id="menuIconClose" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>
-            </button>
+      Olvasási útmutató
+      - Kisbetűs név (header, div, span, a ...) = nyers HTML elem, nagybetűs (Card, Button, Gantt ...) = könyvtári komponens.
+      - A "Típus#azonosító.osztály" kulcs a csomópont neve; az érték a paraméterei vagy a gyerekei.
+      - ${...} kifejezés: az állapotból (state) vagy az adatokból (data) olvas, az állapot változásakor magától frissül.
+      - "@név": eseménykezelő a js/app.js `handlers` térképéből.  $név: a js/app.js `data` objektumának eleme.
 
-            <!-- Vezérlők: asztali nézeten sorban, mobilon a hamburger menü alatt -->
-            <div id="headerControls" class="hidden flex w-full md:w-auto flex-col md:flex-row md:items-center gap-2 pb-2 md:pb-0 border-t border-slate-100 pt-2 md:border-0 md:pt-0 md:flex">
-                <div id="headerTodayBadge" class="inline-flex items-center gap-2 px-2.5 py-1 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs font-semibold">
-                    <span class="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
-                    <span id="headerTodayText">Mai nap: betöltés...</span>
-                </div>
-                <button id="themeToggleBtn" type="button" aria-label="Téma váltása" title="Világos / sötét mód"
-                    class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-700 text-xs font-semibold transition cursor-pointer border border-slate-300">
-                    <span id="themeToggleIcon" aria-hidden="true">🌙</span>
-                    <span id="themeToggleText">Sötét mód</span>
-                </button>
-            </div>
-        </div>
-    </header>
+      Az állapot (state) elemei
+        Forrás (a felhasználó műveletei írják):
+          menuOpen        a mobil menü nyitva van-e
+          detailsOpen     a versenykiírások szekció nyitva van-e
+          timeFilter      "all" vagy "upcoming" (az időrendi lista szűrője)
+          selectedId      a kiválasztott esemény azonosítója
+          theme           "light" vagy "dark"
+          active          { versenyAzonosító: igaz/hamis }, a versenykapcsolók állása
+        Származtatott (js/derive.js számolja a fentiekből, ezeket csak olvassuk):
+          themeLabel, todayInRange, competitions[], timelineRows[], events[], listSubtitle,
+          selectedEvent, competitionInfos[], noEvents, noCompetitionInfo, whatsNew
+      Az adatok (data): icons, downloads[], timelineSettings, todayFull, todayLegend.
+    -->
+    <script type="text/yaml" id="page">
+# yaml-language-server: $schema=vendor/createDOMBlocks.schema.json
 
-    <!-- Fő tartalom -->
-    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+# ---------------------------------------------------------------------------
+# Saját részletek
+# ---------------------------------------------------------------------------
+define:
 
-        <!-- 1. SZEKCIÓ: Verseny kapcsolók (Toggle kártyák) -->
-        <section aria-label="Versenyek szűrése">
-            <div id="filterCardsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <!-- A JS dinamikusan tölti fel a 3 verseny kapcsolókártyáját -->
-            </div>
-        </section>
+  # Ikon és szöveg egymás mellett: az ikon külön elemben, a szöveg nem törik alá
+  IconText:
+    params: [icon, text]
+    body:
+      - span.cmp-icontext:
+          - span.cmp-icontext-icon:
+              text: "${icon}"
+              aria-hidden: "true"
+          - span.cmp-icontext-text: "${text}"
 
-        <!-- 2. SZEKCIÓ: Közös Idővonal (Eredeti letisztult Gantt / Timeline elrendezés) -->
-        <section class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-            <div class="px-5 py-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-3 bg-slate-50/60">
-                <div>
-                    <h2 class="text-base font-bold text-slate-800">Közös időtengely és mérföldkövek</h2>
-                    <p class="text-xs text-slate-500">Kattints bármelyik pontra a részletes teendők megtekintéséhez!</p>
-                </div>
-                <!-- Jelmagyarázat -->
-                <div class="flex flex-wrap items-center gap-4 text-xs text-slate-600">
-                    <span class="inline-flex items-center gap-1.5">
-                        <span class="w-3 h-3 rounded-full bg-slate-600 inline-block border-2 border-white shadow"></span>
-                        Forduló / Határidő
-                    </span>
-                    <span class="inline-flex items-center gap-1.5 font-semibold text-amber-800">
-                        <span class="w-3.5 h-3.5 rotate-45 bg-amber-400 border-2 border-amber-700 inline-block shadow-sm"></span>
-                        Döntő
-                    </span>
-                    <span id="legendTodayItem" class="inline-flex items-center gap-1.5 text-red-600 font-medium">
-                        <span class="w-0.5 h-4 border-l-2 border-dashed border-red-500 inline-block"></span>
-                        <span id="legendTodayText">Mai nap</span>
-                    </span>
-                </div>
-            </div>
+  # Letölthető dokumentumok listája (workshop dokumentumok): cím, leírás, méret, megnézés és letöltés gomb
+  DocumentList:
+    params: [documents]
+    body:
+      - div.cmp-doclist:
+          - each:
+              in: "${documents}"
+              as: file
+              key: file.href
+            do:
+              - div.cmp-doc:
+                  - div:
+                      style: "min-width:0"
+                      children:
+                        - span.cmp-doc-title: "${file.title}"
+                        - span.cmp-doc-desc: "${file.description}"
+                        - span.cmp-doc-size: "${file.sizeText}"
+                  - div.cmp-doc-actions:
+                      - a.link.cmp-icon-btn:
+                          href: "${file.href}"
+                          target: _blank
+                          rel: "noopener noreferrer"
+                          title: "Megnézés"
+                          aria-label: "Megnézés: ${file.title}"
+                          html: $icons.eye
+                      - a.link.cmp-icon-btn:
+                          href: "${file.href}"
+                          download: ""
+                          title: "Letöltés"
+                          aria-label: "Letöltés: ${file.title}"
+                          html: $icons.download
 
-            <!-- Vízszintesen görgethető konténer (asztali gépen is, a sűrű feliratok miatt) -->
-            <div class="overflow-x-auto timeline-scroll">
-                <div id="timelineWrapper" class="min-w-[1500px] lg:min-w-[2200px] p-5 relative select-none">
-                    <!-- Ide épül fel a közös idővonal -->
-                </div>
-            </div>
-        </section>
+  # Egy esemény részletei: az oldalsó panelben és a felugró ablakban is ez jelenik meg.
+  EventDetails:
+    params: [event]
+    body:
+      - if: "${event}"
+        then:
+          - div.cmp-detail:
+              style: "${event.colorStyle}"
+              children:
 
-        <!-- 3. SZEKCIÓ: Kiválasztott esemény kiemelt kártyája + Időrendi teendőlista -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                # Fejléc: balra az érintett csapat(ok) logója, mellette a verseny neve és az esemény címe
+                - div.cmp-detail-head:
+                    - div.cmp-detail-logos:
+                        - each:
+                            in: "${event.teamLogos}"
+                            as: team
+                            key: team.name
+                          do:
+                            - img.cmp-logo:
+                                src: "${team.logo}"
+                                alt: "${team.alt}"
+                                title: "${team.name}"
+                                width: 56
+                                height: 56
+                    - div:
+                        style: "min-width:0"
+                        children:
+                          - Badge.cmp-tag.is-lg: "${event.competitionName}"
+                          - Title(4).cmp-detail-title: "${event.title}"
 
-            <!-- Bal/Felső oszlop: Részletes nézet az aktuálisan kiválasztott eseményről -->
-            <aside class="lg:col-span-4 bg-white rounded-2xl border border-slate-200 shadow-sm p-5 lg:sticky lg:top-20">
-                <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
-                    <h3 class="text-sm font-bold uppercase tracking-wider text-slate-500">Kiválasztott esemény</h3>
-                    <span id="detailStatusBadge" class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600">
-                        Részletek
-                    </span>
-                </div>
-                <div id="eventDetailPanel">
-                    <!-- Dinamikus esemény részletező -->
-                </div>
-            </aside>
+                # Időpont és helyszín
+                - div.cmp-infobox:
+                    - div.cmp-infobox-row:
+                        - span: "Időpont:"
+                        - span:
+                            - span: "${event.date}"
+                            - if: "${event.hasTime}"
+                              then:
+                                - br: null
+                                - span: "${event.time}"
+                    - div.cmp-infobox-row:
+                        - span: "Helyszín / Forma:"
+                        - span: "${event.location}"
 
-            <!-- Jobb/Alsó oszlop: Szűrt, időrendi lista a teendőkről -->
-            <section class="lg:col-span-8 bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4 mb-4">
-                    <div>
-                        <h3 class="text-base font-bold text-slate-800">Időrendi teendők és dátumok</h3>
-                        <p id="listSubtitle" class="text-xs text-slate-500 mt-0.5">Az aktív versenyek összes eseménye időrendben</p>
-                    </div>
-                    <!-- Szűrő: Összes / Csak hátralévő -->
-                    <div class="inline-flex rounded-xl bg-slate-100 p-1 self-start sm:self-auto">
-                        <button type="button" data-timefilter="all" class="time-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-white text-slate-900 shadow-sm transition cursor-pointer">
-                            Összes
-                        </button>
-                        <button type="button" data-timefilter="upcoming" class="time-filter-btn px-3 py-1 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition cursor-pointer">
-                            Csak hátralévő
-                        </button>
-                    </div>
-                </div>
+                # Figyelmeztetések
+                - if: "${event.isEndEstimated}"
+                  then:
+                    - Paragraph.cmp-note: "⏱ A befejezés időpontja nem ismert, a naptárban 1,5 órás becslés szerepel."
+                - if: "${event.hasDiscrepancy}"
+                  then:
+                    - span.badge.cmp-tag.is-warn:
+                        text: "⚠ Eltérés a korábbi információtól"
+                        title: "${event.discrepancyNote}"
+                        tabindex: 0
+                        style: "width:fit-content"
 
-                <div id="chronologicalList" class="space-y-3">
-                    <!-- Dinamikus lista -->
-                </div>
-            </section>
+                # Leírás
+                - div:
+                    - Title(5).cmp-label: "Teendő és tudnivalók"
+                    - Paragraph.cmp-text: "${event.description}"
 
-        </div>
+                # Letölthető dokumentumok (pl. workshop kézikönyv, otthoni felkészülés, szülői nyilatkozat)
+                - if: "${event.hasDocuments}"
+                  then:
+                    - div:
+                        - Title(5).cmp-label: "Dokumentumok"
+                        - DocumentList:
+                            documents: "${event.documents}"
 
-        <!-- 4. SZEKCIÓ: Versenykiírások, Feltételek és Linkek (Összecsukható / áttekinthető kártyák) -->
-        <section aria-label="Versenykiírások, Feltételek és Linkek" class="pt-2">
-            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-                <div class="px-5 py-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-3 bg-slate-50/60">
-                    <div>
-                        <h2 class="text-base sm:text-lg font-extrabold text-slate-900">Versenykiírások, Feltételek és Linkek</h2>
-                        <p class="text-xs text-slate-500">A bekapcsolt versenyek részletes kiírása, kategóriái, díjazása és hivatalos elérhetőségei</p>
-                    </div>
-                    <button id="toggleDetailsSectionBtn" type="button" aria-expanded="true"
-                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 text-xs font-semibold border border-slate-300 shadow-xs transition cursor-pointer">
-                        <span id="toggleDetailsSectionText">Részletek elrejtése</span>
-                        <svg id="toggleDetailsSectionIcon" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
-                    </button>
-                </div>
+                # Gombok: hivatkozás és naptár
+                - if: "${event.hasLink}"
+                  then:
+                    - a.link.cmp-cta.is-solid:
+                        href: "${event.linkUrl}"
+                        target: _blank
+                        rel: "noopener noreferrer"
+                        text: "${event.linkLabel}"
+                        children:
+                          - span.cmp-ext: { html: $icons.external }
+                - if: "${event.canAddToCalendar}"
+                  then:
+                    - button.btn.cmp-cta:
+                        text: "📅 Naptárba"
+                        data-event-id: "${event.id}"
+                        click: "@openCalendarMenu"
 
-                <div id="detailedInfoWrapper" class="p-5">
-                    <div id="detailedInfoCardsContainer" class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
-                        <!-- A JS dinamikusan tölti fel a bekapcsolt versenyek részletes kártyáit -->
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <!-- 5. SZEKCIÓ: Letölthető dokumentumok (a pdf-intake skill tölti fel a jelölők között) -->
-        <section aria-label="Letölthető dokumentumok" class="pt-2">
-            <h2 class="text-base font-bold text-slate-800">Letölthető dokumentumok</h2>
-            <p class="text-xs text-slate-500 mb-3">A versenykiírások és szabályzatok eredeti PDF-jei versenyenként.</p>
-            <!-- PDF-DOWNLOADS:START -->
-<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-<div class="rounded-xl border border-slate-200 bg-white p-4 border-l-4" style="border-left-color: #16A34A;">
-<h3 class="flex items-center gap-2 text-sm font-bold text-slate-900 mb-2"><span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: #16A34A;"></span>Radnóti HACK &amp; CODE</h3>
-<ul class="space-y-3">
-<li class="flex items-start justify-between gap-3"><div class="min-w-0"><span class="block text-sm font-semibold text-slate-800 leading-snug">Versenyfelhívás</span><span class="block text-xs font-normal text-slate-500 leading-snug mt-0.5">A teljes kiírás: résztvevők, nevezés, fordulók, díjazás.</span><span class="block text-[11px] text-slate-400 mt-0.5">PDF, 230 KB</span></div><div class="flex items-center gap-1.5 shrink-0"><a href="downloads/radnoti-hack-code-a-bolygoert-2026-2027-1.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-9 h-9 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition" title="Megnézés" aria-label="Megnézés: Versenyfelhívás"><svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></a><a href="downloads/radnoti-hack-code-a-bolygoert-2026-2027-1.pdf" download class="inline-flex items-center justify-center w-9 h-9 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition" title="Letöltés" aria-label="Letöltés: Versenyfelhívás"><svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v12"/><path d="m6 11 6 6 6-6"/><path d="M5 20h14"/></svg></a></div></li>
-<li class="flex items-start justify-between gap-3"><div class="min-w-0"><span class="block text-sm font-semibold text-slate-800 leading-snug">Zöld Küldetés, játékkészítési feladat</span><span class="block text-xs font-normal text-slate-500 leading-snug mt-0.5">I. forduló 2. rész: környezetvédelmi témájú böngészős játék AI segítségével, leadás dec. 11. 23:59-ig.</span><span class="block text-[11px] text-slate-400 mt-0.5">PDF, 874 KB</span></div><div class="flex items-center gap-1.5 shrink-0"><a href="downloads/randoti-verseny-2026-jatekkeszitesi-feladat.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-9 h-9 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition" title="Megnézés" aria-label="Megnézés: Zöld Küldetés, játékkészítési feladat"><svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></a><a href="downloads/randoti-verseny-2026-jatekkeszitesi-feladat.pdf" download class="inline-flex items-center justify-center w-9 h-9 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition" title="Letöltés" aria-label="Letöltés: Zöld Küldetés, játékkészítési feladat"><svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v12"/><path d="m6 11 6 6 6-6"/><path d="M5 20h14"/></svg></a></div></li>
-<li class="flex items-start justify-between gap-3"><div class="min-w-0"><span class="block text-sm font-semibold text-slate-800 leading-snug">Verseny plakát</span><span class="block text-xs font-normal text-slate-500 leading-snug mt-0.5">Röviden: nevezési határidő, helyszín, csapatméret, elérhetőségek.</span><span class="block text-[11px] text-slate-400 mt-0.5">PDF, 311 KB</span></div><div class="flex items-center gap-1.5 shrink-0"><a href="downloads/rh-c26-plakat.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-9 h-9 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition" title="Megnézés" aria-label="Megnézés: Verseny plakát"><svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></a><a href="downloads/rh-c26-plakat.pdf" download class="inline-flex items-center justify-center w-9 h-9 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition" title="Letöltés" aria-label="Letöltés: Verseny plakát"><svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v12"/><path d="m6 11 6 6 6-6"/><path d="M5 20h14"/></svg></a></div></li>
-</ul>
-</div>
-<div class="rounded-xl border border-slate-200 bg-white p-4 border-l-4" style="border-left-color: #2563EB;">
-<h3 class="flex items-center gap-2 text-sm font-bold text-slate-900 mb-2"><span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: #2563EB;"></span>Neumann János Verseny</h3>
-<ul class="space-y-3">
-<li class="flex items-start justify-between gap-3"><div class="min-w-0"><span class="block text-sm font-semibold text-slate-800 leading-snug">Versenyfelhívás</span><span class="block text-xs font-normal text-slate-500 leading-snug mt-0.5">Rövid kiírás: kategóriák, nevezési feltételek, határidők, a döntő.</span><span class="block text-[11px] text-slate-400 mt-0.5">PDF, 128 KB</span></div><div class="flex items-center gap-1.5 shrink-0"><a href="downloads/2026-palyazati-felhivas.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-9 h-9 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition" title="Megnézés" aria-label="Megnézés: Versenyfelhívás"><svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></a><a href="downloads/2026-palyazati-felhivas.pdf" download class="inline-flex items-center justify-center w-9 h-9 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition" title="Letöltés" aria-label="Letöltés: Versenyfelhívás"><svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v12"/><path d="m6 11 6 6 6-6"/><path d="M5 20h14"/></svg></a></div></li>
-<li class="flex items-start justify-between gap-3"><div class="min-w-0"><span class="block text-sm font-semibold text-slate-800 leading-snug">Versenyszabályzat</span><span class="block text-xs font-normal text-slate-500 leading-snug mt-0.5">Részletes szabályok: kategóriák, nevezés, zsűrizés, pontozás, a döntő menete.</span><span class="block text-[11px] text-slate-400 mt-0.5">PDF, 212 KB</span></div><div class="flex items-center gap-1.5 shrink-0"><a href="downloads/versenyszabalyzat-2026.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-9 h-9 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition" title="Megnézés" aria-label="Megnézés: Versenyszabályzat"><svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></a><a href="downloads/versenyszabalyzat-2026.pdf" download class="inline-flex items-center justify-center w-9 h-9 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition" title="Letöltés" aria-label="Letöltés: Versenyszabályzat"><svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v12"/><path d="m6 11 6 6 6-6"/><path d="M5 20h14"/></svg></a></div></li>
-</ul>
-</div>
-<div class="rounded-xl border border-slate-200 bg-white p-4 border-l-4" style="border-left-color: #EA580C;">
-<h3 class="flex items-center gap-2 text-sm font-bold text-slate-900 mb-2"><span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: #EA580C;"></span>Árpád-kupa</h3>
-<ul class="space-y-3">
-<li class="flex items-start justify-between gap-3"><div class="min-w-0"><span class="block text-sm font-semibold text-slate-800 leading-snug">Versenyfelhívás</span><span class="block text-xs font-normal text-slate-500 leading-snug mt-0.5">Határidők, témakörök, nevezés és a döntő menete.</span><span class="block text-[11px] text-slate-400 mt-0.5">PDF, 704 KB</span></div><div class="flex items-center gap-1.5 shrink-0"><a href="downloads/arpad-kupa-felhivas-2027.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-9 h-9 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition" title="Megnézés" aria-label="Megnézés: Versenyfelhívás"><svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></a><a href="downloads/arpad-kupa-felhivas-2027.pdf" download class="inline-flex items-center justify-center w-9 h-9 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition" title="Letöltés" aria-label="Letöltés: Versenyfelhívás"><svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v12"/><path d="m6 11 6 6 6-6"/><path d="M5 20h14"/></svg></a></div></li>
-</ul>
-</div>
-</div>
-<!-- PDF-DOWNLOADS:END -->
-        </section>
+# ---------------------------------------------------------------------------
+# Az oldal
+# ---------------------------------------------------------------------------
+ui:
 
-        <!-- 6. SZEKCIÓ: Workshop projektek (js/data.js WORKSHOP_PROJECTS, render-panels.js) -->
-        <section aria-label="Workshop projektek" class="pt-2">
-            <h2 class="text-base font-bold text-slate-800">Workshop projektek</h2>
-            <p class="text-xs text-slate-500 mb-3">Mit készítenek a csapatok a pályamunka workshopon, és melyik dokumentumok tartoznak hozzá.</p>
-            <div id="workshopProjects" class="grid grid-cols-1 lg:grid-cols-2 gap-4"></div>
-        </section>
+  # ===== Fejléc: márka, mai nap, téma váltó, mobil menü =====
+  - header.cmp-header:
+      - div.cmp-header-inner:
 
-    </main>
+          - div.cmp-brand:
+              - span.cmp-brand-icon:
+                  html: $icons.calendar
+              - div:
+                  style: "min-width:0"
+                  children:
+                    - Title(1)#page-title.cmp-title: "Mátyás Király Utcai Általános Iskola versenycsapatok versenyei"
+                    - Paragraph.cmp-subtitle: "2026. november – 2027. április"
 
-    <!-- Lábléc -->
-    <footer class="bg-white border-t border-slate-200 mt-10 py-4 px-4 text-center text-xs text-slate-400">
-        Összesített verseny-idővonal • Radnóti HACK &amp; CODE • Neumann János Informatikai Verseny • Árpád-kupa
-    </footer>
+          # Hamburger gomb (csak mobilon látszik)
+          - button#menu-toggle-button.btn.cmp-menu-btn:
+              aria-controls: header-controls
+              aria-expanded: "${menuOpen ? 'true' : 'false'}"
+              aria-label: "${menuOpen ? 'Menü bezárása' : 'Menü megnyitása'}"
+              html: "${menuOpen ? icons.close : icons.menu}"
+              click:
+                toggle: menuOpen
 
-    <!-- Újdonságok ablak (szövegek: js/changelog.js, működés: js/whats-new.js) -->
-    <!-- Esemény részletei felugró ablakban (az idővonalon rákattintva) -->
-    <div id="eventModal" class="anim-modal hidden fixed inset-0 z-[55] flex items-center justify-center p-4 bg-slate-900/60" role="dialog" aria-modal="true" aria-label="Kiválasztott esemény">
-        <div class="relative w-full max-w-md max-h-[85vh] flex flex-col rounded-2xl bg-white border border-slate-200 shadow-2xl">
-            <div class="flex items-center justify-between px-5 pt-4 pb-3 border-b border-slate-100">
-                <h3 class="text-sm font-bold uppercase tracking-wider text-slate-500">Kiválasztott esemény</h3>
-                <button type="button" id="eventModalClose" class="w-8 h-8 inline-flex items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 hover:text-slate-900 transition" aria-label="Bezárás" title="Bezárás">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-                </button>
-            </div>
-            <div id="eventModalBody" class="p-5 overflow-y-auto"></div>
-        </div>
-    </div>
+          - div#header-controls.cmp-controls:
+              class: "${menuOpen ? 'is-open' : ''}"
+              children:
+                - Badge#today-badge.cmp-today-badge: "Mai nap: ${todayFull}"
+                - Button#theme-toggle-button.cmp-theme-btn:
+                    text: "${themeLabel}"
+                    click: "@toggleTheme"
 
-    <div id="whatsNewModal" class="hidden fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-900/60" role="dialog" aria-modal="true" aria-labelledby="whatsNewTitle">
-        <div class="relative w-full max-w-lg max-h-[85vh] flex flex-col rounded-2xl bg-white border border-slate-200 shadow-2xl">
-            <button type="button" id="whatsNewClose" class="absolute top-3 right-3 w-8 h-8 inline-flex items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 hover:text-slate-900 transition" aria-label="Bezárás" title="Bezárás">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-            </button>
-            <div class="px-5 pt-5 pb-3 pr-14">
-                <h2 id="whatsNewTitle" class="text-lg font-extrabold text-slate-900">Újdonságok az oldalon</h2>
-                <p class="text-xs text-slate-500 mt-0.5">Ezek változtak legutóbbi látogatásod óta. <span id="whatsNewVersion" class="font-semibold"></span></p>
-            </div>
-            <div id="whatsNewBody" class="px-5 pb-3 overflow-y-auto space-y-4 text-sm text-slate-700"></div>
-            <div class="px-5 py-4 border-t border-slate-100 flex justify-end">
-                <button type="button" id="whatsNewOk" class="px-4 py-2 rounded-xl text-sm font-bold text-white bg-slate-900 hover:opacity-90 transition">Rendben, értem</button>
-            </div>
-        </div>
-    </div>
+  - main.cmp-main:
 
+      # ===== 1. Versenykapcsolók: kattintásra be- és kikapcsolják a versenyt =====
+      - section#competition-filters.cmp-filters:
+          aria-label: "Versenyek szűrése"
+          children:
+            - each:
+                in: "${competitions}"
+                as: competition
+                key: competition.id
+              do:
+                - div:
+                    style: "${competition.colorStyle}"
+                    data-competition-id: "${competition.id}"
+                    click: "@competitionCardClick"
+                    children:
+                      - Card#competition-card-${competition.id}:
+                          class: "${competition.cssClass}"
+                          title: "${competition.name}"
+                          body:
+                            - Paragraph: "${competition.targetGroup}"
+                            - Checkbox#competition-switch-${competition.id}:
+                                labelText: "${competition.name} ki/bekapcsolása"
+                                checked: "${competition.active}"
+                                onChange: "@competitionSwitchChanged"
+                          footer:
+                            - span.cmp-filter-org:
+                                title: "${competition.organizer}"
+                                children:
+                                  - IconText:
+                                      icon: "📍"
+                                      text: "${competition.organizer}"
+                            - span.cmp-filter-count: "${competition.upcomingText}"
+
+      # ===== 2. Közös idővonal (Gantt) =====
+      - section.cmp-panel:
+          - div.cmp-panel-head:
+              - div:
+                  - Title(2).cmp-h2: "Közös időtengely és mérföldkövek"
+                  - Paragraph.cmp-hint: "Kattints bármelyik pontra a részletes teendők megtekintéséhez!"
+              - div.cmp-legend:
+                  - span.cmp-legend-item:
+                      - span.cmp-legend-dot: null
+                      - span: "Forduló / Határidő"
+                  - span.cmp-legend-item.is-final:
+                      - span.cmp-legend-diamond: null
+                      - span: "Döntő"
+                  - span.cmp-legend-item.is-today:
+                      hidden: "${!todayInRange}"
+                      children:
+                        - span.cmp-legend-line: null
+                        - span: "${todayLegend}"
+
+          - Gantt#timeline:
+              rows: "${timelineRows}"
+              from: "2026-11"
+              to: "2027-04"
+              axis: months
+              monthWidth: $timelineSettings.monthWidth
+              labelWidth: $timelineSettings.labelWidth
+              today: $timelineSettings.today
+              todayLabel: $timelineSettings.todayLabel
+              barStyle: thin
+              dimPast: true
+              selectable: false
+              dragScroll: true
+              labelHeader: "Verseny"
+              ariaLabel: "Versenyek közös idővonala"
+              emptyText: "Nincs kiválasztott verseny. Kapcsold be legalább az egyik versenyt a fenti kártyákon az idővonal megjelenítéséhez!"
+              selectedMilestoneId: "${selectedId}"
+              onMilestoneHover: "@hoverEvent"
+              onMilestoneClick: "@openEvent"
+
+      # ===== 3. Kiválasztott esemény (bal) és időrendi lista (jobb) =====
+      - div.cmp-split:
+
+          # --- Bal oldal: a kiválasztott esemény részletei ---
+          - aside.cmp-panel.cmp-aside:
+              - div.cmp-aside-head:
+                  - Title(3).cmp-aside-title: "Kiválasztott esemény"
+                  - Badge#selected-event-status:
+                      text: "${selectedEvent ? selectedEvent.statusText : 'Részletek'}"
+                      class: "${selectedEvent ? selectedEvent.statusClass : 'badge cmp-pill'}"
+              - div#selected-event-panel:
+                  - if: "${selectedEvent}"
+                    then:
+                      - EventDetails:
+                          event: "${selectedEvent}"
+                    else:
+                      - Paragraph.cmp-hint: "Válassz ki egy eseményt az idővonalon vagy a listából!"
+
+          # --- Jobb oldal: időrendi lista szűrővel ---
+          - section.cmp-panel.cmp-list-panel:
+              - div.cmp-list-head:
+                  - div:
+                      - Title(3).cmp-section-title: "Időrendi teendők és dátumok"
+                      - Paragraph.cmp-hint: "${listSubtitle}"
+                  - div.cmp-segment:
+                      role: group
+                      aria-label: "Időszűrő"
+                      children:
+                        - Button#time-filter-all:
+                            text: "Összes"
+                            class: "cmp-seg-btn ${timeFilter == 'all' ? 'is-active' : ''}"
+                            click:
+                              set:
+                                timeFilter: all
+                        - Button#time-filter-upcoming:
+                            text: "Csak hátralévő"
+                            class: "cmp-seg-btn ${timeFilter == 'upcoming' ? 'is-active' : ''}"
+                            click:
+                              set:
+                                timeFilter: upcoming
+
+              - div#event-list.cmp-list:
+                  - if: "${noEvents}"
+                    then:
+                      - div.cmp-empty:
+                          - strong: "Nincs megjeleníthető esemény a jelenlegi szűréssel."
+                          - span: "Kapcsold be a versenyeket fent, vagy válts az „Összes” nézetre."
+
+                  - each:
+                      in: "${events}"
+                      as: event
+                      key: event.id
+                    do:
+                      - div:
+                          class: "${event.cssClass}"
+                          style: "${event.colorStyle}"
+                          click:
+                            set:
+                              selectedId: "${event.id}"
+                          children:
+
+                            # Dátumdoboz, címkék, cím és leírás
+                            - div.cmp-item-main:
+                                - div:
+                                    class: "${event.dateBoxClass}"
+                                    children:
+                                      - span.d: "${event.date}"
+                                      - if: "${event.hasTime}"
+                                        then:
+                                          - span.t: "${event.time}"
+                                      - span.y: "${event.year}"
+                                - div.cmp-item-body:
+                                    - div.cmp-tags:
+                                        - span.badge.cmp-tag: "${event.competitionName}"
+                                        - if: "${event.isFinal}"
+                                          then:
+                                            - span.badge.cmp-tag.is-final: "🏆 DÖNTŐ"
+                                        - if: "${event.hasDiscrepancy}"
+                                          then:
+                                            - span.badge.cmp-tag.is-warn:
+                                                text: "⚠ Eltérés a korábbi információtól"
+                                                title: "${event.discrepancyNote}"
+                                    - Title(4).cmp-item-title: "${event.title}"
+                                    - Paragraph.cmp-item-desc: "${event.description}"
+
+                            # Jobb oldali oszlop: állapot, helyszín, hivatkozás, naptár
+                            - div.cmp-item-side:
+                                - span:
+                                    class: "${event.statusClass}"
+                                    text: "${event.statusText}"
+                                - div.cmp-item-side-right:
+                                    - span.cmp-loc:
+                                        - IconText:
+                                            icon: "📍"
+                                            text: "${event.location}"
+                                    - div.cmp-item-links:
+                                        - if: "${event.hasLink}"
+                                          then:
+                                            - a.link.cmp-mini:
+                                                href: "${event.linkUrl}"
+                                                target: _blank
+                                                rel: "noopener noreferrer"
+                                                click: "@stopPropagation"
+                                                children:
+                                                  - span.cmp-emoji: "🔗 "
+                                                  - span: "${event.linkLabel}"
+                                        - if: "${event.canAddToCalendar}"
+                                          then:
+                                            - button.btn.cmp-mini:
+                                                data-event-id: "${event.id}"
+                                                click: "@openCalendarMenu"
+                                                children:
+                                                  - span.cmp-emoji: "📅 "
+                                                  - span: "Naptárba"
+
+      # ===== 4. Versenykiírások (összecsukható) =====
+      - section.cmp-panel:
+          aria-label: "Versenykiírások, Feltételek és Linkek"
+          children:
+            - div.cmp-panel-head:
+                - div:
+                    - Title(2).cmp-h2.cmp-h2-lg: "Versenykiírások, Feltételek és Linkek"
+                    - Paragraph.cmp-hint: "A bekapcsolt versenyek részletes kiírása, kategóriái, díjazása és hivatalos elérhetőségei"
+                - Button#details-toggle-button:
+                    text: "${detailsOpen ? 'Részletek elrejtése' : 'Részletek megjelenítése'}"
+                    class: "cmp-toggle-btn ${detailsOpen ? '' : 'is-closed'}"
+                    click:
+                      toggle: detailsOpen
+
+            - div#competition-infos.cmp-info-grid:
+                hidden: "${!detailsOpen}"
+                children:
+                  - if: "${noCompetitionInfo}"
+                    then:
+                      - div.cmp-empty:
+                          - strong: "Nincs megjeleníthető versenykiírás."
+                          - span: "Kapcsold be a versenyeket az oldal tetején a részletes kiírások megtekintéséhez!"
+
+                  - each:
+                      in: "${competitionInfos}"
+                      as: info
+                      key: info.id
+                    do:
+                      - div:
+                          style: "${info.colorStyle}"
+                          children:
+                            - Card.cmp-info:
+                                body:
+
+                                  # Színes fejléc: verseny, szervező, cím
+                                  - div.cmp-info-head:
+                                      - span.cmp-info-kicker: "${info.competitionName}"
+                                      - Title(3): "${info.name}"
+                                      - div.cmp-info-meta:
+                                          - IconText:
+                                              icon: "🏛️"
+                                              text: "${info.organizer}"
+                                      - div.cmp-info-meta:
+                                          - IconText:
+                                              icon: "📍"
+                                              text: "${info.address}"
+
+                                  # Tartalom: kiknek szól, csapataink, kategóriák / téma, fordulók, díjazás
+                                  - div.cmp-info-content:
+                                      - div:
+                                          - Title(4).cmp-label: "Kiknek szól & feltételek"
+                                          - Paragraph.cmp-block-text: "${info.participants}"
+
+                                      - if: "${info.hasTeams}"
+                                        then:
+                                          - div.cmp-teams:
+                                              - Title(4).cmp-label: "${info.teamsTitle}"
+                                              - each:
+                                                  in: "${info.teams}"
+                                                  as: team
+                                                  key: team.name
+                                                do:
+                                                  - div.cmp-team:
+                                                      - if: "${team.logo}"
+                                                        then:
+                                                          - div.cmp-team-logo:
+                                                              - img.cmp-logo.is-sm:
+                                                                  src: "${team.logo}"
+                                                                  alt: "${team.name} csapat logója"
+                                                                  width: 40
+                                                                  height: 40
+                                                      - div.cmp-team-text:
+                                                          - div.cmp-team-line:
+                                                              - strong: "${team.name}"
+                                                              - span.badge.cmp-tag: "${team.size}"
+                                                          - div:
+                                                              - span.badge.cmp-tag.is-neutral: "${team.grade}"
+
+                                      - if: "${info.hasCategories}"
+                                        then:
+                                          - div:
+                                              - Title(4).cmp-label: "6 versenykategória"
+                                              - UnorderedList:
+                                                  items: "${info.categories}"
+                                                  class: "cmp-bullets is-plain"
+
+                                      - if: "${info.hasTopic}"
+                                        then:
+                                          - div:
+                                              - Title(4).cmp-label: "Téma és feladatok"
+                                              - Paragraph.cmp-block-text: "${info.topic}"
+
+                                      - div:
+                                          - Title(4).cmp-label: "Fordulók és dátumok"
+                                          - UnorderedList:
+                                              items: "${info.rounds}"
+                                              class: "cmp-bullets"
+
+                                      - div:
+                                          - Title(4).cmp-label: "Díjazás"
+                                          - Paragraph.cmp-block-text: "${info.prizes}"
+
+                                # Lábléc: hivatkozások és elérhetőségek
+                                footer:
+                                  - each:
+                                      in: "${info.links}"
+                                      as: link
+                                      key: link.url
+                                    do:
+                                      - a:
+                                          class: "link ${link.cssClass}"
+                                          href: "${link.url}"
+                                          target: _blank
+                                          rel: "noopener noreferrer"
+                                          text: "${link.icon} ${link.label}"
+                                          children:
+                                            - span.cmp-ext:
+                                                html: $icons.external
+                                  - Paragraph.cmp-contacts: "${info.contacts}"
+
+      # ===== 5. Letölthető dokumentumok (js/downloads.js, a pdf-intake skill generálja) =====
+      - section:
+          aria-label: "Letölthető dokumentumok"
+          children:
+            - Title(2).cmp-h2: "Letölthető dokumentumok"
+            - Paragraph.cmp-hint.cmp-mb-3: "A versenykiírások és szabályzatok eredeti PDF-jei versenyenként."
+            - div.cmp-dl-grid:
+                - each:
+                    in: $downloads
+                    as: group
+                    key: group.id
+                  do:
+                    - div:
+                        style: "${group.colorStyle}"
+                        children:
+                          - Card.cmp-dl:
+                              title: "${group.name}"
+                              body:
+                                - each:
+                                    in: "${group.documents}"
+                                    as: file
+                                    key: file.href
+                                  do:
+                                    - div.cmp-doc:
+                                        - div:
+                                            style: "min-width:0"
+                                            children:
+                                              - span.cmp-doc-title: "${file.title}"
+                                              - if: "${file.description}"
+                                                then:
+                                                  - span.cmp-doc-desc: "${file.description}"
+                                              - span.cmp-doc-size: "PDF, ${file.sizeKb} KB"
+                                        - div.cmp-doc-actions:
+                                            - a.link.cmp-icon-btn:
+                                                href: "${file.href}"
+                                                target: _blank
+                                                rel: "noopener noreferrer"
+                                                title: "Megnézés"
+                                                aria-label: "Megnézés: ${file.title}"
+                                                html: $icons.eye
+                                            - a.link.cmp-icon-btn:
+                                                href: "${file.href}"
+                                                download: ""
+                                                title: "Letöltés"
+                                                aria-label: "Letöltés: ${file.title}"
+                                                html: $icons.download
+
+      # ===== 6. Workshop projektek (js/data.js WORKSHOP_PROJECTS) =====
+      - section:
+          aria-label: "Workshop projektek"
+          children:
+            - Title(2).cmp-h2: "Workshop projektek"
+            - Paragraph.cmp-hint.cmp-mb-3: "Mit készítenek a csapatok a pályamunka workshopon, és melyik dokumentumok tartoznak hozzá."
+            - div.cmp-project-grid:
+                - each:
+                    in: $workshopProjects
+                    as: project
+                    key: project.id
+                  do:
+                    - div:
+                        style: "${project.colorStyle}"
+                        children:
+                          - Card.cmp-dl.cmp-project:
+                              body:
+                                - div.cmp-project-head:
+                                    - img.cmp-logo:
+                                        src: "${project.logo}"
+                                        alt: "${project.team} csapat logója"
+                                        width: 56
+                                        height: 56
+                                    - div:
+                                        style: "min-width:0"
+                                        children:
+                                          - Title(3).cmp-project-title: "${project.title}"
+                                          - div.cmp-project-team:
+                                              - Badge.cmp-tag.is-lg: "${project.team}"
+                                              - span.cmp-hint: "${project.teamInfo}"
+                                - Paragraph.cmp-text: "${project.summary}"
+                                - p.cmp-hint:
+                                    - span: "Workshop: "
+                                    - button.btn.cmp-textlink:
+                                        text: "${project.dateText}"
+                                        data-event-id: "${project.eventId}"
+                                        click: "@openProjectEvent"
+                                # A dokumentumok doboza a kártya aljára igazodik
+                                - div.cmp-project-docs:
+                                    - Title(5).cmp-label: "Letölthető dokumentumok"
+                                    - DocumentList:
+                                        documents: "${project.documents}"
+
+  # ===== Lábléc =====
+  - footer.cmp-footer: "Összesített verseny-idővonal • Radnóti HACK & CODE • Neumann János Informatikai Verseny • Árpád-kupa"
+
+  # ===== Felugró ablakok =====
+
+  # Az idővonalon rákattintott esemény részletei
+  - Modal#event-modal:
+      title: "Kiválasztott esemény"
+      width: 448
+      footer: false
+      closeOnBackdrop: true
+      closeOnEscape: true
+      body:
+        - EventDetails:
+            event: "${selectedEvent}"
+
+  # Újdonságok: a látogató által még nem látott változások
+  - Modal#whats-new-modal:
+      title: "Újdonságok az oldalon"
+      width: 512
+      footer: false
+      closeOnBackdrop: true
+      closeOnEscape: true
+      body:
+        - Paragraph.cmp-whatsnew-sub: "Ezek változtak legutóbbi látogatásod óta. Verzió ${whatsNew.version}"
+        - each:
+            in: "${whatsNew.entries}"
+            as: entry
+            key: entry.version
+          do:
+            - section.cmp-whatsnew-group:
+                - if: "${whatsNew.hasMultipleEntries}"
+                  then:
+                    - h3.cmp-whatsnew-ver: "${entry.version} · ${entry.date}"
+                - UnorderedList:
+                    items: "${entry.items}"
+                    class: "cmp-whatsnew-list"
+        - div.cmp-whatsnew-actions:
+            - Button#whats-new-ok-button:
+                text: "Rendben, értem"
+                class: cmp-primary
+                click: "@acceptWhatsNew"
+    </script>
+
+    <script src="vendor/createDOMBlocks.js"></script>
     <script src="js/data.js"></script>
-    <script src="js/helpers.js"></script>
-    <script src="js/render-timeline.js"></script>
-    <script src="js/calendar.js"></script>
-    <script src="js/render-panels.js"></script>
-    <script src="js/app.js"></script>
+    <script src="js/downloads.js"></script>
     <script src="js/changelog.js"></script>
-    <script src="js/whats-new.js"></script>
-
+    <script src="js/helpers.js"></script>
+    <script src="js/calendar.js"></script>
+    <script src="js/icons.js"></script>
+    <script src="js/calendar-menu.js"></script>
+    <script src="js/derive.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>

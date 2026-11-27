@@ -1,0 +1,366 @@
+/*
+ * Az oldal témája a createDOMBlocks CSS-változóira építve (vendor/createDOMBlocks.css után tölt be).
+ * A megjelenés megegyezik a korábbi oldaléval: slate paletta, Inter betű, lekerekített kártyák,
+ * versenyszínek, sötét mód. A téma: <html data-theme="light|dark">.
+ */
+
+:root {
+    --primary: #0f172a;
+    --primary-hover: #1e293b;
+    --on-primary: #ffffff;
+    --text: #0f172a;
+    --text-light: #64748b;
+    --border: #e2e8f0;
+    --bg: #ffffff;          /* felület (kártyák) */
+    --bg-alt: #f8fafc;
+    --page-bg: #f8fafc;     /* az oldal háttere */
+    --soft: #f1f5f9;        /* gombok, szegmensek háttere */
+    --soft-hover: #e2e8f0;
+    --line-strong: #cbd5e1;
+    --muted: #94a3b8;
+    --ok-bg: #ecfdf5;  --ok-border: #a7f3d0;  --ok-text: #047857;
+    --warn-bg: #fef3c7; --warn-border: #fcd34d; --warn-text: #92400e;
+    --danger-bg: #fef2f2; --danger-border: #fecaca; --danger-text: #b91c1c; --danger: #dc2626;
+    --overlay: rgba(15, 23, 42, 0.6);
+    --radius: 0.5rem;
+    --radius-lg: 1rem;
+    --gantt-today: #ef4444;
+    font-family: 'Inter', sans-serif;
+}
+
+:root[data-theme="dark"] {
+    color-scheme: dark;
+    --primary: #f1f5f9;
+    --primary-hover: #ffffff;
+    --on-primary: #0f172a;
+    --text: #e2e8f0;
+    --text-light: #94a3b8;
+    --border: #263349;
+    --bg: #111827;
+    --bg-alt: #1a2336;
+    --page-bg: #0b1120;
+    --soft: #1e293b;
+    --soft-hover: #263349;
+    --line-strong: #334155;
+    --muted: #8190a5;
+    --ok-bg: #052e1f;  --ok-border: #065f46;  --ok-text: #6ee7b7;
+    --warn-bg: #451a03; --warn-border: #92400e; --warn-text: #fde68a;
+    --danger-bg: #3b1214; --danger-border: #7f1d1d; --danger-text: #fca5a5; --danger: #f87171;
+    --warning: #f59e0b;
+    --warning-bg: #451a03;
+    --warning-text: #fde68a;
+    --shadow: none;
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--page-bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+[hidden] { display: none !important; }
+#app { display: flex; flex-direction: column; flex: 1; }
+
+/* A könyvtár alap-stílusainak lazítása ezen az oldalon */
+.cmp-page .card { margin-bottom: 0; box-shadow: none; }
+.cmp-page .btn { transform: none; box-shadow: none; background: var(--soft); color: var(--text); font-weight: 600; }
+.cmp-page .btn:hover { transform: none; box-shadow: none; background: var(--soft-hover); }
+.cmp-page .badge:hover { transform: none; background: revert-layer; color: inherit; }
+.cmp-page .link:hover { text-decoration: none; }
+.cmp-page h1, .cmp-page h2, .cmp-page h3, .cmp-page h4, .cmp-page h5, .cmp-page p { margin: 0; }
+
+/* ===== Fejléc ===== */
+.cmp-header { position: sticky; top: 0; z-index: 40; background: var(--bg); border-bottom: 1px solid var(--border); }
+.cmp-header-inner { max-width: 80rem; margin: 0 auto; padding: 0.5rem 1rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem 1rem; }
+.cmp-brand { display: flex; align-items: center; gap: 0.625rem; min-width: 0; flex: 1; }
+.cmp-brand-icon { display: inline-flex; flex-shrink: 0; align-items: center; justify-content: center; width: 2rem; height: 2rem; border-radius: 0.5rem; background: var(--primary); color: var(--on-primary); }
+.cmp-brand-icon svg { width: 1rem; height: 1rem; }
+.cmp-title { font-size: 0.875rem; font-weight: 800; letter-spacing: -0.01em; line-height: 1.25; color: var(--text); }
+.cmp-subtitle { display: none; font-size: 11px; line-height: 1.25; color: var(--text-light); }
+.cmp-menu-btn { display: inline-flex; align-items: center; justify-content: center; width: 2.25rem; height: 2.25rem; padding: 0; border: 1px solid var(--line-strong); border-radius: 0.5rem; }
+.cmp-menu-btn svg { width: 1.25rem; height: 1.25rem; }
+.cmp-controls { display: none; width: 100%; flex-direction: column; gap: 0.5rem; padding: 0.5rem 0; border-top: 1px solid var(--border); }
+.cmp-controls.is-open { display: flex; }
+.cmp-today-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.25rem 0.625rem; border-radius: 0.5rem; background: var(--danger-bg); border: 1px solid var(--danger-border); color: var(--danger-text); font-size: 0.75rem; font-weight: 600; }
+.cmp-today-badge::before { content: ""; width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--danger); animation: cmp-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+.cmp-theme-btn { gap: 0.375rem; padding: 0.25rem 0.625rem; border: 1px solid var(--line-strong); border-radius: 0.5rem; font-size: 0.75rem; }
+@keyframes cmp-pulse { 50% { opacity: 0.4; } }
+@media (min-width: 640px) { .cmp-title { font-size: 1rem; } .cmp-subtitle { display: block; } .cmp-header-inner { padding-inline: 1.5rem; } }
+@media (min-width: 768px) {
+    .cmp-menu-btn { display: none; }
+    .cmp-controls { display: flex; width: auto; flex-direction: row; align-items: center; padding: 0; border: 0; }
+}
+@media (min-width: 1024px) { .cmp-title { font-size: 1.125rem; } .cmp-header-inner { padding-inline: 2rem; } }
+
+/* ===== Elrendezés ===== */
+.cmp-main { flex: 1; width: 100%; max-width: 80rem; margin: 0 auto; padding: 1.5rem 1rem; display: flex; flex-direction: column; gap: 1.5rem; }
+@media (min-width: 640px) { .cmp-main { padding-inline: 1.5rem; } }
+@media (min-width: 1024px) { .cmp-main { padding-inline: 2rem; } }
+.cmp-panel { background: var(--bg); border: 1px solid var(--border); border-radius: 1rem; overflow: hidden; }
+.cmp-panel-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 1rem 1.25rem; border-bottom: 1px solid var(--border); background: var(--bg-alt); }
+.cmp-h2 { font-size: 1rem; font-weight: 700; color: var(--text); }
+.cmp-h2-lg { font-size: 1rem; font-weight: 800; }
+.cmp-hint { font-size: 0.75rem; color: var(--text-light); }
+.cmp-split { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; align-items: start; }
+@media (min-width: 1024px) {
+    .cmp-split { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+    .cmp-aside { grid-column: span 4; position: sticky; top: 5rem; }
+    .cmp-list-panel { grid-column: span 8; }
+    .cmp-h2-lg { font-size: 1.125rem; }
+}
+.cmp-aside, .cmp-list-panel { padding: 1.25rem; }
+.cmp-aside-head { display: flex; align-items: center; justify-content: space-between; padding-bottom: 0.75rem; margin-bottom: 1rem; border-bottom: 1px solid var(--border); }
+.cmp-aside-title { font-size: 0.875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-light); }
+.cmp-list-head { display: flex; flex-direction: column; gap: 0.75rem; padding-bottom: 1rem; margin-bottom: 1rem; border-bottom: 1px solid var(--border); }
+@media (min-width: 640px) { .cmp-list-head { flex-direction: row; align-items: center; justify-content: space-between; } }
+.cmp-section-title { font-size: 1rem; font-weight: 700; color: var(--text); }
+
+/* ===== Állapot-jelvények ===== */
+.cmp-pill { display: inline-block; text-align: center; padding: 0.125rem 0.625rem; border-radius: 9999px; background: var(--soft); color: var(--text-light); font-size: 0.75rem; font-weight: 600; line-height: 1.4; }
+.cmp-pill.is-ok { background: var(--ok-bg); color: var(--ok-text); border: 1px solid var(--ok-border); }
+.cmp-tag { display: inline-flex; padding: 0.125rem 0.5rem; border-radius: 0.375rem; font-size: 11px; font-weight: 700; line-height: 1.4; background: var(--c-bg, var(--soft)); color: var(--c-text, var(--text)); }
+.cmp-tag:hover { background: var(--c-bg, var(--soft)); color: var(--c-text, var(--text)); }
+.cmp-tag.is-warn { background: var(--warn-bg); color: var(--warn-text); border: 1px solid var(--warn-border); cursor: help; }
+.cmp-tag.is-final { font-weight: 800; background: var(--warn-bg); color: var(--warn-text); border: 1px solid var(--warn-border); }
+.cmp-tag.is-neutral { background: var(--soft); color: var(--text); font-weight: 600; }
+.cmp-tag.is-lg { font-size: 0.75rem; padding: 0.25rem 0.625rem; border-radius: 0.5rem; gap: 0.375rem; align-items: center; }
+.cmp-tag.is-lg::before { content: ""; width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--c-color); }
+
+/* ===== Szűrőkártyák ===== */
+.cmp-filters { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+@media (min-width: 768px) { .cmp-filters { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.cmp-page .card.cmp-filter { position: relative; display: flex; flex-direction: column; justify-content: space-between; padding: 1rem; border: 2px solid var(--c-color); cursor: pointer; user-select: none; transition: all 0.2s; }
+.cmp-page .card.cmp-filter.is-off { background: var(--soft); border-color: var(--border); opacity: 0.65; }
+.cmp-page .card.cmp-filter.is-off:hover { opacity: 0.9; }
+.cmp-filter .card-header { display: block; padding: 0; border: 0; background: none; }
+.cmp-filter .card-header h3 { display: flex; align-items: flex-start; gap: 0.75rem; padding-right: 3.5rem; font-size: 0.875rem; line-height: 1.35; font-weight: 700; }
+.cmp-filter .card-header h3::before { content: ""; flex-shrink: 0; width: 1rem; height: 1rem; margin-top: 0.125rem; border-radius: 50%; background: var(--c-color); box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15); }
+.cmp-filter.is-off .card-header h3::before { background: var(--line-strong); }
+.cmp-filter .card-body { padding: 0.125rem 0 0 1.75rem; font-size: 0.75rem; color: var(--text-light); }
+.cmp-filter .card-footer { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; margin-top: 0.75rem; padding: 0.625rem 0 0; border-top: 1px solid var(--border); background: none; font-size: 0.75rem; }
+.cmp-filter-org { min-width: 0; color: var(--text-light); line-height: 1.35; }
+.cmp-filter-count { flex-shrink: 0; white-space: nowrap; text-align: center; font-weight: 600; padding: 0.125rem 0.5rem; border-radius: 0.375rem; background: var(--c-bg); color: var(--c-text); }
+.cmp-filter.is-off .cmp-filter-count { background: var(--soft-hover); color: var(--text-light); }
+/* kapcsoló (switch) a checkboxból */
+.cmp-filter div.checkbox-input { position: absolute; top: 1rem; right: 1rem; margin: 0; }
+.cmp-filter .checkbox-input label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.cmp-filter .checkbox-input input { appearance: none; -webkit-appearance: none; position: relative; display: block; width: 2.75rem; height: 1.5rem; margin: 0; border-radius: 9999px; background: var(--line-strong); cursor: pointer; transition: background-color 0.2s; }
+.cmp-filter .checkbox-input input::after { content: ""; position: absolute; top: 0.125rem; left: 0.125rem; width: 1.25rem; height: 1.25rem; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); transition: transform 0.2s; }
+.cmp-filter .checkbox-input input:checked { background: var(--c-color); }
+.cmp-filter .checkbox-input input:checked::after { transform: translateX(1.25rem); }
+.cmp-filter .checkbox-input input:focus-visible { outline: 2px solid var(--c-color); outline-offset: 2px; }
+
+/* ===== Idővonal (Gantt) ===== */
+.cmp-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; font-size: 0.75rem; color: var(--text-light); }
+.cmp-legend-item { display: inline-flex; align-items: center; gap: 0.375rem; }
+.cmp-legend-dot { width: 0.75rem; height: 0.75rem; border-radius: 50%; background: var(--text-light); border: 2px solid var(--bg); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); }
+.cmp-legend-diamond { width: 0.875rem; height: 0.875rem; transform: rotate(45deg); background: #fbbf24; border: 2px solid #b45309; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); }
+.cmp-legend-item.is-final { font-weight: 600; color: var(--warn-text); }
+.cmp-legend-item.is-today { font-weight: 500; color: var(--danger); }
+.cmp-legend-line { width: 0; height: 1rem; border-left: 2px dashed var(--gantt-today); }
+.cmp-page .gantt { border: 0; border-radius: 0; }
+.cmp-page .gantt .gantt-label-title { font-size: 0.875rem; }
+.cmp-page .gantt .gantt-label { border-left: 0; padding-left: 1.25rem; }
+.cmp-page .gantt .gantt-bar { height: 14px; }
+.cmp-page .gantt .gantt-card { font-size: 11px; }
+
+/* ===== Esemény részletei ===== */
+.cmp-detail { display: flex; flex-direction: column; gap: 1rem; }
+.cmp-detail-title { font-size: 1.125rem; font-weight: 800; line-height: 1.35; margin-top: 0.5rem; }
+.cmp-infobox { display: flex; flex-direction: column; gap: 0.5rem; padding: 0.75rem; background: var(--bg-alt); border: 1px solid var(--border); border-radius: 0.75rem; font-size: 0.75rem; }
+.cmp-infobox-row { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+.cmp-infobox-row > span:first-child { color: var(--text-light); font-weight: 500; }
+.cmp-infobox-row > span:last-child { font-weight: 700; text-align: right; }
+.cmp-note { font-size: 0.75rem; line-height: 1.35; color: var(--text-light); }
+.cmp-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 0.375rem; }
+.cmp-text { font-size: 0.875rem; line-height: 1.6; color: var(--text); }
+.cmp-page .link.cmp-cta, .cmp-page .btn.cmp-cta { display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem; width: 100%; padding: 0.625rem 0.875rem; border-radius: 0.75rem; font-size: 0.75rem; font-weight: 700; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08); }
+.cmp-page .link.cmp-cta.is-solid { background: var(--c-color); color: #fff; }
+.cmp-page .link.cmp-cta.is-solid:hover { opacity: 0.9; color: #fff; }
+.cmp-page .btn.cmp-cta { border: 1px solid var(--line-strong); background: var(--bg); color: var(--text); }
+.cmp-page .btn.cmp-cta:hover { background: var(--bg-alt); }
+.cmp-page .link.cmp-cta.is-quiet { padding-block: 0.5rem; font-weight: 600; border: 1px solid var(--border); background: var(--bg-alt); color: var(--text); }
+.cmp-page .link.cmp-cta.is-quiet:hover { background: var(--soft); color: var(--text); }
+.cmp-ext { width: 0.875rem; height: 0.875rem; flex-shrink: 0; }
+
+/* ===== Időrendi lista ===== */
+.cmp-segment { display: inline-flex; align-self: flex-start; padding: 0.25rem; border-radius: 0.75rem; background: var(--soft); }
+.cmp-page .btn.cmp-seg-btn { padding: 0.25rem 0.75rem; border-radius: 0.5rem; background: transparent; color: var(--text-light); font-size: 0.75rem; }
+.cmp-page .btn.cmp-seg-btn:hover { background: transparent; color: var(--text); }
+.cmp-page .btn.cmp-seg-btn.is-active { background: var(--bg); color: var(--text); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
+.cmp-list { display: flex; flex-direction: column; gap: 0.75rem; }
+.cmp-item { display: flex; flex-direction: column; justify-content: space-between; gap: 0.75rem; padding: 0.75rem; border: 1px solid var(--border); border-radius: 0.75rem; background: var(--bg); cursor: pointer; transition: all 0.2s; }
+@media (min-width: 640px) { .cmp-item { padding: 1rem; } }
+@media (min-width: 640px) { .cmp-item { flex-direction: row; align-items: center; } }
+.cmp-item:hover { border-color: var(--line-strong); }
+.cmp-item.is-past { background: var(--bg-alt); opacity: 0.7; }
+.cmp-item.is-past:hover { opacity: 1; }
+.cmp-item.is-selected { background: var(--bg-alt); border-color: var(--text); box-shadow: 0 0 0 1px var(--text); opacity: 1; }
+.cmp-item-main { display: flex; align-items: flex-start; gap: 0.875rem; }
+.cmp-datebox { width: 7rem; flex-shrink: 0; padding: 0.5rem 0.625rem; border: 1px solid var(--c-border); border-radius: 0.75rem; background: var(--c-bg); text-align: center; }
+.cmp-datebox.is-final { background: var(--warn-bg); border-color: var(--warn-border); }
+.cmp-item.is-past .cmp-datebox { background: var(--soft); border-color: var(--line-strong); }
+.cmp-datebox span { display: block; }
+.cmp-datebox .d { font-size: 0.75rem; font-weight: 800; }
+.cmp-datebox .t { font-size: 11px; font-weight: 700; margin-top: 0.125rem; }
+.cmp-datebox .y { font-size: 10px; font-weight: 600; margin-top: 0.125rem; color: var(--text-light); }
+.cmp-datebox.is-final .d { color: var(--warn-text); }
+.cmp-item.is-past .cmp-datebox span { color: var(--muted); }
+.cmp-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+.cmp-item-title { margin-top: 0.25rem; font-size: 0.875rem; font-weight: 700; }
+.cmp-item.is-past .cmp-item-title { text-decoration: line-through; text-decoration-color: var(--muted); }
+.cmp-item-desc { margin-top: 0.125rem; font-size: 0.75rem; color: var(--text-light); display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.cmp-item-side { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.25rem; padding-top: 0.5rem; border-top: 1px solid var(--border); flex-shrink: 0; }
+@media (min-width: 640px) { .cmp-item-side { flex-wrap: nowrap; flex-direction: column; align-items: flex-end; padding-top: 0; border-top: 0; text-align: right; } }
+.cmp-loc { font-size: 11px; color: var(--muted); }
+/* Ikon és szöveg (IconText): az ikon saját oszlopban, a több sorba törő szöveg nem kerül alá */
+.cmp-icontext { display: inline-flex; align-items: flex-start; gap: 0.25rem; max-width: 100%; text-align: left; }
+.cmp-icontext-icon { flex-shrink: 0; }
+.cmp-icontext-text { min-width: 0; }
+.cmp-page .link.cmp-mini, .cmp-page .btn.cmp-mini { padding: 0; margin-top: 0.125rem; background: none; border: 0; font-size: 11px; font-weight: 700; text-decoration: underline; color: var(--c-color, var(--text)); }
+.cmp-page .btn.cmp-mini { color: var(--text); }
+.cmp-page .link.cmp-mini:hover, .cmp-page .btn.cmp-mini:hover { opacity: 0.8; background: none; }
+.cmp-empty { padding: 2.5rem 1rem; text-align: center; color: var(--muted); background: var(--bg-alt); border: 1px dashed var(--border); border-radius: 0.75rem; }
+.cmp-empty strong { display: block; font-size: 0.875rem; font-weight: 500; color: var(--text-light); }
+.cmp-empty span { display: block; margin-top: 0.25rem; font-size: 0.75rem; }
+
+/* ===== Versenykiírások ===== */
+.cmp-info-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; align-items: stretch; padding: 1.25rem; }
+@media (min-width: 1024px) { .cmp-info-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.cmp-info-grid .cmp-empty { grid-column: 1 / -1; }
+.cmp-page .card.cmp-info { display: flex; flex-direction: column; justify-content: space-between; border-radius: 1rem; }
+.cmp-info-head { padding: 1rem 1.25rem; background: var(--c-bg); }
+.cmp-info-head h3 { font-size: 1rem; font-weight: 800; line-height: 1.35; }
+.cmp-info-grid > div { display: flex; flex-direction: column; }
+.cmp-info-grid > div > .card { flex: 1; }
+.cmp-info-kicker { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.375rem; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: var(--c-text); }
+.cmp-info-kicker::before { content: ""; width: 0.75rem; height: 0.75rem; border-radius: 50%; background: var(--c-color); }
+.cmp-info-meta { margin-top: 0.375rem; font-size: 0.75rem; color: var(--text-light); }
+.cmp-info .card-body { display: flex; flex-direction: column; flex: 1; padding: 0; }
+.cmp-info-content { display: flex; flex-direction: column; gap: 1rem; flex: 1; padding: 1.25rem; }
+.cmp-block-text { font-size: 0.8125rem; line-height: 1.6; color: var(--text); }
+.cmp-teams { padding: 0.75rem; background: var(--c-bg); border: 1px solid var(--c-border); border-radius: 0.75rem; }
+.cmp-teams .cmp-label { color: var(--c-text); margin-bottom: 0.5rem; }
+.cmp-team { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.5rem; margin-bottom: 0.375rem; padding: 0.375rem 0.625rem; background: var(--bg); border-radius: 0.5rem; }
+.cmp-team:last-child { margin-bottom: 0; }
+.cmp-team strong { font-size: 0.875rem; font-weight: 800; }
+.cmp-bullets { display: flex; flex-direction: column; gap: 0.25rem; padding: 0.75rem 0.75rem 0.75rem 1.75rem; background: var(--bg-alt); border: 1px solid var(--border); border-radius: 0.75rem; font-size: 0.75rem; line-height: 1.35; list-style: disc; }
+.cmp-bullets.is-plain { list-style: none; padding-left: 0.75rem; }
+.cmp-info .card-footer { display: flex; flex-direction: column; gap: 0.625rem; padding: 0.75rem 1.25rem 1.25rem; background: var(--bg-alt); }
+.cmp-contacts { padding-top: 0.25rem; font-size: 11px; line-height: 1.6; color: var(--text-light); }
+
+/* ===== Letölthető dokumentumok ===== */
+.cmp-dl-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+@media (min-width: 768px) { .cmp-dl-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1280px) { .cmp-dl-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.cmp-page .card.cmp-dl { border-left: 4px solid var(--c-color); border-radius: 0.75rem; }
+.cmp-dl .card-header { padding: 1rem 1rem 0; border: 0; background: none; }
+.cmp-dl .card-header h3 { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; font-weight: 700; }
+.cmp-dl .card-header h3::before { content: ""; width: 0.625rem; height: 0.625rem; flex-shrink: 0; border-radius: 50%; background: var(--c-color); }
+.cmp-dl .card-body { display: flex; flex-direction: column; gap: 0.75rem; padding: 0.5rem 1rem 1rem; }
+.cmp-doc { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.75rem; }
+.cmp-doc-title { display: block; font-size: 0.875rem; font-weight: 600; line-height: 1.35; }
+.cmp-doc-desc { display: block; margin-top: 0.125rem; font-size: 0.75rem; line-height: 1.35; color: var(--text-light); }
+.cmp-doc-size { display: block; margin-top: 0.125rem; font-size: 11px; color: var(--muted); }
+.cmp-doc-actions { display: flex; align-items: center; gap: 0.375rem; flex-shrink: 0; }
+.cmp-page .link.cmp-icon-btn { display: inline-flex; align-items: center; justify-content: center; width: 2.25rem; height: 2.25rem; border: 1px solid var(--border); border-radius: 0.5rem; background: var(--bg); color: var(--text-light); }
+.cmp-page .link.cmp-icon-btn:hover { background: var(--soft); color: var(--text); }
+.cmp-icon-btn svg { width: 1rem; height: 1rem; }
+
+/* ===== Lábléc ===== */
+.cmp-footer { margin-top: 2.5rem; padding: 1rem; text-align: center; font-size: 0.75rem; color: var(--muted); background: var(--bg); border-top: 1px solid var(--border); }
+
+/* ===== Naptár menü ===== */
+.cmp-cal-menu { position: fixed; z-index: 10001; width: 15rem; padding: 0.375rem; border: 1px solid var(--border); border-radius: 0.75rem; background: var(--bg); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25); font-size: 0.75rem; }
+.cmp-page .cmp-cal-menu .link, .cmp-page .cmp-cal-menu .btn { display: flex; align-items: center; justify-content: flex-start; gap: 0.5rem; width: 100%; padding: 0.5rem 0.75rem; border-radius: 0.5rem; background: none; color: var(--text); font-size: 0.75rem; font-weight: 600; text-align: left; }
+.cmp-page .cmp-cal-menu .link:hover, .cmp-page .cmp-cal-menu .btn:hover { background: var(--soft); }
+
+/* ===== Felugró ablakok ===== */
+.modal-portal { background: var(--overlay) !important; }
+.modal-portal .modal { padding: 0 !important; border: 1px solid var(--border); border-radius: 1rem !important; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4) !important; }
+.modal-portal .modal-title-container { margin: 0 !important; padding: 1rem 1.25rem 0.75rem; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--bg); z-index: 1; }
+.modal-portal .modal-title { font-size: 0.875rem !important; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-light); }
+.modal-portal .modal-close-btn { background: none !important; color: var(--text-light); border-radius: 0.5rem !important; }
+.modal-portal .modal-body { padding: 1.25rem; }
+.cmp-whatsnew-sub { margin-bottom: 1rem; font-size: 0.75rem; color: var(--text-light); }
+.cmp-whatsnew-group + .cmp-whatsnew-group { margin-top: 1rem; }
+.cmp-whatsnew-ver { margin-bottom: 0.375rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+.cmp-whatsnew-list { display: flex; flex-direction: column; gap: 0.5rem; padding-left: 1.25rem; list-style: disc; font-size: 0.875rem; line-height: 1.35; color: var(--text); }
+.cmp-whatsnew-list li::marker { color: var(--muted); }
+.cmp-whatsnew-actions { display: flex; justify-content: flex-end; margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+.cmp-page .btn.cmp-primary { padding: 0.5rem 1rem; border-radius: 0.75rem; background: var(--primary); color: var(--on-primary); font-size: 0.875rem; font-weight: 700; }
+.cmp-page .btn.cmp-primary:hover { background: var(--primary); opacity: 0.9; }
+@media (prefers-reduced-motion: reduce) { .modal-portal { transition: none !important; } }
+
+/* Összecsukható szekció gombja */
+.cmp-page .btn.cmp-toggle-btn { gap: 0.375rem; padding: 0.375rem 0.75rem; border: 1px solid var(--line-strong); border-radius: 0.75rem; background: var(--bg); font-size: 0.75rem; }
+.cmp-page .btn.cmp-toggle-btn:hover { background: var(--soft); }
+.cmp-toggle-btn::after { content: ""; width: 0.5rem; height: 0.5rem; margin-top: -0.2rem; border-right: 2px solid currentColor; border-top: 2px solid currentColor; transform: rotate(-45deg); transition: transform 0.2s; }
+.cmp-toggle-btn.is-closed::after { margin-top: 0.1rem; transform: rotate(135deg); }
+.cmp-page .cmp-mb-3 { margin-bottom: 0.75rem; }
+.cmp-filters > div, .cmp-dl-grid > div { display: flex; flex-direction: column; }
+.cmp-filters > div > .card, .cmp-dl-grid > div > .card { flex: 1; }
+
+/* A rács- és flex-elemek zsugorodhatnak (a hosszú szöveg és a széles idővonal nem tolja szét az oldalt) */
+.cmp-main > *, .cmp-filters > *, .cmp-info-grid > *, .cmp-dl-grid > *, .cmp-split > * { min-width: 0; }
+
+/* ===== Workshop dokumentumok és projektek ===== */
+.cmp-doclist { display: flex; flex-direction: column; gap: 0.625rem; padding: 0.75rem; background: var(--bg-alt); border: 1px solid var(--border); border-radius: 0.75rem; }
+.cmp-project-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+@media (min-width: 1024px) { .cmp-project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.cmp-project-grid > div { display: flex; flex-direction: column; min-width: 0; }
+.cmp-project-grid > div > .card { flex: 1; display: flex; flex-direction: column; }
+.cmp-project-grid .card-body { flex: 1; }
+.cmp-project-docs { margin-top: auto; }
+.cmp-project-grid .card-header h3 { font-size: 1rem; font-weight: 800; }
+.cmp-project-team { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.5rem; }
+.cmp-page .btn.cmp-textlink { padding: 0; border: 0; background: none; font-size: inherit; font-weight: 600; color: inherit; text-decoration: underline dotted; cursor: pointer; }
+.cmp-page .btn.cmp-textlink:hover { color: var(--text); }
+.cmp-logo { width: 3.5rem; height: 3.5rem; border-radius: 50%; flex-shrink: 0; object-fit: cover; }
+.cmp-logo.is-sm { width: 2.5rem; height: 2.5rem; }
+.cmp-detail-head { display: flex; align-items: flex-start; gap: 0.75rem; }
+.cmp-detail-logos { display: flex; gap: 0.375rem; flex-shrink: 0; }
+.cmp-detail-logos:not(:has(img)) { display: none; }
+.cmp-team { flex-wrap: nowrap; justify-content: flex-start; gap: 0.75rem; }
+.cmp-team-text { display: flex; flex-direction: column; gap: 0.25rem; min-width: 0; align-items: flex-start; }
+.cmp-team-line { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.5rem; }
+.cmp-team-logo { flex-shrink: 0; }
+
+/* ===== Idővonal: a main ág kinézete ===== */
+.cmp-page .gantt { --gantt-head-h: 56px; }
+.cmp-page .gantt .gantt-years { display: none; }
+.cmp-page .gantt .gantt-sub { height: 100%; }
+.cmp-page .gantt .gantt-tick { width: 0 !important; overflow: visible; justify-content: center; border-top: 0; font-weight: 600; color: var(--text); padding: 0; }
+.cmp-page .gantt .gantt-corner, .cmp-page .gantt .gantt-label { background: var(--bg-alt); border-right: 0; box-shadow: 4px 0 8px -6px rgba(15, 23, 42, 0.25); }
+.cmp-page .gantt .gantt-row.is-alt { background: transparent; }
+.cmp-page .gantt .gantt-row.is-alt .gantt-label, .cmp-page .gantt .gantt-row:hover .gantt-label { background: var(--bg-alt); }
+.cmp-page .gantt .gantt-label-title { white-space: normal; overflow: visible; text-overflow: clip; font-weight: 800; }
+.cmp-page .gantt .gantt-label-title::before { content: ""; display: inline-block; width: 0.625rem; height: 0.625rem; margin-right: 0.5rem; border-radius: 50%; background: var(--gantt-color); }
+.cmp-page .gantt .gantt-label-sub { white-space: normal; padding-left: 1.125rem; }
+.cmp-page .gantt .gantt-card { display: flex; flex-direction: column; align-items: center; }
+.cmp-page .gantt .gantt-card-caption { order: 0; }
+.cmp-page .gantt .gantt-card-meta { order: 1; }
+.cmp-page .gantt .gantt-card-label { order: 2; }
+.cmp-project-head { display: flex; align-items: center; gap: 0.75rem; }
+.cmp-project-title { font-size: 1rem; font-weight: 800; line-height: 1.35; }
+.cmp-dl.cmp-project .card-body { padding-top: 1rem; }
+.cmp-page .gantt .gantt-label-title { font-weight: 700; }
+.cmp-legend-dot { width: 0.5rem; height: 0.5rem; border: 0; box-shadow: none; background: #475569; }
+@media (max-width: 1023px) {
+  /* mobilon a versenynevek az idővonallal együtt görögnek (mint a main ágon), nem tapadnak a bal szélre */
+  .cmp-page .gantt .gantt-corner, .cmp-page .gantt .gantt-label { position: static; box-shadow: none; }
+}
+.cmp-pill.is-fixed { width: 7rem; flex-shrink: 0; box-sizing: border-box; padding: 0.25rem 0.5rem; border-radius: 0.5rem; text-align: center; }
+/* mobilon: balra a jelvény, jobbra egy oszlop (felül a helyszín, alatta egymás mellett a hivatkozások); asztali nézetben az elemek közvetlenül az oldalsó oszlopban állnak */
+@media (max-width: 639px) { .cmp-item-side { flex-wrap: nowrap; align-items: flex-start; gap: 0.5rem; } }
+.cmp-item-side-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.25rem; min-width: 0; text-align: right; }
+.cmp-item-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.125rem 0.5rem; }
+.cmp-emoji { display: none; }
+@media (min-width: 640px) { .cmp-emoji { display: inline; } }
+@media (min-width: 640px) { .cmp-item-side-right, .cmp-item-links { display: contents; } }
+.cmp-item-body { flex: 1 1 0; min-width: 0; }
+.cmp-item-title { overflow-wrap: anywhere; hyphens: auto; }
