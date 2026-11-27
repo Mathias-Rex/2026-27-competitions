@@ -217,6 +217,10 @@ body {
 .cmp-item-side { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.25rem; padding-top: 0.5rem; border-top: 1px solid var(--border); flex-shrink: 0; }
 @media (min-width: 640px) { .cmp-item-side { flex-wrap: nowrap; flex-direction: column; align-items: flex-end; padding-top: 0; border-top: 0; text-align: right; } }
 .cmp-loc { font-size: 11px; color: var(--muted); }
+/* Ikon és szöveg (IconText): az ikon saját oszlopban, a több sorba törő szöveg nem kerül alá */
+.cmp-icontext { display: inline-flex; align-items: flex-start; gap: 0.25rem; max-width: 100%; text-align: left; }
+.cmp-icontext-icon { flex-shrink: 0; }
+.cmp-icontext-text { min-width: 0; }
 .cmp-page .link.cmp-mini, .cmp-page .btn.cmp-mini { padding: 0; margin-top: 0.125rem; background: none; border: 0; font-size: 11px; font-weight: 700; text-decoration: underline; color: var(--c-color, var(--text)); }
 .cmp-page .btn.cmp-mini { color: var(--text); }
 .cmp-page .link.cmp-mini:hover, .cmp-page .btn.cmp-mini:hover { opacity: 0.8; background: none; }

@@ -77,6 +77,16 @@
 # ---------------------------------------------------------------------------
 define:
 
+  # Ikon és szöveg egymás mellett: az ikon külön elemben, a szöveg nem törik alá
+  IconText:
+    params: [icon, text]
+    body:
+      - span.cmp-icontext:
+          - span.cmp-icontext-icon:
+              text: "${icon}"
+              aria-hidden: "true"
+          - span.cmp-icontext-text: "${text}"
+
   # Letölthető dokumentumok listája (workshop dokumentumok): cím, leírás, méret, megnézés és letöltés gomb
   DocumentList:
     params: [documents]
@@ -258,8 +268,11 @@ ui:
                                 onChange: "@competitionSwitchChanged"
                           footer:
                             - span.cmp-filter-org:
-                                text: "${competition.organizer}"
                                 title: "${competition.organizer}"
+                                children:
+                                  - IconText:
+                                      icon: "📍"
+                                      text: "${competition.organizer}"
                             - span.cmp-filter-count: "${competition.upcomingText}"
 
       # ===== 2. Közös idővonal (Gantt) =====
@@ -392,7 +405,10 @@ ui:
                                     class: "${event.statusClass}"
                                     text: "${event.statusText}"
                                 - div.cmp-item-side-right:
-                                    - span.cmp-loc: "${event.location}"
+                                    - span.cmp-loc:
+                                        - IconText:
+                                            icon: "📍"
+                                            text: "${event.location}"
                                     - div.cmp-item-links:
                                         - if: "${event.hasLink}"
                                           then:
@@ -451,8 +467,14 @@ ui:
                                   - div.cmp-info-head:
                                       - span.cmp-info-kicker: "${info.competitionName}"
                                       - Title(3): "${info.name}"
-                                      - Paragraph.cmp-info-meta: "${info.organizer}"
-                                      - Paragraph.cmp-info-meta: "${info.address}"
+                                      - div.cmp-info-meta:
+                                          - IconText:
+                                              icon: "🏛️"
+                                              text: "${info.organizer}"
+                                      - div.cmp-info-meta:
+                                          - IconText:
+                                              icon: "📍"
+                                              text: "${info.address}"
 
                                   # Tartalom: kiknek szól, csapataink, kategóriák / téma, fordulók, díjazás
                                   - div.cmp-info-content:
