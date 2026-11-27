@@ -1,0 +1,3 @@
+# Python bájtkód (a pdf-intake szkript futtatásakor keletkezik)
+__pycache__/
+*.pyc
