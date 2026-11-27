@@ -56,9 +56,9 @@ function renderFilterCards() {
                 </button>
             </div>
 
-            <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span class="text-slate-500 truncate max-w-[62%]" title="${comp.organizer}">📍 ${comp.organizer}</span>
-                <span class="font-semibold px-2 py-0.5 rounded-md text-center" style="background-color: ${comp.active ? cc(comp, 'bgLight') : nc('#e2e8f0')}; color: ${comp.active ? cc(comp, 'textDark') : nc('#475569')};">
+            <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-start justify-between gap-2 text-xs">
+                <span class="text-slate-500 min-w-0 leading-snug" title="${comp.organizer}">📍 ${comp.organizer}</span>
+                <span class="shrink-0 whitespace-nowrap font-semibold px-2 py-0.5 rounded-md text-center" style="background-color: ${comp.active ? cc(comp, 'bgLight') : nc('#e2e8f0')}; color: ${comp.active ? cc(comp, 'textDark') : nc('#475569')};">
                     ${upcomingCount} hátralévő esemény
                 </span>
             </div>
