@@ -49,7 +49,7 @@ function renderWorkshopProjects() {
             </div>
             <p class="text-sm text-slate-700 leading-relaxed">${p.summary}</p>
             <p class="text-xs text-slate-500">Workshop: <button type="button" class="font-semibold underline decoration-dotted hover:text-slate-900" onclick="openEventModal('${p.eventId}')">${p.date}</button></p>
-            <div>
+            <div class="mt-auto">
                 <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">Letölthető dokumentumok</h4>
                 <ul class="space-y-2.5 bg-slate-50 rounded-xl p-3 border border-slate-200/80">${docRowsHtml(p.docs)}</ul>
             </div>
