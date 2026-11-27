@@ -254,7 +254,7 @@ function renderChronologicalList() {
                     ${past ? 'Lejárt' : relText}
                 </span>
                 <div class="min-w-0 flex flex-col items-end gap-1 text-right sm:contents">
-                <span class="text-[11px] text-slate-400">📍 ${ev.location}</span>
+                <span class="inline-flex items-start gap-1 max-w-full text-left text-[11px] text-slate-400"><span class="shrink-0" aria-hidden="true">📍</span><span class="min-w-0">${ev.location}</span></span>
                 <div class="flex flex-wrap justify-end gap-x-2 gap-y-0.5 sm:contents">
                 ${ev.linkUrl ? `
                     <a href="${ev.linkUrl}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();"
@@ -362,8 +362,8 @@ function renderDetailedInfoCards() {
                         </span>
                     </div>
                     <h3 class="text-base font-extrabold text-slate-900 leading-snug">${comp.name}</h3>
-                    <p class="text-xs text-slate-700 mt-1.5 font-medium">🏛️ ${comp.organizer}</p>
-                    <p class="text-xs text-slate-600 mt-0.5">📍 ${comp.address}</p>
+                    <p class="flex items-start gap-1 text-xs text-slate-700 mt-1.5 font-medium"><span class="shrink-0" aria-hidden="true">🏛️</span><span class="min-w-0">${comp.organizer}</span></p>
+                    <p class="flex items-start gap-1 text-xs text-slate-600 mt-0.5"><span class="shrink-0" aria-hidden="true">📍</span><span class="min-w-0">${comp.address}</span></p>
                 </div>
 
                 <!-- Tartalmi blokkok -->
