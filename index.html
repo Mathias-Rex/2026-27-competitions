@@ -633,7 +633,8 @@ ui:
                                         text: "${project.dateText}"
                                         data-event-id: "${project.eventId}"
                                         click: "@openProjectEvent"
-                                - div:
+                                # A dokumentumok doboza a kártya aljára igazodik
+                                - div.cmp-project-docs:
                                     - Title(5).cmp-label: "Letölthető dokumentumok"
                                     - DocumentList:
                                         documents: "${project.documents}"
